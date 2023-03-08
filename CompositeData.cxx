@@ -340,10 +340,9 @@ void CompositeData::saveDetails(Variation* normalData)
 // Calculate necessary info for one histogram type with normal data and one variation
 void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, std::vector<DataPoint>& vectorOfPoints)
 {
-  DataPoint point;
-
   for (int i = 1; i <= normalHisto->GetNbinsX(); i++)
   {
+    DataPoint point;
     point.normalValue = normalHisto->GetBinContent(i);
     point.normalError = normalHisto->GetBinError(i);
     
@@ -362,6 +361,7 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, std::vector<
 
     point.variance = Nvariance / 2.0;
     point.stdDev = TMath::Sqrt(point.variance);
+    point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
 
     vectorOfPoints.push_back(point);
   }
@@ -371,10 +371,9 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, std::vector<
 // Calculate necessary info for one histogram type with normal data and two variations
 void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Histo, std::vector<DataPoint>& vectorOfPoints)
 {
-  DataPoint point;
-
   for (int i = 1; i <= normalHisto->GetNbinsX(); i++)
   {
+    DataPoint point;
     point.normalValue = normalHisto->GetBinContent(i);
     point.normalError = normalHisto->GetBinError(i);
     
@@ -401,6 +400,7 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Hi
 
     point.variance = Nvariance / 3.0;
     point.stdDev = TMath::Sqrt(point.variance);
+    point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
 
     vectorOfPoints.push_back(point);
   }
@@ -410,10 +410,9 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Hi
 // Calculate necessary info for one histogram type with normal data and three variations
 void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Histo, TH1D* var3Histo, std::vector<DataPoint>& vectorOfPoints)
 {
-  DataPoint point;
-
-  for (int i = 1; i <= normalHisto->GetNbinsX(); i++)
+ for (int i = 1; i <= normalHisto->GetNbinsX(); i++)
   {
+    DataPoint point;
     point.normalValue = normalHisto->GetBinContent(i);
     point.normalError = normalHisto->GetBinError(i);
     
@@ -444,6 +443,7 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Hi
 
     point.variance = Nvariance / 4.0;
     point.stdDev = TMath::Sqrt(point.variance);
+    point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
 
     vectorOfPoints.push_back(point);
   }
@@ -452,10 +452,9 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Hi
 // Calculate necessary info for one histogram type with normal data and four variations
 void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Histo, TH1D* var3Histo, TH1D* var4Histo, std::vector<DataPoint>& vectorOfPoints)
 {
-  DataPoint point;
-
   for (int i = 1; i <= normalHisto->GetNbinsX(); i++)
   {
+    DataPoint point;
     point.normalValue = normalHisto->GetBinContent(i);
     point.normalError = normalHisto->GetBinError(i);
     
@@ -490,6 +489,7 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Hi
 
     point.variance = Nvariance / 5.0;
     point.stdDev = TMath::Sqrt(point.variance);
+    point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
 
     vectorOfPoints.push_back(point);
   }

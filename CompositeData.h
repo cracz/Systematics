@@ -36,6 +36,7 @@ class CompositeData
     Double_t mean;
     Double_t stdDev;
     Double_t variance;
+    Double_t stdDevPercentage;
 
     void getMax()
     {

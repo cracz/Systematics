@@ -22,7 +22,9 @@ void calculateSystematics(TString order_n_str)
   Variation* Normal = new Variation("Normal_30", order_n_str);
 
   Variation* epd_high_30 = new Variation("epd_high_30", order_n_str);
-  Variation* epd_low_30 = new Variation("epd_low_30", order_n_str);
+  //Variation* epd_low_30 = new Variation("E5FCCCABE8E37F613B8E2F76BE72E3AD", order_n_str);
+  //Variation* epd_low_30 = new Variation("epd_low_30", order_n_str);
+  Variation* epd_scaled = new Variation("epd_scaled", order_n_str);
   Variation* nSigPi_high_30 = new Variation("nSigPi_high_30", order_n_str);
   Variation* nSigPi_low_30  = new Variation("nSigPi_low_30", order_n_str);
   Variation* nSigKa_high_30 = new Variation("nSigKa_high_30", order_n_str);
@@ -74,7 +76,8 @@ void calculateSystematics(TString order_n_str)
   Variation* m2Ka_low_20  = new Variation("m2Ka_low_20", order_n_str);
 
 
-  CompositeData* epd = new CompositeData("epd", Normal, epd_low_30, epd_high_30);
+  //CompositeData* epd = new CompositeData("epd", Normal, epd_low_30, epd_high_30);
+  CompositeData* epd = new CompositeData("epd", Normal, epd_scaled, epd_high_30);
   CompositeData* nhits = new CompositeData("nhits", Normal, nhits_low_30, nhits_high_30, nhits_low_20, nhits_high_20);  
   CompositeData* nSigPi = new CompositeData("nSigPi", Normal, nSigPi_low_30, nSigPi_high_30, nSigPi_low_20, nSigPi_high_20);
   CompositeData* nSigKa = new CompositeData("nSigKa", Normal, nSigKa_low_30, nSigKa_high_30, nSigKa_low_20, nSigKa_high_20);
@@ -146,7 +149,7 @@ void calculateSystematics(TString order_n_str)
   bins = Normal->h_vn_pm->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
   {
-    std::cout << "Bin " << ithBin << std::endl;
+    //std::cout << "Bin " << ithBin << std::endl;
     quadSum = 0.0;
     quadSum += epd->v_vn_pm.at(ithBin).variance;
 
@@ -221,21 +224,21 @@ void calculateSystematics(TString order_n_str)
   bins = Normal->h_vn_pr->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
   {
-    //std::cout << "Bin " << ithBin << std::endl;
+    std::cout << "Bin " << ithBin+1 << std::endl;
     quadSum = 0.0;
     quadSum += epd->v_vn_pr.at(ithBin).variance;
-
+    //std::cout << 100 * epd->v_vn_pr.at(ithBin).stdDev / TMath::Abs(Normal->h_vn_pr->GetBinContent(ithBin+1)) << std::endl;
+    std::cout << "epd: " << epd->v_vn_pr.at(ithBin).stdDevPercentage << std::endl;
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_pr.at(ithBin).deltaByDeltaError > 1.0)
         {
           quadSum += composites.at(jthVariation)->v_vn_pr.at(ithBin).variance;
-          /*
-          std::cout << composites.at(jthVariation)->ID << ": "
-        << (composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDev/Normal->h_vn_pr->GetBinContent(ithBin+1) ) * 100
-        << std::endl;
-          */
+          
+          std::cout << composites.at(jthVariation)->ID << ": " 
+          << composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDevPercentage 
+          << std::endl;
         }
     }
     
@@ -2043,7 +2046,8 @@ void calculateSystematics(TString order_n_str)
 
   delete Normal;
   delete epd_high_30;
-  delete epd_low_30;
+  //delete epd_low_30;
+  delete epd_scaled;
   delete nSigPi_high_30;
   delete nSigPi_low_30;
   delete nSigKa_high_30;

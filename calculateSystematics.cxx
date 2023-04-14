@@ -131,16 +131,71 @@ struct AverageContributionTracker
   }
 };
 
-void calculateSystematics(TString order_n_str)
+
+
+
+
+
+void calculateSystematics(TString order_n_str = "3")
 {
   TFile* newFile = new TFile("systematicErrors.root", "RECREATE");
   
-  Variation* Normal = new Variation("Normal_30", order_n_str);
+  Variation* Normal = new Variation("Normal", order_n_str);
+  Variation* epd_high = new Variation("epd_high", order_n_str);
+  Variation* epd_scaled = new Variation("epd_low", order_n_str);
 
-  Variation* epd_high_30 = new Variation("epd_high_30", order_n_str);
-  //Variation* epd_low_30 = new Variation("E5FCCCABE8E37F613B8E2F76BE72E3AD", order_n_str);
-  //Variation* epd_low_30 = new Variation("epd_low_30", order_n_str);
-  Variation* epd_scaled = new Variation("epd_scaled", order_n_str);
+  /*
+  Variation* nSigPi_high = new Variation("nSigPi_high", order_n_str);
+  Variation* nSigPi_low  = new Variation("nSigPi_low", order_n_str);
+  Variation* nSigKa_high = new Variation("nSigKa_high", order_n_str);
+  Variation* nSigKa_low  = new Variation("nSigKa_low", order_n_str);
+  Variation* nSigPr_high = new Variation("nSigPr_high", order_n_str);
+  Variation* nSigPr_low  = new Variation("nSigPr_low", order_n_str);
+  Variation* rvtx_high = new Variation("rvtx_high", order_n_str);
+  Variation* rvtx_low  = new Variation("rvtx_low", order_n_str);
+  Variation* zvtx_high = new Variation("zvtx_high", order_n_str);
+  Variation* zvtx_low  = new Variation("zvtx_low", order_n_str);
+  Variation* dca_high = new Variation("dca_high", order_n_str);
+  Variation* dca_low  = new Variation("dca_low", order_n_str);
+  Variation* nhits_high = new Variation("nhits_high", order_n_str);
+  Variation* nhits_low = new Variation("nhits_low", order_n_str);
+  Variation* nhitsdEdx_high = new Variation("nhitsdEdx_high", order_n_str);
+  //Variation* nhitsdEdx_low  = new Variation("nhitsdEdx_low", order_n_str);
+  Variation* nhitsratio_high = new Variation("nhitsratio_high", order_n_str);
+  Variation* nhitsratio_low  = new Variation("nhitsratio_low", order_n_str);
+  Variation* m2Pi_high = new Variation("m2Pi_high", order_n_str);
+  Variation* m2Pi_low  = new Variation("m2Pi_low", order_n_str);
+  Variation* m2Ka_high = new Variation("m2Ka_high", order_n_str);
+  Variation* m2Ka_low  = new Variation("m2Ka_low", order_n_str);
+  */
+
+  //Variation* Normal_20 = new Variation("Normal_20", order_n_str);
+  //Variation* epd_high_20 = new Variation("epd_high_20", order_n_str);
+  //Variation* epd_low_20 = new Variation("epd_low_20", order_n_str);
+
+  Variation* nSigPi_high_20 = new Variation("nSigPi_high_20", order_n_str);
+  Variation* nSigPi_low_20  = new Variation("nSigPi_low_20", order_n_str);
+  Variation* nSigKa_high_20 = new Variation("nSigKa_high_20", order_n_str);
+  Variation* nSigKa_low_20  = new Variation("nSigKa_low_20", order_n_str);
+  Variation* nSigPr_high_20 = new Variation("nSigPr_high_20", order_n_str);
+  Variation* nSigPr_low_20  = new Variation("nSigPr_low_20", order_n_str);
+  Variation* rvtx_high_20 = new Variation("rvtx_high_20", order_n_str);
+  Variation* rvtx_low_20  = new Variation("rvtx_low_20", order_n_str);
+  Variation* zvtx_high_20 = new Variation("zvtx_high_20", order_n_str);
+  Variation* zvtx_low_20  = new Variation("zvtx_low_20", order_n_str);
+  Variation* dca_high_20 = new Variation("dca_high_20", order_n_str);
+  Variation* dca_low_20  = new Variation("dca_low_20", order_n_str);
+  Variation* nhits_high_20 = new Variation("nhits_high_20", order_n_str);
+  Variation* nhits_low_20 = new Variation("nhits_low_20", order_n_str);
+  Variation* nhitsdEdx_high_20 = new Variation("nhitsdEdx_high_20", order_n_str);
+  //Variation* nhitsdEdx_low_20  = new Variation("nhitsdEdx_low_20", order_n_str);
+  Variation* nhitsratio_high_20 = new Variation("nhitsratio_high_20", order_n_str);
+  Variation* nhitsratio_low_20  = new Variation("nhitsratio_low_20", order_n_str);
+  Variation* m2Pi_high_20 = new Variation("m2Pi_high_20", order_n_str);
+  Variation* m2Pi_low_20  = new Variation("m2Pi_low_20", order_n_str);
+  Variation* m2Ka_high_20 = new Variation("m2Ka_high_20", order_n_str);
+  Variation* m2Ka_low_20  = new Variation("m2Ka_low_20", order_n_str);
+
   Variation* nSigPi_high_30 = new Variation("nSigPi_high_30", order_n_str);
   Variation* nSigPi_low_30  = new Variation("nSigPi_low_30", order_n_str);
   Variation* nSigKa_high_30 = new Variation("nSigKa_high_30", order_n_str);
@@ -165,35 +220,7 @@ void calculateSystematics(TString order_n_str)
   Variation* m2Ka_low_30  = new Variation("m2Ka_low_30", order_n_str);
 
 
-  //Variation* Normal_20 = new Variation("Normal_20", order_n_str);
-  //Variation* epd_high_20 = new Variation("epd_high_20", order_n_str);
-  //Variation* epd_low_20 = new Variation("epd_low_20", order_n_str);
-  Variation* nSigPi_high_20 = new Variation("nSigPi_high_20", order_n_str);
-  Variation* nSigPi_low_20  = new Variation("nSigPi_low_20", order_n_str);
-  Variation* nSigKa_high_20 = new Variation("nSigKa_high_20", order_n_str);
-  Variation* nSigKa_low_20  = new Variation("nSigKa_low_20", order_n_str);
-  Variation* nSigPr_high_20 = new Variation("nSigPr_high_20", order_n_str);
-  Variation* nSigPr_low_20  = new Variation("nSigPr_low_20", order_n_str);
-  Variation* rvtx_high_20 = new Variation("rvtx_high_20", order_n_str);
-  Variation* rvtx_low_20  = new Variation("rvtx_low_20", order_n_str);
-  Variation* zvtx_high_20 = new Variation("zvtx_high_20", order_n_str);
-  Variation* zvtx_low_20  = new Variation("zvtx_low_20", order_n_str);
-  Variation* dca_high_20 = new Variation("dca_high_20", order_n_str);
-  Variation* dca_low_20  = new Variation("dca_low_20", order_n_str);
-  Variation* nhits_high_20 = new Variation("nhits_high_20", order_n_str);
-  Variation* nhits_low_20 = new Variation("nhits_low_20", order_n_str);
-  Variation* nhitsdEdx_high_20 = new Variation("nhitsdEdx_high_20", order_n_str);
-  //Variation* nhitsdEdx_low_20  = new Variation("nhitsdEdx_low_20", order_n_str);
-  Variation* nhitsratio_high_20 = new Variation("nhitsratio_high_20", order_n_str);
-  Variation* nhitsratio_low_20  = new Variation("nhitsratio_low_20", order_n_str);
-  Variation* m2Pi_high_20 = new Variation("m2Pi_high_20", order_n_str);
-  Variation* m2Pi_low_20  = new Variation("m2Pi_low_20", order_n_str);
-  Variation* m2Ka_high_20 = new Variation("m2Ka_high_20", order_n_str);
-  Variation* m2Ka_low_20  = new Variation("m2Ka_low_20", order_n_str);
-
-
-  //CompositeData* epd = new CompositeData("epd", Normal, epd_low_30, epd_high_30);
-  CompositeData* epd = new CompositeData("epd", Normal, epd_scaled, epd_high_30);
+  CompositeData* epd = new CompositeData("epd", Normal, epd_scaled, epd_high);
   CompositeData* nhits = new CompositeData("nhits", Normal, nhits_low_30, nhits_high_30, nhits_low_20, nhits_high_20);  
   CompositeData* nSigPi = new CompositeData("nSigPi", Normal, nSigPi_low_30, nSigPi_high_30, nSigPi_low_20, nSigPi_high_20);
   CompositeData* nSigKa = new CompositeData("nSigKa", Normal, nSigKa_low_30, nSigKa_high_30, nSigKa_low_20, nSigKa_high_20);
@@ -206,6 +233,21 @@ void calculateSystematics(TString order_n_str)
   CompositeData* m2Pi = new CompositeData("m2Pi", Normal, m2Pi_low_30, m2Pi_high_30, m2Pi_low_20, m2Pi_high_20);
   CompositeData* m2Ka = new CompositeData("m2Ka", Normal, m2Ka_low_30, m2Ka_high_30, m2Ka_low_20, m2Ka_high_20);
 
+  /*
+  CompositeData* epd = new CompositeData("epd", Normal, epd_scaled, epd_high);
+  CompositeData* nhits = new CompositeData("nhits", Normal, nhits_low, nhits_high);  
+  CompositeData* nSigPi = new CompositeData("nSigPi", Normal, nSigPi_low, nSigPi_high);
+  CompositeData* nSigKa = new CompositeData("nSigKa", Normal, nSigKa_low, nSigKa_high);
+  CompositeData* nSigPr = new CompositeData("nSigPr", Normal, nSigPr_low, nSigPr_high);
+  CompositeData* rvtx = new CompositeData("rvtx", Normal, rvtx_low, rvtx_high);
+  CompositeData* zvtx = new CompositeData("zvtx", Normal, zvtx_low, zvtx_high);
+  CompositeData* dca  = new CompositeData("dca", Normal, dca_low, dca_high);
+  CompositeData* nhitsdEdx = new CompositeData("nhitsdEdx", Normal, nhitsdEdx_high);
+  CompositeData* nhitsratio = new CompositeData("nhitsratio", Normal, nhitsratio_low, nhitsratio_high);
+  CompositeData* m2Pi = new CompositeData("m2Pi", Normal, m2Pi_low, m2Pi_high);
+  CompositeData* m2Ka = new CompositeData("m2Ka", Normal, m2Ka_low, m2Ka_high);
+  */
+  
   // Any variations applied universally (like epd variation) should not be in this vector.
   std::vector<CompositeData*> composites;
   composites.push_back(nhits);
@@ -2251,9 +2293,10 @@ void calculateSystematics(TString order_n_str)
   delete m2Ka;
 
   delete Normal;
-  delete epd_high_30;
-  //delete epd_low_30;
+  delete epd_high;
+  //delete epd_low;
   delete epd_scaled;
+  
   delete nSigPi_high_30;
   delete nSigPi_low_30;
   delete nSigKa_high_30;
@@ -2277,8 +2320,7 @@ void calculateSystematics(TString order_n_str)
   delete m2Ka_high_30;
   delete m2Ka_low_30;
 
-  //delete epd_high_20;
-  //delete epd_low_20;
+
   delete nSigPi_high_20;
   delete nSigPi_low_20;
   delete nSigKa_high_20;
@@ -2301,7 +2343,7 @@ void calculateSystematics(TString order_n_str)
   delete m2Pi_low_20;
   delete m2Ka_high_20;
   delete m2Ka_low_20;
-  
+
   newFile->Close();
   delete newFile;
 }

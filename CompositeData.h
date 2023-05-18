@@ -10,16 +10,22 @@ class CompositeData
  public:
   CompositeData(TString prefix, Variation* normalData, Variation* var1Data);
   CompositeData(TString prefix, Variation* normalData, Variation* var1Data, Variation* var2Data);
+  CompositeData(TString prefix, Variation* normalData, Variation* var1Data, Variation* var2Data, Variation* var3Data);
+  CompositeData(TString prefix, Variation* normalData, Variation* var1Data, Variation* var2Data, Variation* var3Data, Variation* var4Data);
   ~CompositeData();
 
   struct DataPoint
   {
-    Double_t normalValue;
-    Double_t normalError;
-    Double_t var1Value;
-    Double_t var1Error;
-    Double_t var2Value;
-    Double_t var2Error;
+    Double_t normalValue = -999.0;
+    Double_t normalError = -999.0;
+    Double_t var1Value = -999.0;
+    Double_t var1Error = -999.0;
+    Double_t var2Value = -999.0;
+    Double_t var2Error = -999.0;
+    Double_t var3Value = -999.0;
+    Double_t var3Error = -999.0;
+    Double_t var4Value = -999.0;
+    Double_t var4Error = -999.0;
     Double_t maxValue;
     Double_t maxError;
     Double_t minValue;
@@ -27,39 +33,89 @@ class CompositeData
     Double_t delta;
     Double_t deltaError;
     Double_t deltaByDeltaError;
+    Double_t mean;
     Double_t stdDev;
     Double_t variance;
+    Double_t stdDevPercentage;
 
     void getMax()
     {
+      // Get max out of normal value and first 2 variations, 
+      //which should always be present when using this function.
       maxValue = normalValue;
       maxError = normalError;
+      
       if (var1Value > maxValue)
-	{
-	  maxValue = var1Value;
-	  maxError = var1Error;
-	}
+      {
+        maxValue = var1Value;
+        maxError = var1Error;
+      }
       if (var2Value > maxValue)
-	{
-	  maxValue = var2Value;
-	  maxError = var2Error;
-	}
+      {
+        maxValue = var2Value;
+        maxError = var2Error;
+      }
+      ////
+
+      // Add check for 3rd variation if present
+      if (var3Value != -999.0 && var3Error != -999.0)
+      {
+        if (var3Value > maxValue)
+        {
+          maxValue = var3Value;
+          maxError = var3Error;
+        }
+
+        // Add check for 4th variation if present
+        if (var4Value != -999.0 && var4Error != -999.0)
+        {
+          if (var4Value > maxValue)
+          {
+            maxValue = var4Value;
+            maxError = var4Error;
+          }
+        }
+      }
     }
 
     void getMin()
     {
+      // Get min out of normal value and first 2 variations, 
+      //which should always be present when using this function.
       minValue = normalValue;
       minError = normalError;
+      
       if (var1Value < minValue)
-	{
-	  minValue = var1Value;
-	  minError = var1Error;
-	}
+      {
+        minValue = var1Value;
+        minError = var1Error;
+      }
       if (var2Value < minValue)
-	{
-	  minValue = var2Value;
-	  minError = var2Error;
-	}
+      {
+        minValue = var2Value;
+        minError = var2Error;
+      }
+      ////
+
+      // Add check for 3rd variation if present
+      if (var3Value != -999.0 && var3Error != -999.0)
+      {
+        if (var3Value < minValue)
+        {
+          minValue = var3Value;
+          minError = var3Error;
+        }
+
+        // Add check for 4th variation if present
+        if (var4Value != -999.0 && var4Error != -999.0)
+        {
+          if (var4Value < minValue)
+          {
+            minValue = var4Value;
+            minError = var4Error;
+          }
+        }
+      }
     }
   }; // End struct DataPoint
 
@@ -175,17 +231,22 @@ class CompositeData
 
   TString ID;
   bool onlyOneVariation;
+  int nVariations;
   
 
  private:
   void initialize();
   void mergePoints(TH1D* normalHisto, TH1D* var1Histo, std::vector<DataPoint>& vectorOfPoints);
   void mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Histo, std::vector<DataPoint>& vectorOfPoints);
+  void mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Histo, TH1D* var3Histo, std::vector<DataPoint>& vectorOfPoints);
+  void mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Histo, TH1D* var3Histo, TH1D* var4Histo, std::vector<DataPoint>& vectorOfPoints);
   void addRawValuesToFile(TFile* file, TString histogramName, std::vector<DataPoint> vectorOfPoints);
   void addBarlowValuesToFile(TFile* file, TH1D* barlowHistogram, std::vector<DataPoint> vectorOfPoints);
   void saveDetails(Variation* normalData);
   void combine(Variation* normalData, Variation* var1Data);
   void combine(Variation* normalData, Variation* var1Data, Variation* var2Data);
+  void combine(Variation* normalData, Variation* var1Data, Variation* var2Data, Variation* var3Data);
+  void combine(Variation* normalData, Variation* var1Data, Variation* var2Data, Variation* var3Data, Variation* var4Data);
 };
 
 #endif

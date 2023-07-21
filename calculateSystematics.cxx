@@ -29,105 +29,131 @@ struct AverageContributionTracker
   Double_t m2PiPercentQuadSum = 0.0;
   Double_t m2KaPercentQuadSum = 0.0;
 
+  Double_t trackQAPercentQuadSum = 0.0;
+  Double_t eventQAPercentQuadSum = 0.0;
+
   Int_t epdNbins = 0;
   Int_t nhitsNbins = 0;
   Int_t nSigPiNbins = 0;
   Int_t nSigKaNbins = 0;
-  Int_t nSigPrNbins = 0.0;
-  Int_t rvtxNbins = 0.0;
-  Int_t zvtxNbins = 0.0;
-  Int_t dcaNbins = 0.0;
-  Int_t nhitsdEdxNbins = 0.0;
-  Int_t nhitsratioNbins = 0.0;
-  Int_t m2PiNbins = 0.0;
-  Int_t m2KaNbins = 0.0;
+  Int_t nSigPrNbins = 0;
+  Int_t rvtxNbins = 0;
+  Int_t zvtxNbins = 0;
+  Int_t dcaNbins = 0;
+  Int_t nhitsdEdxNbins = 0;
+  Int_t nhitsratioNbins = 0;
+  Int_t m2PiNbins = 0;
+  Int_t m2KaNbins = 0;
+
+  Int_t trackQANbins = 0;
+  Int_t eventQANbins = 0;
 
   void addContribution(TString ID, Double_t stdDevContributed)
   {
-    if (ID == "epd")
-    {
-      epdPercentQuadSum += stdDevContributed;
-      epdNbins++;
-    }
-    else if (ID == "nhits")
-    {
-      nhitsPercentQuadSum += stdDevContributed;
-      nhitsNbins++;
-    }
+    if (ID == "nhits" ||
+	ID == "dca" ||
+	ID == "nhitsdEdx" ||
+	ID == "nhitsratio")
+      {
+	trackQAPercentQuadSum += stdDevContributed;
+	trackQANbins++;
+      }
+    else if (ID == "rvtx" ||
+	     ID == "zvtx")
+      {
+	eventQAPercentQuadSum += stdDevContributed;
+	eventQANbins++;
+      }
+    else if (ID == "epd")
+      {
+	epdPercentQuadSum += stdDevContributed;
+	epdNbins++;
+      }
     else if (ID == "nSigPi")
-    {
-      nSigPiPercentQuadSum += stdDevContributed;
-      nSigPiNbins++;
-    }
+      {
+	nSigPiPercentQuadSum += stdDevContributed;
+	nSigPiNbins++;
+      }
     else if (ID == "nSigKa")
-    {
-      nSigKaPercentQuadSum += stdDevContributed;
-      nSigKaNbins++;
-    }
+      {
+	nSigKaPercentQuadSum += stdDevContributed;
+	nSigKaNbins++;
+      }
     else if (ID == "nSigPr")
-    {
-      nSigPrPercentQuadSum += stdDevContributed;
-      nSigPrNbins++;
-    }
+      {
+	nSigPrPercentQuadSum += stdDevContributed;
+	nSigPrNbins++;
+      }
+    /*
     else if (ID == "rvtx")
-    {
-      rvtxPercentQuadSum += stdDevContributed;
-      rvtxNbins++;
-    }
+      {
+	rvtxPercentQuadSum += stdDevContributed;
+	rvtxNbins++;
+      }
     else if (ID == "zvtx")
-    {
-      zvtxPercentQuadSum += stdDevContributed;
-      zvtxNbins++;
-    }
+      {
+	zvtxPercentQuadSum += stdDevContributed;
+	zvtxNbins++;
+      }
     else if (ID == "dca")
-    {
-      dcaPercentQuadSum += stdDevContributed;
-      dcaNbins++;
-    }
+      {
+	dcaPercentQuadSum += stdDevContributed;
+	dcaNbins++;
+      }
+    else if (ID == "nhits")
+      {
+	nhitsPercentQuadSum += stdDevContributed;
+	nhitsNbins++;
+      }
     else if (ID == "nhitsdEdx")
-    {
-      nhitsdEdxPercentQuadSum += stdDevContributed;
-      nhitsdEdxNbins++;
-    }
+      {
+	nhitsdEdxPercentQuadSum += stdDevContributed;
+	nhitsdEdxNbins++;
+      }
     else if (ID == "nhitsratio")
-    {
-      nhitsratioPercentQuadSum += stdDevContributed;
-      nhitsratioNbins++;
-    }
+      {
+	nhitsratioPercentQuadSum += stdDevContributed;
+	nhitsratioNbins++;
+      }
+    */
     else if (ID == "m2Pi")
-    {
-      m2PiPercentQuadSum += stdDevContributed;
-      m2PiNbins++;
-    }
+      {
+	m2PiPercentQuadSum += stdDevContributed;
+	m2PiNbins++;
+      }
     else if (ID == "m2Ka")
-    {
-      m2KaPercentQuadSum += stdDevContributed;
-      m2KaNbins++;
-    }
+      {
+	m2KaPercentQuadSum += stdDevContributed;
+	m2KaNbins++;
+      }
     else
-    {
-      std::cout << "AverageContributionTracker error, check spelling of ID!" << std::endl;
-    }
+      {
+	std::cout << "AverageContributionTracker error, check spelling of ID!" << std::endl;
+      }
   }
 
   void printContributions()
   {
     std::cout << std::endl 
-    << "Std dev of each contribution as a percent of the normal v3 measurement:" << std::endl
-    << std::endl
-    << "EP Resolution, " << epdPercentQuadSum / (Double_t)epdNbins << std::endl
-    << "nHits, " << nhitsPercentQuadSum / (Double_t)nhitsNbins << std::endl
-    << "nHits dEdx, " << nhitsdEdxPercentQuadSum / (Double_t)nhitsdEdxNbins << std::endl
-    << "nHits Ratio, " << nhitsratioPercentQuadSum / (Double_t)nhitsratioNbins << std::endl
-    << "DCA, " << dcaPercentQuadSum / (Double_t)dcaNbins << std::endl
-    << "r Vertex, " << rvtxPercentQuadSum / (Double_t)rvtxNbins << std::endl
-    << "z Vertex, " << zvtxPercentQuadSum / (Double_t)zvtxNbins << std::endl
-    << "nSigma Pi, " << nSigPiPercentQuadSum / (Double_t)nSigPiNbins << std::endl
-    << "nSigma Ka, " << nSigKaPercentQuadSum / (Double_t)nSigKaNbins << std::endl
-    << "nSigma Pr, " << nSigPrPercentQuadSum / (Double_t)nSigPrNbins << std::endl
-    << "m^2 Pi, " << m2PiPercentQuadSum / (Double_t)m2PiNbins << std::endl
-    << "m^2 Ka, " << m2KaPercentQuadSum / (Double_t)m2KaNbins << std::endl
-    << std::endl;
+	      << "Std dev of each contribution as a percent of the normal v3 measurement:" << std::endl
+	      << std::endl
+	      << "Track QA, " << trackQAPercentQuadSum / (Double_t)trackQANbins << std::endl
+      	      << "Event QA, " << eventQAPercentQuadSum / (Double_t)eventQANbins << std::endl
+            /*
+	      << "nHits, " << nhitsPercentQuadSum / (Double_t)nhitsNbins << std::endl
+	      << "nHits dEdx, " << nhitsdEdxPercentQuadSum / (Double_t)nhitsdEdxNbins << std::endl
+	      << "nHits Ratio, " << nhitsratioPercentQuadSum / (Double_t)nhitsratioNbins << std::endl
+	      << "DCA, " << dcaPercentQuadSum / (Double_t)dcaNbins << std::endl
+	      << "r Vertex, " << rvtxPercentQuadSum / (Double_t)rvtxNbins << std::endl
+	      << "z Vertex, " << zvtxPercentQuadSum / (Double_t)zvtxNbins << std::endl
+	    */
+	      << "nSigma Pi, " << nSigPiPercentQuadSum / (Double_t)nSigPiNbins << std::endl
+	      << "nSigma Ka, " << nSigKaPercentQuadSum / (Double_t)nSigKaNbins << std::endl
+	      << "nSigma Pr, " << nSigPrPercentQuadSum / (Double_t)nSigPrNbins << std::endl
+	      << "m^2 Pi, " << m2PiPercentQuadSum / (Double_t)m2PiNbins << std::endl
+	      << "m^2 Ka, " << m2KaPercentQuadSum / (Double_t)m2KaNbins << std::endl
+	      << "EP Resolution, " << epdPercentQuadSum / (Double_t)epdNbins << std::endl
+	      << std::endl;
   }
 };
 
@@ -139,85 +165,60 @@ struct AverageContributionTracker
 void calculateSystematics(TString order_n_str = "3")
 {
   TFile* newFile = new TFile("systematicErrors.root", "RECREATE");
+
+  TString directory20Percent = "../thirdDraft/20percentVariations/";
+  TString directory30Percent = "../thirdDraft/30percentVariations/";
+  TString directoryEPR = "../thirdDraft/eprVariations/";
   
-  Variation* Normal = new Variation("Normal", order_n_str);
-  Variation* epd_high = new Variation("epd_high", order_n_str);
-  Variation* epd_scaled = new Variation("epd_low", order_n_str);
+  Variation* Normal = new Variation("Normal_averagedRes", order_n_str);
+  Variation* epd_high = new Variation(directoryEPR+"epd_high", order_n_str);
+  Variation* epd_scaled = new Variation(directoryEPR+"epd_low", order_n_str);
 
-  /*
-  Variation* nSigPi_high = new Variation("nSigPi_high", order_n_str);
-  Variation* nSigPi_low  = new Variation("nSigPi_low", order_n_str);
-  Variation* nSigKa_high = new Variation("nSigKa_high", order_n_str);
-  Variation* nSigKa_low  = new Variation("nSigKa_low", order_n_str);
-  Variation* nSigPr_high = new Variation("nSigPr_high", order_n_str);
-  Variation* nSigPr_low  = new Variation("nSigPr_low", order_n_str);
-  Variation* rvtx_high = new Variation("rvtx_high", order_n_str);
-  Variation* rvtx_low  = new Variation("rvtx_low", order_n_str);
-  Variation* zvtx_high = new Variation("zvtx_high", order_n_str);
-  Variation* zvtx_low  = new Variation("zvtx_low", order_n_str);
-  Variation* dca_high = new Variation("dca_high", order_n_str);
-  Variation* dca_low  = new Variation("dca_low", order_n_str);
-  Variation* nhits_high = new Variation("nhits_high", order_n_str);
-  Variation* nhits_low = new Variation("nhits_low", order_n_str);
-  Variation* nhitsdEdx_high = new Variation("nhitsdEdx_high", order_n_str);
-  //Variation* nhitsdEdx_low  = new Variation("nhitsdEdx_low", order_n_str);
-  Variation* nhitsratio_high = new Variation("nhitsratio_high", order_n_str);
-  Variation* nhitsratio_low  = new Variation("nhitsratio_low", order_n_str);
-  Variation* m2Pi_high = new Variation("m2Pi_high", order_n_str);
-  Variation* m2Pi_low  = new Variation("m2Pi_low", order_n_str);
-  Variation* m2Ka_high = new Variation("m2Ka_high", order_n_str);
-  Variation* m2Ka_low  = new Variation("m2Ka_low", order_n_str);
-  */
+  Variation* nSigPi_high_20 = new Variation(directory20Percent+"nSigPi_high", order_n_str);
+  Variation* nSigPi_low_20  = new Variation(directory20Percent+"nSigPi_low", order_n_str);
+  Variation* nSigKa_high_20 = new Variation(directory20Percent+"nSigKa_high", order_n_str);
+  Variation* nSigKa_low_20  = new Variation(directory20Percent+"nSigKa_low", order_n_str);
+  Variation* nSigPr_high_20 = new Variation(directory20Percent+"nSigPr_high", order_n_str);
+  Variation* nSigPr_low_20  = new Variation(directory20Percent+"nSigPr_low", order_n_str);
+  Variation* rvtx_high_20 = new Variation(directory20Percent+"rvtx_high", order_n_str);
+  Variation* rvtx_low_20  = new Variation(directory20Percent+"rvtx_low", order_n_str);
+  Variation* zvtx_high_20 = new Variation(directory20Percent+"zvtx_high", order_n_str);
+  Variation* zvtx_low_20  = new Variation(directory20Percent+"zvtx_low", order_n_str);
+  Variation* dca_high_20 = new Variation(directory20Percent+"dca_high", order_n_str);
+  Variation* dca_low_20  = new Variation(directory20Percent+"dca_low", order_n_str);
+  Variation* nhits_high_20 = new Variation(directory20Percent+"nhits_high", order_n_str);
+  Variation* nhits_low_20 = new Variation(directory20Percent+"nhits_low", order_n_str);
+  Variation* nhitsdEdx_high_20 = new Variation(directory20Percent+"nhitsdEdx_high", order_n_str);
+  Variation* nhitsdEdx_low_20  = new Variation(directory20Percent+"nhitsdEdx_low", order_n_str);
+  Variation* nhitsratio_high_20 = new Variation(directory20Percent+"nhitsratio_high", order_n_str);
+  Variation* nhitsratio_low_20  = new Variation(directory20Percent+"nhitsratio_low", order_n_str);
+  Variation* m2Pi_high_20 = new Variation(directory20Percent+"m2Pi_high", order_n_str);
+  Variation* m2Pi_low_20  = new Variation(directory20Percent+"m2Pi_low", order_n_str);
+  Variation* m2Ka_high_20 = new Variation(directory20Percent+"m2Ka_high", order_n_str);
+  Variation* m2Ka_low_20  = new Variation(directory20Percent+"m2Ka_low", order_n_str);
 
-  //Variation* Normal_20 = new Variation("Normal_20", order_n_str);
-  //Variation* epd_high_20 = new Variation("epd_high_20", order_n_str);
-  //Variation* epd_low_20 = new Variation("epd_low_20", order_n_str);
-
-  Variation* nSigPi_high_20 = new Variation("nSigPi_high_20", order_n_str);
-  Variation* nSigPi_low_20  = new Variation("nSigPi_low_20", order_n_str);
-  Variation* nSigKa_high_20 = new Variation("nSigKa_high_20", order_n_str);
-  Variation* nSigKa_low_20  = new Variation("nSigKa_low_20", order_n_str);
-  Variation* nSigPr_high_20 = new Variation("nSigPr_high_20", order_n_str);
-  Variation* nSigPr_low_20  = new Variation("nSigPr_low_20", order_n_str);
-  Variation* rvtx_high_20 = new Variation("rvtx_high_20", order_n_str);
-  Variation* rvtx_low_20  = new Variation("rvtx_low_20", order_n_str);
-  Variation* zvtx_high_20 = new Variation("zvtx_high_20", order_n_str);
-  Variation* zvtx_low_20  = new Variation("zvtx_low_20", order_n_str);
-  Variation* dca_high_20 = new Variation("dca_high_20", order_n_str);
-  Variation* dca_low_20  = new Variation("dca_low_20", order_n_str);
-  Variation* nhits_high_20 = new Variation("nhits_high_20", order_n_str);
-  Variation* nhits_low_20 = new Variation("nhits_low_20", order_n_str);
-  Variation* nhitsdEdx_high_20 = new Variation("nhitsdEdx_high_20", order_n_str);
-  //Variation* nhitsdEdx_low_20  = new Variation("nhitsdEdx_low_20", order_n_str);
-  Variation* nhitsratio_high_20 = new Variation("nhitsratio_high_20", order_n_str);
-  Variation* nhitsratio_low_20  = new Variation("nhitsratio_low_20", order_n_str);
-  Variation* m2Pi_high_20 = new Variation("m2Pi_high_20", order_n_str);
-  Variation* m2Pi_low_20  = new Variation("m2Pi_low_20", order_n_str);
-  Variation* m2Ka_high_20 = new Variation("m2Ka_high_20", order_n_str);
-  Variation* m2Ka_low_20  = new Variation("m2Ka_low_20", order_n_str);
-
-  Variation* nSigPi_high_30 = new Variation("nSigPi_high_30", order_n_str);
-  Variation* nSigPi_low_30  = new Variation("nSigPi_low_30", order_n_str);
-  Variation* nSigKa_high_30 = new Variation("nSigKa_high_30", order_n_str);
-  Variation* nSigKa_low_30  = new Variation("nSigKa_low_30", order_n_str);
-  Variation* nSigPr_high_30 = new Variation("nSigPr_high_30", order_n_str);
-  Variation* nSigPr_low_30  = new Variation("nSigPr_low_30", order_n_str);
-  Variation* rvtx_high_30 = new Variation("rvtx_high_30", order_n_str);
-  Variation* rvtx_low_30  = new Variation("rvtx_low_30", order_n_str);
-  Variation* zvtx_high_30 = new Variation("zvtx_high_30", order_n_str);
-  Variation* zvtx_low_30  = new Variation("zvtx_low_30", order_n_str);
-  Variation* dca_high_30 = new Variation("dca_high_30", order_n_str);
-  Variation* dca_low_30  = new Variation("dca_low_30", order_n_str);
-  Variation* nhits_high_30 = new Variation("nhits_high_30", order_n_str);
-  Variation* nhits_low_30 = new Variation("nhits_low_30", order_n_str);
-  Variation* nhitsdEdx_high_30 = new Variation("nhitsdEdx_high_30", order_n_str);
-  //Variation* nhitsdEdx_low_30  = new Variation("nhitsdEdx_low_30", order_n_str);
-  Variation* nhitsratio_high_30 = new Variation("nhitsratio_high_30", order_n_str);
-  Variation* nhitsratio_low_30  = new Variation("nhitsratio_low_30", order_n_str);
-  Variation* m2Pi_high_30 = new Variation("m2Pi_high_30", order_n_str);
-  Variation* m2Pi_low_30  = new Variation("m2Pi_low_30", order_n_str);
-  Variation* m2Ka_high_30 = new Variation("m2Ka_high_30", order_n_str);
-  Variation* m2Ka_low_30  = new Variation("m2Ka_low_30", order_n_str);
+  Variation* nSigPi_high_30 = new Variation(directory30Percent+"nSigPi_high", order_n_str);
+  Variation* nSigPi_low_30  = new Variation(directory30Percent+"nSigPi_low", order_n_str);
+  Variation* nSigKa_high_30 = new Variation(directory30Percent+"nSigKa_high", order_n_str);
+  Variation* nSigKa_low_30  = new Variation(directory30Percent+"nSigKa_low", order_n_str);
+  Variation* nSigPr_high_30 = new Variation(directory30Percent+"nSigPr_high", order_n_str);
+  Variation* nSigPr_low_30  = new Variation(directory30Percent+"nSigPr_low", order_n_str);
+  Variation* rvtx_high_30 = new Variation(directory30Percent+"rvtx_high", order_n_str);
+  Variation* rvtx_low_30  = new Variation(directory30Percent+"rvtx_low", order_n_str);
+  Variation* zvtx_high_30 = new Variation(directory30Percent+"zvtx_high", order_n_str);
+  Variation* zvtx_low_30  = new Variation(directory30Percent+"zvtx_low", order_n_str);
+  Variation* dca_high_30 = new Variation(directory30Percent+"dca_high", order_n_str);
+  Variation* dca_low_30  = new Variation(directory30Percent+"dca_low", order_n_str);
+  Variation* nhits_high_30 = new Variation(directory30Percent+"nhits_high", order_n_str);
+  Variation* nhits_low_30 = new Variation(directory30Percent+"nhits_low", order_n_str);
+  Variation* nhitsdEdx_high_30 = new Variation(directory30Percent+"nhitsdEdx_high", order_n_str);
+  //Variation* nhitsdEdx_low_30  = new Variation(directory30Percent+"nhitsdEdx_low", order_n_str);
+  Variation* nhitsratio_high_30 = new Variation(directory30Percent+"nhitsratio_high", order_n_str);
+  Variation* nhitsratio_low_30  = new Variation(directory30Percent+"nhitsratio_low", order_n_str);
+  Variation* m2Pi_high_30 = new Variation(directory30Percent+"m2Pi_high", order_n_str);
+  Variation* m2Pi_low_30  = new Variation(directory30Percent+"m2Pi_low", order_n_str);
+  Variation* m2Ka_high_30 = new Variation(directory30Percent+"m2Ka_high", order_n_str);
+  Variation* m2Ka_low_30  = new Variation(directory30Percent+"m2Ka_low", order_n_str);
 
 
   CompositeData* epd = new CompositeData("epd", Normal, epd_scaled, epd_high);
@@ -228,25 +229,11 @@ void calculateSystematics(TString order_n_str = "3")
   CompositeData* rvtx = new CompositeData("rvtx", Normal, rvtx_low_30, rvtx_high_30, rvtx_low_20, rvtx_high_20);
   CompositeData* zvtx = new CompositeData("zvtx", Normal, zvtx_low_30, zvtx_high_30, zvtx_low_20, zvtx_high_20);
   CompositeData* dca  = new CompositeData("dca", Normal, dca_low_30, dca_high_30, dca_low_20, dca_high_20);
-  CompositeData* nhitsdEdx = new CompositeData("nhitsdEdx", Normal, nhitsdEdx_high_30, nhitsdEdx_high_20);
+  CompositeData* nhitsdEdx = new CompositeData("nhitsdEdx", Normal, nhitsdEdx_high_30, nhitsdEdx_high_20, nhitsdEdx_low_20);
   CompositeData* nhitsratio = new CompositeData("nhitsratio", Normal, nhitsratio_low_30, nhitsratio_high_30, nhitsratio_low_20, nhitsratio_high_20);
   CompositeData* m2Pi = new CompositeData("m2Pi", Normal, m2Pi_low_30, m2Pi_high_30, m2Pi_low_20, m2Pi_high_20);
   CompositeData* m2Ka = new CompositeData("m2Ka", Normal, m2Ka_low_30, m2Ka_high_30, m2Ka_low_20, m2Ka_high_20);
 
-  /*
-  CompositeData* epd = new CompositeData("epd", Normal, epd_scaled, epd_high);
-  CompositeData* nhits = new CompositeData("nhits", Normal, nhits_low, nhits_high);  
-  CompositeData* nSigPi = new CompositeData("nSigPi", Normal, nSigPi_low, nSigPi_high);
-  CompositeData* nSigKa = new CompositeData("nSigKa", Normal, nSigKa_low, nSigKa_high);
-  CompositeData* nSigPr = new CompositeData("nSigPr", Normal, nSigPr_low, nSigPr_high);
-  CompositeData* rvtx = new CompositeData("rvtx", Normal, rvtx_low, rvtx_high);
-  CompositeData* zvtx = new CompositeData("zvtx", Normal, zvtx_low, zvtx_high);
-  CompositeData* dca  = new CompositeData("dca", Normal, dca_low, dca_high);
-  CompositeData* nhitsdEdx = new CompositeData("nhitsdEdx", Normal, nhitsdEdx_high);
-  CompositeData* nhitsratio = new CompositeData("nhitsratio", Normal, nhitsratio_low, nhitsratio_high);
-  CompositeData* m2Pi = new CompositeData("m2Pi", Normal, m2Pi_low, m2Pi_high);
-  CompositeData* m2Ka = new CompositeData("m2Ka", Normal, m2Ka_low, m2Ka_high);
-  */
   
   // Any variations applied universally (like epd variation) should not be in this vector.
   std::vector<CompositeData*> composites;
@@ -270,28 +257,37 @@ void calculateSystematics(TString order_n_str = "3")
   Double_t quadSum = 0.0;
   Int_t bins;
 
-  AverageContributionTracker avgTracker;
+  AverageContributionTracker avgTracker_00to10;
+  AverageContributionTracker avgTracker_10to40;
+  AverageContributionTracker avgTracker_40to60;
 
   //=== pi+ vs centrality
+  //std::cout << "PP VS CENTRALITY" << std::endl;
   std::vector<Double_t> v_sys_pp;
   bins = Normal->h_vn_pp->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
   {
-    //std::cout << "Bin " << ithBin+1 << std::endl;
     quadSum = 0.0;
     quadSum += epd->v_vn_pp.at(ithBin).variance;
 
-    avgTracker.addContribution(epd->ID, epd->v_vn_pp.at(ithBin).stdDevPercentage);
-    //epdPercentQuadSum += epd->v_vn_pp.at(ithBin).stdDevPercentage;
-    //epdNbins += 1;
-    //std::cout << "epd: " << epd->v_vn_pp.at(ithBin).stdDevPercentage << std::endl;
-
+    if (ithBin < 2)
+      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_pp.at(ithBin).stdDevPercentage);
+    else if (ithBin >= 2 && ithBin <= 7)
+      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pp.at(ithBin).stdDevPercentage);
+    else if (ithBin > 7)
+      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pp.at(ithBin).stdDevPercentage);
+ 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_pp.at(ithBin).deltaByDeltaError > 1.0)
         {
           quadSum += composites.at(jthVariation)->v_vn_pp.at(ithBin).variance;
-          avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pp.at(ithBin).stdDevPercentage);
+	  if (ithBin < 2)
+	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pp.at(ithBin).stdDevPercentage);
+	  else if (ithBin >= 2 && ithBin <= 7)
+	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pp.at(ithBin).stdDevPercentage);
+	  else if (ithBin > 7)
+	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pp.at(ithBin).stdDevPercentage);
         }
     }
     
@@ -302,25 +298,35 @@ void calculateSystematics(TString order_n_str = "3")
   quadSum = 0.0;
   //=== End h_vn_pp loop
 
+
+  
   //=== pi- vs centrality
+  //std::cout << "PM VS CENTRALITY" << std::endl;
   std::vector<Double_t> v_sys_pm;
   bins = Normal->h_vn_pm->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
   {
-    //std::cout << "Bin " << ithBin << std::endl;
     quadSum = 0.0;
     quadSum += epd->v_vn_pm.at(ithBin).variance;
 
-    avgTracker.addContribution(epd->ID, epd->v_vn_pm.at(ithBin).stdDevPercentage);
-    //epdPercentQuadSum += epd->v_vn_pm.at(ithBin).stdDevPercentage;
-    //epdNbins += 1;
-
+    if (ithBin < 2)
+      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_pm.at(ithBin).stdDevPercentage);
+    if (ithBin >= 2 && ithBin <= 7)
+      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pm.at(ithBin).stdDevPercentage);
+    if (ithBin > 7)
+      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pm.at(ithBin).stdDevPercentage);
+ 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_pm.at(ithBin).deltaByDeltaError > 1.0)
         {
           quadSum += composites.at(jthVariation)->v_vn_pm.at(ithBin).variance;
-          avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pm.at(ithBin).stdDevPercentage);
+	  if (ithBin < 2)
+	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pm.at(ithBin).stdDevPercentage);
+	  if (ithBin >= 2 && ithBin <= 7)
+	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pm.at(ithBin).stdDevPercentage);
+	  if (ithBin > 7)
+	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pm.at(ithBin).stdDevPercentage);
         }
     }
     
@@ -331,7 +337,10 @@ void calculateSystematics(TString order_n_str = "3")
   quadSum = 0.0;
   //=== End h_vn_pm loop
 
+
+  
   //=== K+ vs centrality
+  //std::cout << "KP VS CENTRALITY" << std::endl;
   std::vector<Double_t> v_sys_kp;
   bins = Normal->h_vn_kp->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
@@ -339,10 +348,25 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum = 0.0;
     quadSum += epd->v_vn_kp.at(ithBin).variance;
 
+    if (ithBin < 2)
+      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_kp.at(ithBin).stdDevPercentage);
+    if (ithBin >= 2 && ithBin <= 7)
+      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_kp.at(ithBin).stdDevPercentage);
+    if (ithBin > 7)
+      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_kp.at(ithBin).stdDevPercentage);
+    
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_kp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_kp.at(ithBin).variance;
+	{
+	  quadSum += composites.at(jthVariation)->v_vn_kp.at(ithBin).variance;
+	  if (ithBin < 2)
+	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_kp.at(ithBin).stdDevPercentage);
+	  if (ithBin >= 2 && ithBin <= 7)
+	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_kp.at(ithBin).stdDevPercentage);
+	  if (ithBin > 7)
+	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_kp.at(ithBin).stdDevPercentage);
+	}
     }
     
     ithBinSysErr = TMath::Sqrt(quadSum);
@@ -353,6 +377,7 @@ void calculateSystematics(TString order_n_str = "3")
   //=== End h_vn_kp loop
 
   //=== K- vs centrality
+  //std::cout << "KM VS CENTRALITY" << std::endl;
   std::vector<Double_t> v_sys_km;
   bins = Normal->h_vn_km->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
@@ -360,11 +385,26 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum = 0.0;
     quadSum += epd->v_vn_km.at(ithBin).variance;
 
-
+    if (ithBin < 2)
+      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_km.at(ithBin).stdDevPercentage);
+    if (ithBin >= 2 && ithBin <= 7)
+      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_km.at(ithBin).stdDevPercentage);
+    if (ithBin > 7)
+      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_km.at(ithBin).stdDevPercentage);
+ 
+ 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_km.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_km.at(ithBin).variance;
+	{
+	  quadSum += composites.at(jthVariation)->v_vn_km.at(ithBin).variance;
+	  if (ithBin < 2)
+	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_km.at(ithBin).stdDevPercentage);
+	  if (ithBin >= 2 && ithBin <= 7)
+	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_km.at(ithBin).stdDevPercentage);
+	  if (ithBin > 7)
+	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_km.at(ithBin).stdDevPercentage);
+	}
     }
     
     ithBinSysErr = TMath::Sqrt(quadSum);
@@ -374,28 +414,34 @@ void calculateSystematics(TString order_n_str = "3")
   quadSum = 0.0;
   //=== End h_vn_km loop
 
+
   //=== proton vs centrality
   //std::cout << "PROTON VS CENTRALITY" << std::endl;
   std::vector<Double_t> v_sys_pr;
   bins = Normal->h_vn_pr->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
   {
-    //std::cout << "Bin " << ithBin+1 << std::endl;
     quadSum = 0.0;
     quadSum += epd->v_vn_pr.at(ithBin).variance;
-    //std::cout << 100 * epd->v_vn_pr.at(ithBin).stdDev / TMath::Abs(Normal->h_vn_pr->GetBinContent(ithBin+1)) << std::endl;
-    //std::cout << "epd: " << epd->v_vn_pr.at(ithBin).stdDevPercentage << std::endl;
-    
-    avgTracker.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
-    //epdPercentQuadSum += epd->v_vn_pr.at(ithBin).stdDevPercentage;
-    //epdNbins += 1;
+
+    if (ithBin < 2)
+      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
+    if (ithBin >= 2 && ithBin <= 7)
+      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
+    if (ithBin > 7)
+      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_pr.at(ithBin).deltaByDeltaError > 1.0)
         {
           quadSum += composites.at(jthVariation)->v_vn_pr.at(ithBin).variance;
-          avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDevPercentage);
+	  if (ithBin < 2)
+	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDevPercentage);
+	  if (ithBin >= 2 && ithBin <= 7)
+	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDevPercentage);
+	  if (ithBin > 7)
+	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDevPercentage);
         }
     }
     
@@ -406,382 +452,25 @@ void calculateSystematics(TString order_n_str = "3")
   quadSum = 0.0;
   //=== End h_vn_pr loop
 
-/*
-  //=== proton alternate acceptance vs centrality
-  std::cout << "PROTON VS CENTRALITY (ALTERNATE ACCEPTANCE)" << std::endl;
-  std::vector<Double_t> v_sys_pr_alt;
-  bins = Normal->h_vn_pr_alt->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    std::cout << "Bin " << ithBin << std::endl;
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pr_alt.at(ithBin).variance;
-
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pr_alt.at(ithBin).deltaByDeltaError > 1.0)
-        {
-          quadSum += composites.at(jthVariation)->v_vn_pr_alt.at(ithBin).variance;
-
-          std::cout << composites.at(jthVariation)->ID << ": "
-        << (composites.at(jthVariation)->v_vn_pr_alt.at(ithBin).stdDev/Normal->h_vn_pr_alt->GetBinContent(ithBin+1) ) * 100
-        << std::endl;
-        }
-    }
-
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pr_alt.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //=== End h_vn_pr_alt loop
-
-
-
-  //=== Deuteron vs centrality
-  std::cout << "DEUTERON VS CENTRALITY" << std::endl;
-  std::vector<Double_t> v_sys_de;
-  bins = Normal->h_vn_de->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    std::cout << "Bin " << ithBin << std::endl;
-    quadSum = 0.0;
-    quadSum += epd->v_vn_de.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_de.at(ithBin).deltaByDeltaError > 1.0)
-        {
-          quadSum += composites.at(jthVariation)->v_vn_de.at(ithBin).variance;
-
-          std::cout << composites.at(jthVariation)->ID << ": "
-        << (composites.at(jthVariation)->v_vn_de.at(ithBin).stdDev/Normal->h_vn_de->GetBinContent(ithBin+1) ) * 100
-        << std::endl;
-        }
-    }
-
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_de.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //=== End h_vn_de loop
-
-
-  //=== Triton vs centrality
-  std::cout << "TRITON VS CENTRALITY" << std::endl;
-  std::vector<Double_t> v_sys_tr;
-  bins = Normal->h_vn_tr->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    std::cout << "Bin " << ithBin << std::endl;
-    quadSum = 0.0;
-    quadSum += epd->v_vn_tr.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_tr.at(ithBin).deltaByDeltaError > 1.0)
-        {
-          quadSum += composites.at(jthVariation)->v_vn_tr.at(ithBin).variance;
-
-          std::cout << composites.at(jthVariation)->ID << ": "
-        << (composites.at(jthVariation)->v_vn_tr.at(ithBin).stdDev/Normal->h_vn_tr->GetBinContent(ithBin+1) ) * 100
-        << std::endl;
-        }
-    }
-
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_tr.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //=== End h_vn_tr loop
-*/
-
-
-  
-  //=== pi+ vs rapidity 0 - 10%
-  std::vector<Double_t> v_sys_yCM_00to10_pp;
-  bins = Normal->h_vn_yCM_00to10_pp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_00to10_pp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_00to10_pp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_00to10_pp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_00to10_pp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //=== End h_vn_pp loop
-
-
-  //=== pi+ vs rapidity 10 - 40%
-  std::vector<Double_t> v_sys_yCM_10to40_pp;
-  bins = Normal->h_vn_yCM_10to40_pp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_10to40_pp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_10to40_pp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_10to40_pp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_10to40_pp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //=== End h_vn_pp loop
-
-
-  //=== pi+ vs rapidity 40 - 60%
-  std::vector<Double_t> v_sys_yCM_40to60_pp;
-  bins = Normal->h_vn_yCM_40to60_pp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_40to60_pp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_40to60_pp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_40to60_pp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_40to60_pp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //=== End h_vn_pp loop
-
-
-  //=== pi- vs rapidity 0 - 10%
-  std::vector<Double_t> v_sys_yCM_00to10_pm;
-  bins = Normal->h_vn_yCM_00to10_pm->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_00to10_pm.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_00to10_pm.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_00to10_pm.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_00to10_pm.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-  //=== pi- vs rapidity 10 - 40%
-  std::vector<Double_t> v_sys_yCM_10to40_pm;
-  bins = Normal->h_vn_yCM_10to40_pm->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_10to40_pm.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_10to40_pm.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_10to40_pm.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_10to40_pm.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-  //=== pi- vs rapidity 40 - 60%
-  std::vector<Double_t> v_sys_yCM_40to60_pm;
-  bins = Normal->h_vn_yCM_40to60_pm->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_40to60_pm.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_40to60_pm.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_40to60_pm.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_40to60_pm.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K+ vs rapidity 0 - 10%
-  std::vector<Double_t> v_sys_yCM_00to10_kp;
-  bins = Normal->h_vn_yCM_00to10_kp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_00to10_kp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_00to10_kp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_00to10_kp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_00to10_kp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K+ vs rapidity 10 - 40%
-  std::vector<Double_t> v_sys_yCM_10to40_kp;
-  bins = Normal->h_vn_yCM_10to40_kp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_10to40_kp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_10to40_kp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_10to40_kp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_10to40_kp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K+ vs rapidity 40 - 60%
-  std::vector<Double_t> v_sys_yCM_40to60_kp;
-  bins = Normal->h_vn_yCM_40to60_kp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_40to60_kp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_40to60_kp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_40to60_kp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_40to60_kp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K- vs rapidity 0 - 10%
-  std::vector<Double_t> v_sys_yCM_00to10_km;
-  bins = Normal->h_vn_yCM_00to10_km->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_00to10_km.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_00to10_km.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_00to10_km.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_00to10_km.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-  //=== K- vs rapidity 10 - 40%
-  std::vector<Double_t> v_sys_yCM_10to40_km;
-  bins = Normal->h_vn_yCM_10to40_km->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_10to40_km.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_10to40_km.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_10to40_km.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_10to40_km.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K- vs rapidity 40 - 60%
-  std::vector<Double_t> v_sys_yCM_40to60_km;
-  bins = Normal->h_vn_yCM_40to60_km->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_yCM_40to60_km.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_yCM_40to60_km.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_yCM_40to60_km.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_yCM_40to60_km.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
 
   //=== Proton vs rapidity 0 - 10%
+  //std::cout << "PROTON VS RAPIDITY" << std::endl;
   std::vector<Double_t> v_sys_yCM_00to10_pr;
   bins = Normal->h_vn_yCM_00to10_pr->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
   {
     quadSum = 0.0;
     quadSum += epd->v_vn_yCM_00to10_pr.at(ithBin).variance;
+
     if (ithBin > 9)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_yCM_00to10_pr.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_yCM_00to10_pr.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
+      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_yCM_00to10_pr.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_yCM_00to10_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_yCM_00to10_pr.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_00to10_pr.at(ithBin).stdDevPercentage);
+        avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_00to10_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -793,7 +482,9 @@ void calculateSystematics(TString order_n_str = "3")
   //===
 
 
+
   //=== Proton vs rapidity 10 - 40%
+  //std::cout << "PROTON VS RAPIDITY" << std::endl;
   std::vector<Double_t> v_sys_yCM_10to40_pr;
   bins = Normal->h_vn_yCM_10to40_pr->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
@@ -802,19 +493,14 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += epd->v_vn_yCM_10to40_pr.at(ithBin).variance;
     
     if (ithBin > 9)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
-
-
+      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
+ 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_yCM_10to40_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_yCM_10to40_pr.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
+        avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -827,6 +513,7 @@ void calculateSystematics(TString order_n_str = "3")
 
 
   //=== Proton vs rapidity 40 - 60%
+  //std::cout << "PROTON VS RAPIDITY" << std::endl;
   std::vector<Double_t> v_sys_yCM_40to60_pr;
   bins = Normal->h_vn_yCM_40to60_pr->GetNbinsX();
   for (int ithBin = 0; ithBin < bins; ithBin++)
@@ -835,18 +522,14 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += epd->v_vn_yCM_40to60_pr.at(ithBin).variance;
     
     if (ithBin > 9)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_yCM_40to60_pr.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_yCM_40to60_pr.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
+      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_yCM_40to60_pr.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_yCM_40to60_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_yCM_40to60_pr.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_40to60_pr.at(ithBin).stdDevPercentage);
+        avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_40to60_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -867,18 +550,14 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += epd->v_vn_yCM_00to10_pr_symm.at(ithBin).variance;
     
     if (ithBin > 4 && ithBin < 15)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_yCM_00to10_pr_symm.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_yCM_00to10_pr_symm.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
+      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_yCM_00to10_pr_symm.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_yCM_00to10_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_yCM_00to10_pr_symm.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_00to10_pr_symm.at(ithBin).stdDevPercentage);
+        avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_00to10_pr_symm.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -899,18 +578,14 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += epd->v_vn_yCM_10to40_pr_symm.at(ithBin).variance;
     
     if (ithBin > 4 && ithBin < 15)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
+      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_yCM_10to40_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_yCM_10to40_pr_symm.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
+        avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -931,290 +606,19 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += epd->v_vn_yCM_40to60_pr_symm.at(ithBin).variance;
     
     if (ithBin > 4 && ithBin < 15)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_yCM_40to60_pr_symm.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_yCM_40to60_pr_symm.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
+      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_yCM_40to60_pr_symm.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_yCM_40to60_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_yCM_40to60_pr_symm.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_40to60_pr_symm.at(ithBin).stdDevPercentage);
+        avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_40to60_pr_symm.at(ithBin).stdDevPercentage);
       }
     }
     
     ithBinSysErr = TMath::Sqrt(quadSum);
     v_sys_yCM_40to60_pr_symm.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== pi+ vs pT 0 - 10%
-  std::vector<Double_t> v_sys_pT_00to10_pp;
-  bins = Normal->h_vn_pT_00to10_pp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_00to10_pp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_00to10_pp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_00to10_pp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_00to10_pp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== pi+ vs pT 10 - 40%
-  std::vector<Double_t> v_sys_pT_10to40_pp;
-  bins = Normal->h_vn_pT_10to40_pp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_10to40_pp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_10to40_pp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_10to40_pp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_10to40_pp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== pi+ vs pT 40 - 60%
-  std::vector<Double_t> v_sys_pT_40to60_pp;
-  bins = Normal->h_vn_pT_40to60_pp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_40to60_pp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_40to60_pp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_40to60_pp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_40to60_pp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== pi- vs pT 0 - 10%
-  std::vector<Double_t> v_sys_pT_00to10_pm;
-  bins = Normal->h_vn_pT_00to10_pm->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_00to10_pm.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_00to10_pm.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_00to10_pm.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_00to10_pm.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== pi- vs pT 10 - 40%
-  std::vector<Double_t> v_sys_pT_10to40_pm;
-  bins = Normal->h_vn_pT_10to40_pm->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_10to40_pm.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_10to40_pm.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_10to40_pm.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_10to40_pm.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== pi- vs pT 40 - 60%
-  std::vector<Double_t> v_sys_pT_40to60_pm;
-  bins = Normal->h_vn_pT_40to60_pm->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_40to60_pm.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_40to60_pm.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_40to60_pm.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_40to60_pm.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K+ vs pT 0 - 10%
-  std::vector<Double_t> v_sys_pT_00to10_kp;
-  bins = Normal->h_vn_pT_00to10_kp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_00to10_kp.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_00to10_kp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_00to10_kp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_00to10_kp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K+ vs pT 10 - 40%
-  std::vector<Double_t> v_sys_pT_10to40_kp;
-  bins = Normal->h_vn_pT_10to40_kp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_10to40_kp.at(ithBin).variance;
-
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_10to40_kp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_10to40_kp.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_10to40_kp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K+ vs pT 40 - 60%
-  std::vector<Double_t> v_sys_pT_40to60_kp;
-  bins = Normal->h_vn_pT_40to60_kp->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_40to60_kp.at(ithBin).variance;
-
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_40to60_kp.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_40to60_kp.at(ithBin).variance;
-    }
-
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_40to60_kp.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K- vs pT 0 - 10%
-  std::vector<Double_t> v_sys_pT_00to10_km;
-  bins = Normal->h_vn_pT_00to10_km->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_00to10_km.at(ithBin).variance;
-
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_00to10_km.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_00to10_km.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_00to10_km.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K- vs pT 10 - 40%
-  std::vector<Double_t> v_sys_pT_10to40_km;
-  bins = Normal->h_vn_pT_10to40_km->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_10to40_km.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_10to40_km.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_10to40_km.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_10to40_km.push_back(ithBinSysErr);
-  }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  //===
-
-
-  //=== K- vs pT 40 - 60%
-  std::vector<Double_t> v_sys_pT_40to60_km;
-  bins = Normal->h_vn_pT_40to60_km->GetNbinsX();
-  for (int ithBin = 0; ithBin < bins; ithBin++)
-  {
-    quadSum = 0.0;
-    quadSum += epd->v_vn_pT_40to60_km.at(ithBin).variance;
-
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
-    {
-      if (composites.at(jthVariation)->v_vn_pT_40to60_km.at(ithBin).deltaByDeltaError > 1.0)
-        quadSum += composites.at(jthVariation)->v_vn_pT_40to60_km.at(ithBin).variance;
-    }
-    
-    ithBinSysErr = TMath::Sqrt(quadSum);
-    v_sys_pT_40to60_km.push_back(ithBinSysErr);
   }
   ithBinSysErr = 0;
   quadSum = 0.0;
@@ -1230,18 +634,14 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += epd->v_vn_pT_00to10_pr.at(ithBin).variance;
     
     if (ithBin > 1)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_pT_00to10_pr.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_pT_00to10_pr.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
+      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_pT_00to10_pr.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_pT_00to10_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_pT_00to10_pr.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_00to10_pr.at(ithBin).stdDevPercentage);
+        avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_00to10_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -1262,18 +662,14 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += epd->v_vn_pT_10to40_pr.at(ithBin).variance;
     
     if (ithBin > 1)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
+      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_pT_10to40_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_pT_10to40_pr.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
+        avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -1294,18 +690,14 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += epd->v_vn_pT_40to60_pr.at(ithBin).variance;
     
     if (ithBin > 1)
-    {
-      avgTracker.addContribution(epd->ID, epd->v_vn_pT_40to60_pr.at(ithBin).stdDevPercentage);
-      //epdPercentQuadSum += epd->v_vn_pT_40to60_pr.at(ithBin).stdDevPercentage;
-      //epdNbins += 1;
-    }
+      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pT_40to60_pr.at(ithBin).stdDevPercentage);
 
     for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
     {
       if (composites.at(jthVariation)->v_vn_pT_40to60_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
         quadSum += composites.at(jthVariation)->v_vn_pT_40to60_pr.at(ithBin).variance;
-        avgTracker.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_40to60_pr.at(ithBin).stdDevPercentage);
+        avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_40to60_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -1318,45 +710,14 @@ void calculateSystematics(TString order_n_str = "3")
 
 
 
+  std::cout << "0-10% Centrality" << std::endl;
+  avgTracker_00to10.printContributions();  
   
-  /*
-  // Proton vs yCM scan through pT
-  std::vector<Double_t> v_sys_yCM_pr_1;
-  bins = Normal->h_vn_yCM_pr_1->GetNbinsX();
-  for (int i = 0; i < bins; i++)
-    {
-      ithBinSysErr = TMath::Sqrt(epd_high->v_vn_yCM_pr_1.at(i).variance);
-				 
-      v_sys_yCM_pr_1.push_back(ithBinSysErr);
-    }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
+  std::cout << "10-40% Centrality" << std::endl;
+  avgTracker_10to40.printContributions();
 
-  std::vector<Double_t> v_sys_yCM_pr_2;
-  bins = Normal->h_vn_yCM_pr_2->GetNbinsX();
-  for (int i = 0; i < bins; i++)
-    {
-      ithBinSysErr = TMath::Sqrt(epd_high->v_vn_yCM_pr_2.at(i).variance);
-				 
-      v_sys_yCM_pr_2.push_back(ithBinSysErr);
-    }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-
-  std::vector<Double_t> v_sys_yCM_pr_3;
-  bins = Normal->h_vn_yCM_pr_3->GetNbinsX();
-  for (int i = 0; i < bins; i++)
-    {
-      ithBinSysErr = TMath::Sqrt(epd_high->v_vn_yCM_pr_3.at(i).variance);
-				 
-      v_sys_yCM_pr_3.push_back(ithBinSysErr);
-    }
-  ithBinSysErr = 0;
-  quadSum = 0.0;
-  */
-  
-  
-  avgTracker.printContributions();
+  std::cout << "40-60% Centrality" << std::endl;
+  avgTracker_40to60.printContributions();
 
 
   // PLOTTING
@@ -1395,73 +756,7 @@ void calculateSystematics(TString order_n_str = "3")
       kaLegend->AddEntry(Normal->h_vn_kp,"K^{+}");
       kaLegend->AddEntry(Normal->h_vn_km,"K^{-}");
       kaLegend->SetFillColorAlpha(0,0);
-      kaLegend->SetLineColorAlpha(0,0);
-
-      /*
-      TLegend *ppExtLegend = new TLegend(0.4, 0.62, 0.7, 0.82);
-      ppExtLegend->AddEntry(vn_pp,"#pi^{+}, 0 < y_{CM} < 0.5");
-      ppExtLegend->AddEntry(vn_pp_ext,"#pi^{+}, 0.5 < y_{CM} < 1.0");
-      ppExtLegend->SetFillColorAlpha(0,0);
-      ppExtLegend->SetLineColorAlpha(0,0);
-
-      TLegend *pmExtLegend = new TLegend(0.15, 0.67, 0.45, 0.9);
-      pmExtLegend->AddEntry(vn_pm,"#pi^{-}, 0 < y_{CM} < 0.5");
-      pmExtLegend->AddEntry(vn_pm_ext,"#pi^{-}, 0.5 < y_{CM} < 1.0");
-      pmExtLegend->SetFillColorAlpha(0,0);
-      pmExtLegend->SetLineColorAlpha(0,0);
-
-      TLegend *kpExtLegend = new TLegend(0.55, 0.7, 0.85, 0.9);
-      kpExtLegend->AddEntry(vn_kp,"K^{+}, 0 < y_{CM} < 0.5");
-      kpExtLegend->AddEntry(vn_kp_ext,"K^{+}, 0.5 < y_{CM} < 1.0");
-      kpExtLegend->SetFillColorAlpha(0,0);
-      kpExtLegend->SetLineColorAlpha(0,0);
-
-      TLegend *kmExtLegend = new TLegend(0.28, 0.68, 0.55, 0.85);
-      kmExtLegend->AddEntry(vn_km,"K^{-}, 0 < y_{CM} < 0.5");
-      kmExtLegend->AddEntry(vn_km_ext,"K^{-}, 0.5 < y_{CM} < 1.0");
-      kmExtLegend->SetFillColorAlpha(0,0);
-      kmExtLegend->SetLineColorAlpha(0,0);
-
-      TLegend *prExtLegend = new TLegend(0.25, 0.16, 0.55, 0.3);
-      prExtLegend->AddEntry(vn_pr_for,"Proton, -0.5 < y_{CM} < 0");
-      prExtLegend->AddEntry(vn_pr,"Proton, 0 < y_{CM} < 0.5");
-      prExtLegend->AddEntry(vn_pr_ext,"Proton, 0.5 < y_{CM} < 1.0");
-      prExtLegend->SetFillColorAlpha(0,0);
-      prExtLegend->SetLineColorAlpha(0,0);
-
-      TLegend *etaLegend = new TLegend(0.65, 0.25, 0.9, 0.45);
-      etaLegend->AddEntry(vn_EpdE, "EPD -5.6 < #eta < -3.3");
-      etaLegend->AddEntry(vn_EpdF, "EPD -3.3 < #eta < -2.4");
-      etaLegend->AddEntry(vn_TpcB, "TPC -1.0 < #eta < 0");
-      */
-      
-      TLegend *ppLegend = new TLegend(0.18, 0.72, 0.38, 0.87);
-      ppLegend->AddEntry(Normal->h_vn_yCM_00to10_pp, "0 - 10%");
-      ppLegend->AddEntry(Normal->h_vn_yCM_10to40_pp, "10 - 40%");
-      ppLegend->AddEntry(Normal->h_vn_yCM_40to60_pp, "40 - 60%");
-      ppLegend->SetBorderSize(0);
-      ppLegend->SetFillColorAlpha(0,0);
-
-      TLegend *pmLegend = new TLegend(0.18, 0.72, 0.38, 0.87);
-      pmLegend->AddEntry(Normal->h_vn_yCM_00to10_pm, "0 - 10%");
-      pmLegend->AddEntry(Normal->h_vn_yCM_10to40_pm, "10 - 40%");
-      pmLegend->AddEntry(Normal->h_vn_yCM_40to60_pm, "40 - 60%");
-      pmLegend->SetBorderSize(0);
-      pmLegend->SetFillColorAlpha(0,0);
-
-      TLegend *kpLegend = new TLegend(0.18, 0.72, 0.38, 0.87);
-      kpLegend->AddEntry(Normal->h_vn_yCM_00to10_kp, "0 - 10%");
-      kpLegend->AddEntry(Normal->h_vn_yCM_10to40_kp, "10 - 40%");
-      kpLegend->AddEntry(Normal->h_vn_yCM_40to60_kp, "40 - 60%");
-      kpLegend->SetBorderSize(0);
-      kpLegend->SetFillColorAlpha(0,0);
-
-      TLegend *kmLegend = new TLegend(0.18, 0.77, 0.38, 0.87);
-      //kmLegend->AddEntry(Normal->h_vn_yCM_00to10_km, "0 - 10%");
-      kmLegend->AddEntry(Normal->h_vn_yCM_10to40_km, "10 - 40%");
-      //kmLegend->AddEntry(Normal->h_vn_yCM_40to60_km, "40 - 60%");
-      kmLegend->SetBorderSize(0);
-      kmLegend->SetFillColorAlpha(0,0);
+      kaLegend->SetLineColorAlpha(0,0);      
 
       TLegend *prLegend = new TLegend(0.19, 0.15, 0.39, 0.3);
       prLegend->AddEntry(Normal->h_vn_yCM_00to10_pr, "0 - 10%");
@@ -1471,35 +766,6 @@ void calculateSystematics(TString order_n_str = "3")
       prLegend->SetFillColorAlpha(0,0);
 
       
-
-      TLegend *ppPtLegend = new TLegend(0.18, 0.72, 0.38, 0.87);
-      ppPtLegend->AddEntry(Normal->h_vn_pT_00to10_pp, "0 - 10%");
-      ppPtLegend->AddEntry(Normal->h_vn_pT_10to40_pp, "10 - 40%");
-      ppPtLegend->AddEntry(Normal->h_vn_pT_40to60_pp, "40 - 60%");
-      ppPtLegend->SetBorderSize(0);
-      ppPtLegend->SetFillColorAlpha(0,0);
-
-      TLegend *pmPtLegend = new TLegend(0.18, 0.72, 0.38, 0.87);
-      pmPtLegend->AddEntry(Normal->h_vn_pT_00to10_pm, "0 - 10%");
-      pmPtLegend->AddEntry(Normal->h_vn_pT_10to40_pm, "10 - 40%");
-      pmPtLegend->AddEntry(Normal->h_vn_pT_40to60_pm, "40 - 60%");
-      pmPtLegend->SetBorderSize(0);
-      pmPtLegend->SetFillColorAlpha(0,0);
-
-      TLegend *kpPtLegend = new TLegend(0.18, 0.72, 0.38, 0.87);
-      kpPtLegend->AddEntry(Normal->h_vn_pT_00to10_kp, "0 - 10%");
-      kpPtLegend->AddEntry(Normal->h_vn_pT_10to40_kp, "10 - 40%");
-      kpPtLegend->AddEntry(Normal->h_vn_pT_40to60_kp, "40 - 60%");
-      kpPtLegend->SetBorderSize(0);
-      kpPtLegend->SetFillColorAlpha(0,0);
-
-      TLegend *kmPtLegend = new TLegend(0.19, 0.12, 0.39, 0.27);
-      //kmPtLegend->AddEntry(Normal->h_vn_pT_00to10_km, "0 - 10%");
-      kmPtLegend->AddEntry(Normal->h_vn_pT_10to40_km, "10 - 40%");
-      //kmPtLegend->AddEntry(Normal->h_vn_pT_40to60_km, "40 - 60%");
-      kmPtLegend->SetBorderSize(0);
-      kmPtLegend->SetFillColorAlpha(0,0);
-
       TLegend *prPtLegend = new TLegend(0.19, 0.15, 0.39, 0.3);
       prPtLegend->AddEntry(Normal->h_vn_pT_00to10_pr, "0 - 10%");
       prPtLegend->AddEntry(Normal->h_vn_pT_10to40_pr, "10 - 40%");
@@ -1530,39 +796,6 @@ void calculateSystematics(TString order_n_str = "3")
       prText->AddText("0.4 < p_{T} < 2.0 GeV");
       prText->SetFillColorAlpha(0,0);
       prText->SetLineColorAlpha(0,0);
-
-
-      TPaveText *ppText = new TPaveText(0.5, 0.07, 0.8, 0.14, "NB");
-      ppText->AddText("#pi^{+}");
-      ppText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
-      ppText->AddText("0.18 < p_{T} < 1.6 GeV");
-      ppText->SetFillColorAlpha(0,0);
-      ppText->SetLineColorAlpha(0,0);
-      ppText->SetTextSize(.04);
-
-      TPaveText *pmText = new TPaveText(0.5, 0.07, 0.8, 0.14, "NB");
-      pmText->AddText("#pi^{-}");
-      pmText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
-      pmText->AddText("0.18 < p_{T} < 1.6 GeV");
-      pmText->SetFillColorAlpha(0,0);
-      pmText->SetLineColorAlpha(0,0);
-      pmText->SetTextSize(.04);
-      
-      TPaveText *kpText = new TPaveText(0.5, 0.07, 0.8, 0.14, "NB");
-      kpText->AddText("K^{+}");
-      kpText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
-      kpText->AddText("0.4 < p_{T} < 1.6 GeV");
-      kpText->SetFillColorAlpha(0,0);
-      kpText->SetLineColorAlpha(0,0);
-      kpText->SetTextSize(.04);
-      
-      TPaveText *kmText = new TPaveText(0.3, 0.05, 0.7, 0.12, "NB");
-      kmText->AddText("K^{-}");
-      kmText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
-      kmText->AddText("0.4 < p_{T} < 1.6 GeV");
-      kmText->SetFillColorAlpha(0,0);
-      kmText->SetLineColorAlpha(0,0);
-      kmText->SetTextSize(.04);
       
       TPaveText *prText_y = new TPaveText(-0.2, 0.02, 0.9, 0.05, "NB");
       prText_y->AddText("Proton");
@@ -1580,40 +813,6 @@ void calculateSystematics(TString order_n_str = "3")
       prText_y_symm->SetLineColorAlpha(0,0);
       prText_y_symm->SetTextSize(.035);
       
-
-
-      TPaveText *ppPtText = new TPaveText(0.2, -0.22, 1.2, -0.1, "NB");
-      ppPtText->AddText("#pi^{+}");
-      ppPtText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
-      ppPtText->AddText("0 < y_{CM} < 0.5");
-      ppPtText->SetFillColorAlpha(0,0);
-      ppPtText->SetLineColorAlpha(0,0);
-      ppPtText->SetTextSize(.04);
-
-      TPaveText *pmPtText = new TPaveText(0.2, -0.22, 1.2, -0.1, "NB");
-      pmPtText->AddText("#pi^{-}");
-      pmPtText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
-      pmPtText->AddText("0 < y_{CM} < 0.5");
-      pmPtText->SetFillColorAlpha(0,0);
-      pmPtText->SetLineColorAlpha(0,0);
-      pmPtText->SetTextSize(.04);
-
-      TPaveText *kpPtText = new TPaveText(0.2, -0.22, 1.2, -0.1, "NB");
-      kpPtText->AddText("K^{+}");
-      kpPtText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
-      kpPtText->AddText("0 < y_{CM} < 0.5");
-      kpPtText->SetFillColorAlpha(0,0);
-      kpPtText->SetLineColorAlpha(0,0);
-      kpPtText->SetTextSize(.04);
-
-      TPaveText *kmPtText = new TPaveText(0.2, 0.07, 1.2, 0.18, "NB");
-      kmPtText->AddText("K^{-}");
-      kmPtText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
-      kmPtText->AddText("0 < y_{CM} < 0.5");
-      kmPtText->SetFillColorAlpha(0,0);
-      kmPtText->SetLineColorAlpha(0,0);
-      kmPtText->SetTextSize(.04);
-
       TPaveText *prPtText = new TPaveText(0.2, 0.07, 1.2, 0.18, "NB");
       prPtText->AddText("Proton");
       prPtText->AddText("Au+Au #sqrt{s_{NN}} = 3.0 GeV FXT");
@@ -1718,237 +917,7 @@ void calculateSystematics(TString order_n_str = "3")
       canvas->Clear();
       //===
 
-/*
-      //=== Proton Alternate Acceptance vs centrality
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_pr_alt->Clone());
-      for (int i = 0; i < v_sys_pr_alt.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_pr_alt.at(i)); }
 
-      copyWithNewErrors1->Write();
-      
-      Normal->h_vn_pr_alt->Draw();
-      Normal->h_vn_pr_alt->SetMinimum(centralityLowerBound);
-      Normal->h_vn_pr_alt->SetMaximum(centralityUpperBound);
-      Normal->h_vn_pr_alt->Draw("E1");
-      copyWithNewErrors1->Draw("[]");
-      zeroLine->Draw("SAME");
-      //prText->Draw();
-      canvas->SaveAs("sys_h_vn_pr_alt.png");
-      delete copyWithNewErrors1;
-      canvas->Clear();
-      //===
-
-
-      //=== Deuteron vs centrality
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_de->Clone());
-      for (int i = 0; i < v_sys_de.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_de.at(i)); }
-
-      copyWithNewErrors1->Write();
-      
-      Normal->h_vn_de->Draw();
-      Normal->h_vn_de->SetMinimum(centralityLowerBound);
-      Normal->h_vn_de->SetMaximum(centralityUpperBound);
-      Normal->h_vn_de->Draw("E1");
-      copyWithNewErrors1->Draw("[]");
-      zeroLine->Draw("SAME");
-      //deText->Draw();
-      canvas->SaveAs("sys_h_vn_de.png");
-      delete copyWithNewErrors1;
-      canvas->Clear();
-      //===
-
-
-      //=== Triton vs centrality
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_tr->Clone());
-      for (int i = 0; i < v_sys_tr.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_tr.at(i)); }
-
-      copyWithNewErrors1->Write();
-      
-      Normal->h_vn_tr->Draw();
-      Normal->h_vn_tr->SetMinimum(centralityLowerBound);
-      Normal->h_vn_tr->SetMaximum(centralityUpperBound);
-      Normal->h_vn_tr->Draw("E1");
-      copyWithNewErrors1->Draw("[]");
-      zeroLine->Draw("SAME");
-      //deText->Draw();
-      canvas->SaveAs("sys_h_vn_tr.png");
-      delete copyWithNewErrors1;
-      canvas->Clear();
-      //===
-*/
-
-      //=== Pi+ vs rapidity
-      THStack *ppRapidityStack = new THStack("ppRapidityStack", ";y-y_{mid};v_{"+order_n_str+"}");
-      ppRapidityStack->Add(Normal->h_vn_yCM_00to10_pp);
-      ppRapidityStack->Add(Normal->h_vn_yCM_10to40_pp);
-      ppRapidityStack->Add(Normal->h_vn_yCM_40to60_pp);
-
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_00to10_pp->Clone());
-      for (int i = 0; i < v_sys_yCM_00to10_pp.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_yCM_00to10_pp.at(i)); }
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_10to40_pp->Clone());
-      for (int i = 0; i < v_sys_yCM_10to40_pp.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_yCM_10to40_pp.at(i)); }
-
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_40to60_pp->Clone());
-      for (int i = 0; i < v_sys_yCM_40to60_pp.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_yCM_40to60_pp.at(i)); }
-
-      copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      copyWithNewErrors3->Write();
-      
-      ppRapidityStack->Draw();
-      ppRapidityStack->GetYaxis()->SetTitleOffset(1.9);
-      ppRapidityStack->GetXaxis()->SetNdivisions(210);
-      ppRapidityStack->SetMaximum(rapidityUpperBound);
-      ppRapidityStack->SetMinimum(rapidityLowerBound);
-      ppRapidityStack->Draw("NOSTACK E1P");
-      zeroLine_y->Draw("SAME");
-      copyWithNewErrors1->Draw("[]");
-      copyWithNewErrors2->Draw("[]");
-      copyWithNewErrors3->Draw("[]");
-      ppLegend->Draw();
-      ppText->Draw();
-      canvas->SaveAs("sys_ppRapidityStack.png");
-      canvas->Clear();
-      delete copyWithNewErrors1;
-      delete copyWithNewErrors2;
-      delete copyWithNewErrors3;
-      //===
-
-
-      //=== Pi- vs rapidity
-      THStack *pmRapidityStack = new THStack("pmRapidityStack", ";y-y_{mid};v_{"+order_n_str+"}");
-      pmRapidityStack->Add(Normal->h_vn_yCM_00to10_pm);
-      pmRapidityStack->Add(Normal->h_vn_yCM_10to40_pm);
-      pmRapidityStack->Add(Normal->h_vn_yCM_40to60_pm);
-
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_00to10_pm->Clone());
-      for (int i = 0; i < v_sys_yCM_00to10_pm.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_yCM_00to10_pm.at(i)); }
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_10to40_pm->Clone());
-      for (int i = 0; i < v_sys_yCM_10to40_pm.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_yCM_10to40_pm.at(i)); }
-
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_40to60_pm->Clone());
-      for (int i = 0; i < v_sys_yCM_40to60_pm.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_yCM_40to60_pm.at(i)); }
-
-      copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      copyWithNewErrors3->Write();
-      
-      pmRapidityStack->Draw();
-      pmRapidityStack->GetYaxis()->SetTitleOffset(1.9);
-      pmRapidityStack->GetXaxis()->SetNdivisions(210);
-      pmRapidityStack->SetMaximum(rapidityUpperBound);
-      pmRapidityStack->SetMinimum(rapidityLowerBound);
-      pmRapidityStack->Draw("NOSTACK E1P");
-      zeroLine_y->Draw("SAME");
-      copyWithNewErrors1->Draw("[]");
-      copyWithNewErrors2->Draw("[]");
-      copyWithNewErrors3->Draw("[]");
-      pmLegend->Draw();
-      pmText->Draw();
-      canvas->SaveAs("sys_pmRapidityStack.png");
-      canvas->Clear();
-      delete copyWithNewErrors1;
-      delete copyWithNewErrors2;
-      delete copyWithNewErrors3;
-      //===
-
-      //=== K+ vs rapidity
-      THStack *kpRapidityStack = new THStack("kpRapidityStack", ";y-y_{mid};v_{"+order_n_str+"}");
-      kpRapidityStack->Add(Normal->h_vn_yCM_00to10_kp);
-      kpRapidityStack->Add(Normal->h_vn_yCM_10to40_kp);
-      kpRapidityStack->Add(Normal->h_vn_yCM_40to60_kp);
-
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_00to10_kp->Clone());
-      for (int i = 0; i < v_sys_yCM_00to10_kp.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_yCM_00to10_kp.at(i)); }
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_10to40_kp->Clone());
-      for (int i = 0; i < v_sys_yCM_10to40_kp.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_yCM_10to40_kp.at(i)); }
-
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_40to60_kp->Clone());
-      for (int i = 0; i < v_sys_yCM_40to60_kp.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_yCM_40to60_kp.at(i)); }
-
-      copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      copyWithNewErrors3->Write();
-      
-      kpRapidityStack->Draw();
-      kpRapidityStack->GetYaxis()->SetTitleOffset(1.9);
-      kpRapidityStack->GetXaxis()->SetNdivisions(210);
-      kpRapidityStack->SetMaximum(rapidityUpperBound);
-      kpRapidityStack->SetMinimum(rapidityLowerBound);
-      kpRapidityStack->Draw("NOSTACK E1P");
-      zeroLine_y->Draw("SAME");
-      copyWithNewErrors1->Draw("[]");
-      copyWithNewErrors2->Draw("[]");
-      copyWithNewErrors3->Draw("[]");
-      kpLegend->Draw();
-      kpText->Draw();
-      canvas->SaveAs("sys_kpRapidityStack.png");
-      canvas->Clear();
-      delete copyWithNewErrors1;
-      delete copyWithNewErrors2;
-      delete copyWithNewErrors3;
-      //===
-
-
-
-      //=== K- vs rapidity
-      THStack *kmRapidityStack = new THStack("kmRapidityStack", ";y-y_{mid};v_{"+order_n_str+"}");
-      //kmRapidityStack->Add(Normal->h_vn_yCM_00to10_km);
-      kmRapidityStack->Add(Normal->h_vn_yCM_10to40_km);
-      //kmRapidityStack->Add(Normal->h_vn_yCM_40to60_km);
-
-      /*
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_00to10_km->Clone());
-      for (int i = 0; i < v_sys_yCM_00to10_km.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_yCM_00to10_km.at(i)); }
-      */
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_10to40_km->Clone());
-      for (int i = 0; i < v_sys_yCM_10to40_km.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_yCM_10to40_km.at(i)); }
-
-      /*
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_40to60_km->Clone());
-      for (int i = 0; i < v_sys_yCM_40to60_km.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_yCM_40to60_km.at(i)); }
-      */
-
-      //copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      //copyWithNewErrors3->Write();
-
-      kmRapidityStack->Draw();
-      kmRapidityStack->GetYaxis()->SetTitleOffset(1.9);
-      kmRapidityStack->GetXaxis()->SetNdivisions(210);
-      kmRapidityStack->SetMaximum(rapidityUpperBound);
-      kmRapidityStack->SetMinimum(rapidityLowerBound);
-      kmRapidityStack->Draw("NOSTACK E1P");
-      zeroLine_y->Draw("SAME");
-      //copyWithNewErrors1->Draw("[]");
-      copyWithNewErrors2->Draw("[]");
-      //copyWithNewErrors3->Draw("[]");
-      kmLegend->Draw();
-      kmText->Draw();
-      canvas->SaveAs("sys_kmRapidityStack.png");
-      canvas->Clear();
-      //delete copyWithNewErrors1;
-      delete copyWithNewErrors2;
-      //delete copyWithNewErrors3;
-      //===
 
 
       //=== Proton vs rapidity
@@ -2037,178 +1006,6 @@ void calculateSystematics(TString order_n_str = "3")
 
 
 
-      //=== Pi+ vs pT
-      THStack *ppPtStack = new THStack("ppPtStack", ";p_{T} (GeV);v_{"+order_n_str+"}");
-      ppPtStack->Add(Normal->h_vn_pT_00to10_pp);
-      ppPtStack->Add(Normal->h_vn_pT_40to60_pp);
-      ppPtStack->Add(Normal->h_vn_pT_10to40_pp);
-
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_pT_00to10_pp->Clone());
-      for (int i = 0; i < v_sys_pT_00to10_pp.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_pT_00to10_pp.at(i));}
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_pT_10to40_pp->Clone());
-      for (int i = 0; i < v_sys_pT_10to40_pp.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_pT_10to40_pp.at(i)); }
-
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_pT_40to60_pp->Clone());
-      for (int i = 0; i < v_sys_pT_40to60_pp.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_pT_40to60_pp.at(i)); }
-
-      copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      copyWithNewErrors3->Write();
-      
-      ppPtStack->Draw();
-      ppPtStack->GetYaxis()->SetTitleOffset(1.9);
-      ppPtStack->GetXaxis()->SetNdivisions(210);
-      ppPtStack->SetMaximum(ptUpperBound);
-      ppPtStack->SetMinimum(ptLowerBound);
-      ppPtStack->Draw("NOSTACK E1P");
-      zeroLine_pt->Draw("SAME");
-      copyWithNewErrors1->Draw("[]");
-      copyWithNewErrors3->Draw("[]");
-      copyWithNewErrors2->Draw("[]");
-      ppPtLegend->Draw();
-      ppPtText->Draw();
-      canvas->SaveAs("sys_ppPtStack.png");
-      canvas->Clear();
-      delete copyWithNewErrors1;
-      delete copyWithNewErrors2;
-      delete copyWithNewErrors3;
-      //===
-
-
-
-      //=== Pi- vs pT
-      THStack *pmPtStack = new THStack("pmPtStack", ";p_{T} (GeV);v_{"+order_n_str+"}");
-      pmPtStack->Add(Normal->h_vn_pT_00to10_pm);
-      pmPtStack->Add(Normal->h_vn_pT_40to60_pm);
-      pmPtStack->Add(Normal->h_vn_pT_10to40_pm);
-
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_pT_00to10_pm->Clone());
-      for (int i = 0; i < v_sys_pT_00to10_pm.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_pT_00to10_pm.at(i)); }
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_pT_10to40_pm->Clone());
-      for (int i = 0; i < v_sys_pT_10to40_pm.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_pT_10to40_pm.at(i)); }
-
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_pT_40to60_pm->Clone());
-      for (int i = 0; i < v_sys_pT_40to60_pm.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_pT_40to60_pm.at(i)); }
-
-      copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      copyWithNewErrors3->Write();
-
-      pmPtStack->Draw();
-      pmPtStack->GetYaxis()->SetTitleOffset(1.9);
-      pmPtStack->GetXaxis()->SetNdivisions(210);
-      pmPtStack->SetMaximum(ptUpperBound);
-      pmPtStack->SetMinimum(ptLowerBound);
-      pmPtStack->Draw("NOSTACK E1P");
-      zeroLine_pt->Draw("SAME");
-      copyWithNewErrors1->Draw("[]");
-      copyWithNewErrors3->Draw("[]");
-      copyWithNewErrors2->Draw("[]");
-      pmPtLegend->Draw();
-      pmPtText->Draw();
-      canvas->SaveAs("sys_pmPtStack.png");
-      canvas->Clear();
-      delete copyWithNewErrors1;
-      delete copyWithNewErrors2;
-      delete copyWithNewErrors3;
-      //===
-
-
-      //=== K+ vs pT
-      THStack *kpPtStack = new THStack("kpPtStack", ";p_{T} (GeV);v_{"+order_n_str+"}");
-      kpPtStack->Add(Normal->h_vn_pT_00to10_kp);
-      kpPtStack->Add(Normal->h_vn_pT_40to60_kp);
-      kpPtStack->Add(Normal->h_vn_pT_10to40_kp);
-
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_pT_00to10_kp->Clone());
-      for (int i = 0; i < v_sys_pT_00to10_kp.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_pT_00to10_kp.at(i)); }
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_pT_10to40_kp->Clone());
-      for (int i = 0; i < v_sys_pT_10to40_kp.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_pT_10to40_kp.at(i)); }
-
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_pT_40to60_kp->Clone());
-      for (int i = 0; i < v_sys_pT_40to60_kp.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_pT_40to60_kp.at(i)); }
-
-      copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      copyWithNewErrors3->Write();
-
-      kpPtStack->Draw();
-      kpPtStack->GetYaxis()->SetTitleOffset(1.9);
-      kpPtStack->GetXaxis()->SetNdivisions(210);
-      kpPtStack->SetMaximum(ptUpperBound);
-      kpPtStack->SetMinimum(ptLowerBound);
-      kpPtStack->Draw("NOSTACK E1P");
-      zeroLine_pt->Draw("SAME");
-      copyWithNewErrors1->Draw("[]");
-      copyWithNewErrors3->Draw("[]");
-      copyWithNewErrors2->Draw("[]");
-      kpPtLegend->Draw();
-      kpPtText->Draw();
-      canvas->SaveAs("sys_kpPtStack.png");
-      canvas->Clear();
-      delete copyWithNewErrors1;
-      delete copyWithNewErrors2;
-      delete copyWithNewErrors3;
-      //===
-
-
-      //=== K- vs pT
-
-      THStack *kmPtStack = new THStack("kmPtStack", ";p_{T} (GeV);v_{"+order_n_str+"}");
-      //kmPtStack->Add(Normal->h_vn_pT_00to10_km);
-      //kmPtStack->Add(Normal->h_vn_pT_40to60_km);
-      kmPtStack->Add(Normal->h_vn_pT_10to40_km);
-
-      /*
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_pT_00to10_km->Clone());
-      for (int i = 0; i < v_sys_pT_00to10_km.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_pT_00to10_km.at(i)); }
-      */
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_pT_10to40_km->Clone());
-      for (int i = 0; i < v_sys_pT_10to40_km.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_pT_10to40_km.at(i)); }
-
-      /*
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_pT_40to60_km->Clone());
-      for (int i = 0; i < v_sys_pT_40to60_km.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_pT_40to60_km.at(i)); }
-      */
-
-      //copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      //copyWithNewErrors3->Write();
-
-      kmPtStack->Draw();
-      kmPtStack->GetYaxis()->SetTitleOffset(1.9);
-      kmPtStack->GetXaxis()->SetNdivisions(210);
-      kmPtStack->SetMaximum(ptUpperBound);
-      kmPtStack->SetMinimum(ptLowerBound);
-      kmPtStack->Draw("NOSTACK E1P");
-      zeroLine_pt->Draw("SAME");
-      //copyWithNewErrors1->Draw("[]");
-      //copyWithNewErrors3->Draw("[]");
-      copyWithNewErrors2->Draw("[]");
-      kmPtLegend->Draw();
-      kmPtText->Draw();
-      canvas->SaveAs("sys_kmPtStack.png");
-      canvas->Clear();
-      //delete copyWithNewErrors1;
-      delete copyWithNewErrors2;
-      //delete copyWithNewErrors3;
-      //===
 
 
       //=== Proton vs pT
@@ -2252,34 +1049,11 @@ void calculateSystematics(TString order_n_str = "3")
       delete copyWithNewErrors3;
       //===
 
-      /*
-      // Proton vs yCM scan through pT
-
-
-      copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_pr_1->Clone());
-      for (int i = 0; i < v_sys_yCM_pr_1.size(); i++)
-	{ copyWithNewErrors1->SetPointError(i, 0.0, v_sys_yCM_pr_1.at(i)); }
-
-      copyWithNewErrors2 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_pr_2->Clone());
-      for (int i = 0; i < v_sys_yCM_pr_2.size(); i++)
-	{ copyWithNewErrors2->SetPointError(i, 0.0, v_sys_yCM_pr_2.at(i)); }
-
-      copyWithNewErrors3 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_pr_3->Clone());
-      for (int i = 0; i < v_sys_yCM_pr_3.size(); i++)
-	{ copyWithNewErrors3->SetPointError(i, 0.0, v_sys_yCM_pr_3.at(i)); }
-
-      copyWithNewErrors1->Write();
-      copyWithNewErrors2->Write();
-      copyWithNewErrors3->Write();
-
-      //===
-      */
-      
       delete canvas;
     }// End if order_n_str == 3
 
 
-  delete epd;
+  //delete epd;
   delete nhits;
   delete nSigPi;
   delete nSigKa;
@@ -2293,9 +1067,9 @@ void calculateSystematics(TString order_n_str = "3")
   delete m2Ka;
 
   delete Normal;
-  delete epd_high;
+  //delete epd_high;
   //delete epd_low;
-  delete epd_scaled;
+  //delete epd_scaled;
   
   delete nSigPi_high_30;
   delete nSigPi_low_30;
@@ -2336,7 +1110,7 @@ void calculateSystematics(TString order_n_str = "3")
   delete nhits_high_20;
   delete nhits_low_20;
   delete nhitsdEdx_high_20;
-  //delete nhitsdEdx_low_20;
+  delete nhitsdEdx_low_20;
   delete nhitsratio_high_20;
   delete nhitsratio_low_20;
   delete m2Pi_high_20;

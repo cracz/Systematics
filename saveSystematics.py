@@ -1,7 +1,7 @@
 import numpy as np
 
 systemDict = {
-    "Normal": "Normal",
+    #"Normal": "Normal",
     "rvtx_low": "rvtx_low",
     "rvtx_high": "rvtx_high",
     "zvtx_low": "zvtx_low",
@@ -10,7 +10,7 @@ systemDict = {
     "dca_high": "dca_high",
     "nhits_low": "nhits_low",
     "nhits_high": "nhits_high",
-    #"nhitsdedx_low": "nhitsdedx_low",
+    "nhitsdedx_low": "nhitsdedx_low",
     "nhitsdedx_high": "nhitsdedx_high",
     "nhitsratio_low": "nhitsratio_low",
     "nhitsratio_high": "nhitsratio_high",

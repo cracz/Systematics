@@ -277,17 +277,17 @@ void calculateSystematics(TString order_n_str = "3")
     else if (ithBin > 7)
       avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pp.at(ithBin).stdDevPercentage);
  
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_pp.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_pp.at(ithBin).deltaByDeltaError > 1.0)
         {
-          quadSum += composites.at(jthVariation)->v_vn_pp.at(ithBin).variance;
+          quadSum += composites.at(jthCut)->v_vn_pp.at(ithBin).variance;
 	  if (ithBin < 2)
-	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pp.at(ithBin).stdDevPercentage);
+	    avgTracker_00to10.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pp.at(ithBin).stdDevPercentage);
 	  else if (ithBin >= 2 && ithBin <= 7)
-	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pp.at(ithBin).stdDevPercentage);
+	    avgTracker_10to40.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pp.at(ithBin).stdDevPercentage);
 	  else if (ithBin > 7)
-	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pp.at(ithBin).stdDevPercentage);
+	    avgTracker_40to60.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pp.at(ithBin).stdDevPercentage);
         }
     }
     
@@ -316,17 +316,17 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 7)
       avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pm.at(ithBin).stdDevPercentage);
  
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_pm.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_pm.at(ithBin).deltaByDeltaError > 1.0)
         {
-          quadSum += composites.at(jthVariation)->v_vn_pm.at(ithBin).variance;
+          quadSum += composites.at(jthCut)->v_vn_pm.at(ithBin).variance;
 	  if (ithBin < 2)
-	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pm.at(ithBin).stdDevPercentage);
+	    avgTracker_00to10.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pm.at(ithBin).stdDevPercentage);
 	  if (ithBin >= 2 && ithBin <= 7)
-	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pm.at(ithBin).stdDevPercentage);
+	    avgTracker_10to40.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pm.at(ithBin).stdDevPercentage);
 	  if (ithBin > 7)
-	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pm.at(ithBin).stdDevPercentage);
+	    avgTracker_40to60.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pm.at(ithBin).stdDevPercentage);
         }
     }
     
@@ -355,17 +355,17 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 7)
       avgTracker_40to60.addContribution(epd->ID, epd->v_vn_kp.at(ithBin).stdDevPercentage);
     
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_kp.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_kp.at(ithBin).deltaByDeltaError > 1.0)
 	{
-	  quadSum += composites.at(jthVariation)->v_vn_kp.at(ithBin).variance;
+	  quadSum += composites.at(jthCut)->v_vn_kp.at(ithBin).variance;
 	  if (ithBin < 2)
-	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_kp.at(ithBin).stdDevPercentage);
+	    avgTracker_00to10.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_kp.at(ithBin).stdDevPercentage);
 	  if (ithBin >= 2 && ithBin <= 7)
-	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_kp.at(ithBin).stdDevPercentage);
+	    avgTracker_10to40.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_kp.at(ithBin).stdDevPercentage);
 	  if (ithBin > 7)
-	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_kp.at(ithBin).stdDevPercentage);
+	    avgTracker_40to60.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_kp.at(ithBin).stdDevPercentage);
 	}
     }
     
@@ -393,17 +393,17 @@ void calculateSystematics(TString order_n_str = "3")
       avgTracker_40to60.addContribution(epd->ID, epd->v_vn_km.at(ithBin).stdDevPercentage);
  
  
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_km.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_km.at(ithBin).deltaByDeltaError > 1.0)
 	{
-	  quadSum += composites.at(jthVariation)->v_vn_km.at(ithBin).variance;
+	  quadSum += composites.at(jthCut)->v_vn_km.at(ithBin).variance;
 	  if (ithBin < 2)
-	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_km.at(ithBin).stdDevPercentage);
+	    avgTracker_00to10.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_km.at(ithBin).stdDevPercentage);
 	  if (ithBin >= 2 && ithBin <= 7)
-	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_km.at(ithBin).stdDevPercentage);
+	    avgTracker_10to40.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_km.at(ithBin).stdDevPercentage);
 	  if (ithBin > 7)
-	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_km.at(ithBin).stdDevPercentage);
+	    avgTracker_40to60.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_km.at(ithBin).stdDevPercentage);
 	}
     }
     
@@ -431,17 +431,17 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 7)
       avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_pr.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_pr.at(ithBin).deltaByDeltaError > 1.0)
         {
-          quadSum += composites.at(jthVariation)->v_vn_pr.at(ithBin).variance;
+          quadSum += composites.at(jthCut)->v_vn_pr.at(ithBin).variance;
 	  if (ithBin < 2)
-	    avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDevPercentage);
+	    avgTracker_00to10.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pr.at(ithBin).stdDevPercentage);
 	  if (ithBin >= 2 && ithBin <= 7)
-	    avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDevPercentage);
+	    avgTracker_10to40.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pr.at(ithBin).stdDevPercentage);
 	  if (ithBin > 7)
-	    avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pr.at(ithBin).stdDevPercentage);
+	    avgTracker_40to60.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pr.at(ithBin).stdDevPercentage);
         }
     }
     
@@ -465,12 +465,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 9)
       avgTracker_00to10.addContribution(epd->ID, epd->v_vn_yCM_00to10_pr.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_yCM_00to10_pr.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_yCM_00to10_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_yCM_00to10_pr.at(ithBin).variance;
-        avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_00to10_pr.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_yCM_00to10_pr.at(ithBin).variance;
+        avgTracker_00to10.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_yCM_00to10_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -495,12 +495,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 9)
       avgTracker_10to40.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
  
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_yCM_10to40_pr.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_yCM_10to40_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_yCM_10to40_pr.at(ithBin).variance;
-        avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_yCM_10to40_pr.at(ithBin).variance;
+        avgTracker_10to40.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -524,12 +524,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 9)
       avgTracker_40to60.addContribution(epd->ID, epd->v_vn_yCM_40to60_pr.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_yCM_40to60_pr.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_yCM_40to60_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_yCM_40to60_pr.at(ithBin).variance;
-        avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_40to60_pr.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_yCM_40to60_pr.at(ithBin).variance;
+        avgTracker_40to60.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_yCM_40to60_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -552,12 +552,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 4 && ithBin < 15)
       avgTracker_00to10.addContribution(epd->ID, epd->v_vn_yCM_00to10_pr_symm.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_yCM_00to10_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_yCM_00to10_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_yCM_00to10_pr_symm.at(ithBin).variance;
-        avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_00to10_pr_symm.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_yCM_00to10_pr_symm.at(ithBin).variance;
+        avgTracker_00to10.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_yCM_00to10_pr_symm.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -580,12 +580,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 4 && ithBin < 15)
       avgTracker_10to40.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_yCM_10to40_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_yCM_10to40_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_yCM_10to40_pr_symm.at(ithBin).variance;
-        avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_yCM_10to40_pr_symm.at(ithBin).variance;
+        avgTracker_10to40.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -608,12 +608,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 4 && ithBin < 15)
       avgTracker_40to60.addContribution(epd->ID, epd->v_vn_yCM_40to60_pr_symm.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_yCM_40to60_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_yCM_40to60_pr_symm.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_yCM_40to60_pr_symm.at(ithBin).variance;
-        avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_yCM_40to60_pr_symm.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_yCM_40to60_pr_symm.at(ithBin).variance;
+        avgTracker_40to60.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_yCM_40to60_pr_symm.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -636,12 +636,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 1)
       avgTracker_00to10.addContribution(epd->ID, epd->v_vn_pT_00to10_pr.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_pT_00to10_pr.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_pT_00to10_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_pT_00to10_pr.at(ithBin).variance;
-        avgTracker_00to10.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_00to10_pr.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_pT_00to10_pr.at(ithBin).variance;
+        avgTracker_00to10.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pT_00to10_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -664,12 +664,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 1)
       avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_pT_10to40_pr.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_pT_10to40_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_pT_10to40_pr.at(ithBin).variance;
-        avgTracker_10to40.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_pT_10to40_pr.at(ithBin).variance;
+        avgTracker_10to40.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
       }
     }
     
@@ -692,12 +692,12 @@ void calculateSystematics(TString order_n_str = "3")
     if (ithBin > 1)
       avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pT_40to60_pr.at(ithBin).stdDevPercentage);
 
-    for (int jthVariation = 0; jthVariation < composites.size(); jthVariation++)
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
-      if (composites.at(jthVariation)->v_vn_pT_40to60_pr.at(ithBin).deltaByDeltaError > 1.0)
+      if (composites.at(jthCut)->v_vn_pT_40to60_pr.at(ithBin).deltaByDeltaError > 1.0)
       {
-        quadSum += composites.at(jthVariation)->v_vn_pT_40to60_pr.at(ithBin).variance;
-        avgTracker_40to60.addContribution(composites.at(jthVariation)->ID, composites.at(jthVariation)->v_vn_pT_40to60_pr.at(ithBin).stdDevPercentage);
+        quadSum += composites.at(jthCut)->v_vn_pT_40to60_pr.at(ithBin).variance;
+        avgTracker_40to60.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_pT_40to60_pr.at(ithBin).stdDevPercentage);
       }
     }
     

@@ -1,1 +1,6 @@
 Details*.root
+*.png
+*.pdf
+*rflx*
+*.rootmap
+*.so

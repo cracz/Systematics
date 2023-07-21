@@ -7,9 +7,13 @@ When first setting up, or any time anything in Variation.* or CompositeDatat.* i
 ./makeSharedLib.sh CompositeData
 ```
 
-Go into `calculateSystematics.cxx` and make sure the first argument for each `Variation` object is the path and prefix of your results variations. The normal results are also considered a 'variation' as well. The `Variation` objects are then compined into one `CompositeData` object for each type of cut. Each `CompositeData` object can accept up to 5 `Variation` objects to combine.
+Go into `calculateSystematics.cxx` and make sure the first argument for each `Variation` object is the path and prefix of your results variations. The normal results are also considered a 'variation' as well. To run the script and calculate systematic uncertainties, use 
 
-`CompositeData` does the background work to calculate the standard deviations and the significance of each cuts's systematic uncertainty contribution. All you need to do is use the `CompositeData` objects to pull out the significance value and the systematic uncertainty contribution.
+```bash
+root -l -b -q calculateSystematics.cxx
+```
+
+The `Variation` objects are then compined into one `CompositeData` object for each type of cut. Each `CompositeData` object can accept up to 5 `Variation` objects to combine. `CompositeData` does the background work to calculate the standard deviations and the significance of each cuts's systematic uncertainty contribution. All you need to do is use the `CompositeData` objects to pull out the significance value and the systematic uncertainty contribution.
 
 Each `CompositeData` holds vectors corresponding to each important TProfile, for example, proton flow measurements vs centrality is called `p_vn_pp` (`p_` for 'profile', `v_` for 'vector'). To get the corresponding data that was compiled from all variations, use `compositeDataObject->v_vn_pp`. These vectors hold another custom data type called `DataPoint` defined within `CompositeData.h` which holds all necessary systematic info for each point.
 

@@ -8,9 +8,9 @@
 using namespace PlotUtils;
 
 // Constructor for the "normal" results.
-Variation::Variation(TString prefix, TString order_n_str)
+Variation::Variation(TString identifier, TString prefix, TString order_n_str)
 {
-  ID = prefix;
+  ID = identifier;
   fileName = prefix + ".picoDst.result.combined.root";
 
   file = TFile::Open(fileName);
@@ -34,20 +34,33 @@ Variation::~Variation()
   delete h_vn_yCM_00to10_pr_symm;
   delete h_vn_yCM_10to40_pr_symm;
   delete h_vn_yCM_40to60_pr_symm;
+  delete h_vn_yCM_00to05_pr_symm;
+  delete h_vn_yCM_05to10_pr_symm;
+  delete h_vn_yCM_10to15_pr_symm;
+  delete h_vn_yCM_15to20_pr_symm;
+  delete h_vn_yCM_20to25_pr_symm;
+  delete h_vn_yCM_25to30_pr_symm;
+  delete h_vn_yCM_30to35_pr_symm;
+  delete h_vn_yCM_35to40_pr_symm;
+  delete h_vn_yCM_40to45_pr_symm;
+  delete h_vn_yCM_45to50_pr_symm;
+  delete h_vn_yCM_50to55_pr_symm;
+  delete h_vn_yCM_55to60_pr_symm;
   delete h_vn_pT_00to10_pr;
   delete h_vn_pT_10to40_pr;
   delete h_vn_pT_40to60_pr;
+  
   file->Close();
 }
 
 // Initialize all histograms
 void Variation::initialize(TString order_n_str)
 {
-  TProfile *p_vn_pp = (TProfile*)file->Get("p_vn_pp");
-  TProfile *p_vn_pm = (TProfile*)file->Get("p_vn_pm");
-  TProfile *p_vn_kp = (TProfile*)file->Get("p_vn_kp");
-  TProfile *p_vn_km = (TProfile*)file->Get("p_vn_km");
-  TProfile *p_vn_pr = (TProfile*)file->Get("p_vn_pr");
+  p_vn_pp = (TProfile*)file->Get("p_vn_pp");
+  p_vn_pm = (TProfile*)file->Get("p_vn_pm");
+  p_vn_kp = (TProfile*)file->Get("p_vn_kp");
+  p_vn_km = (TProfile*)file->Get("p_vn_km");
+  p_vn_pr = (TProfile*)file->Get("p_vn_pr");
   p_vn_kp->Rebin();
   p_vn_km->Rebin();
   
@@ -74,13 +87,26 @@ void Variation::initialize(TString order_n_str)
   TProfile2D *p2_vn_yCM_cent_pr = (TProfile2D*)file->Get("p2_vn_yCM_cent_pr");
   TProfile2D *p2_vn_yCM_cent_pr_symmetry = (TProfile2D*)file->Get("p2_vn_yCM_cent_pr_symmetry");
 
-  TProfile *p_vn_yCM_00to10_pr = p2_vn_yCM_cent_pr->ProfileY("p_vn_yCM_00to10_pr", 15, 16);
-  TProfile *p_vn_yCM_10to40_pr = p2_vn_yCM_cent_pr->ProfileY("p_vn_yCM_10to40_pr", 9, 14);
-  TProfile *p_vn_yCM_40to60_pr = p2_vn_yCM_cent_pr->ProfileY("p_vn_yCM_40to60_pr", 5, 8);
+  p_vn_yCM_00to10_pr = p2_vn_yCM_cent_pr->ProfileY("p_vn_yCM_00to10_pr", 15, 16);
+  p_vn_yCM_10to40_pr = p2_vn_yCM_cent_pr->ProfileY("p_vn_yCM_10to40_pr", 9, 14);
+  p_vn_yCM_40to60_pr = p2_vn_yCM_cent_pr->ProfileY("p_vn_yCM_40to60_pr", 5, 8);
 
-  TProfile *p_vn_yCM_00to10_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_00to10_pr_symm", 15, 16);
-  TProfile *p_vn_yCM_10to40_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_10to40_pr_symm", 9, 14);
-  TProfile *p_vn_yCM_40to60_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_40to60_pr_symm", 5, 8);
+  p_vn_yCM_00to10_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_00to10_pr_symm", 15, 16);
+  p_vn_yCM_10to40_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_10to40_pr_symm", 9, 14);
+  p_vn_yCM_40to60_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_40to60_pr_symm", 5, 8);
+
+  p_vn_yCM_00to05_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_00to05_pr_symm", 16, 16);
+  p_vn_yCM_05to10_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_05to10_pr_symm", 15, 15);
+  p_vn_yCM_10to15_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_10to15_pr_symm", 14, 14);
+  p_vn_yCM_15to20_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_15to20_pr_symm", 13, 13);
+  p_vn_yCM_20to25_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_20to25_pr_symm", 12, 12);
+  p_vn_yCM_25to30_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_25to30_pr_symm", 11, 11);
+  p_vn_yCM_30to35_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_30to35_pr_symm", 10, 10);
+  p_vn_yCM_35to40_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_35to40_pr_symm", 9, 9);
+  p_vn_yCM_40to45_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_40to45_pr_symm", 8, 8);
+  p_vn_yCM_45to50_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_45to50_pr_symm", 7, 7);
+  p_vn_yCM_50to55_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_50to55_pr_symm", 6, 6);
+  p_vn_yCM_55to60_pr_symm = p2_vn_yCM_cent_pr_symmetry->ProfileY("p_vn_yCM_55to60_pr_symm", 5, 5);
 
   h_vn_yCM_00to10_pr = new TH1D("h_vn_yCM_00to10_pr", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
   h_vn_yCM_10to40_pr = new TH1D("h_vn_yCM_10to40_pr", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
@@ -90,7 +116,19 @@ void Variation::initialize(TString order_n_str)
   h_vn_yCM_10to40_pr_symm = new TH1D("h_vn_yCM_10to40_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
   h_vn_yCM_40to60_pr_symm = new TH1D("h_vn_yCM_40to60_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
 
-  
+  h_vn_yCM_00to05_pr_symm = new TH1D("h_vn_yCM_00to05_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_05to10_pr_symm = new TH1D("h_vn_yCM_05to10_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_10to15_pr_symm = new TH1D("h_vn_yCM_10to15_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_15to20_pr_symm = new TH1D("h_vn_yCM_15to20_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_20to25_pr_symm = new TH1D("h_vn_yCM_20to25_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_25to30_pr_symm = new TH1D("h_vn_yCM_25to30_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_30to35_pr_symm = new TH1D("h_vn_yCM_30to35_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_35to40_pr_symm = new TH1D("h_vn_yCM_35to40_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_40to45_pr_symm = new TH1D("h_vn_yCM_40to45_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_45to50_pr_symm = new TH1D("h_vn_yCM_45to50_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_50to55_pr_symm = new TH1D("h_vn_yCM_50to55_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+  h_vn_yCM_55to60_pr_symm = new TH1D("h_vn_yCM_55to60_pr_symm", ";y-y_{mid};v_{"+order_n_str+"}", 20, -1, 1);
+
   // Convert profiles to histograms
   h_vn_yCM_00to10_pr = p_vn_yCM_00to10_pr->ProjectionX();
   h_vn_yCM_10to40_pr = p_vn_yCM_10to40_pr->ProjectionX();
@@ -100,14 +138,26 @@ void Variation::initialize(TString order_n_str)
   h_vn_yCM_10to40_pr_symm = p_vn_yCM_10to40_pr_symm->ProjectionX();
   h_vn_yCM_40to60_pr_symm = p_vn_yCM_40to60_pr_symm->ProjectionX();
 
+  h_vn_yCM_00to05_pr_symm = p_vn_yCM_00to05_pr_symm->ProjectionX();
+  h_vn_yCM_05to10_pr_symm = p_vn_yCM_05to10_pr_symm->ProjectionX();
+  h_vn_yCM_10to15_pr_symm = p_vn_yCM_10to15_pr_symm->ProjectionX();
+  h_vn_yCM_15to20_pr_symm = p_vn_yCM_15to20_pr_symm->ProjectionX();
+  h_vn_yCM_20to25_pr_symm = p_vn_yCM_20to25_pr_symm->ProjectionX();
+  h_vn_yCM_25to30_pr_symm = p_vn_yCM_25to30_pr_symm->ProjectionX();
+  h_vn_yCM_30to35_pr_symm = p_vn_yCM_30to35_pr_symm->ProjectionX();
+  h_vn_yCM_35to40_pr_symm = p_vn_yCM_35to40_pr_symm->ProjectionX();
+  h_vn_yCM_40to45_pr_symm = p_vn_yCM_40to45_pr_symm->ProjectionX();
+  h_vn_yCM_45to50_pr_symm = p_vn_yCM_45to50_pr_symm->ProjectionX();
+  h_vn_yCM_50to55_pr_symm = p_vn_yCM_50to55_pr_symm->ProjectionX();
+  h_vn_yCM_55to60_pr_symm = p_vn_yCM_55to60_pr_symm->ProjectionX();
 
 
   //=== vn vs pT stuff
   TProfile2D *p2_vn_pT_cent_pr = (TProfile2D*)file->Get("p2_vn_pT_cent_pr");
 
-  TProfile *p_vn_pT_00to10_pr = p2_vn_pT_cent_pr->ProfileY("p_vn_pT_00to10_pr", 15, 16);
-  TProfile *p_vn_pT_10to40_pr = p2_vn_pT_cent_pr->ProfileY("p_vn_pT_10to40_pr", 9, 14);
-  TProfile *p_vn_pT_40to60_pr = p2_vn_pT_cent_pr->ProfileY("p_vn_pT_40to60_pr", 5, 8);
+  p_vn_pT_00to10_pr = p2_vn_pT_cent_pr->ProfileY("p_vn_pT_00to10_pr", 15, 16);
+  p_vn_pT_10to40_pr = p2_vn_pT_cent_pr->ProfileY("p_vn_pT_10to40_pr", 9, 14);
+  p_vn_pT_40to60_pr = p2_vn_pT_cent_pr->ProfileY("p_vn_pT_40to60_pr", 5, 8);
 
   h_vn_pT_00to10_pr = new TH1D("h_vn_pT_00to10_pr", ";p_{T} (GeV);v_{"+order_n_str+"}", 10, 0, 2);
   h_vn_pT_10to40_pr = new TH1D("h_vn_pT_10to40_pr", ";p_{T} (GeV);v_{"+order_n_str+"}", 10, 0, 2);

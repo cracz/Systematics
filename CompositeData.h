@@ -132,9 +132,24 @@ class CompositeData
   std::vector<DataPoint> v_vn_yCM_10to40_pr_symm;
   std::vector<DataPoint> v_vn_yCM_40to60_pr_symm;
 
+  std::vector<DataPoint> v_vn_yCM_00to05_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_05to10_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_10to15_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_15to20_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_20to25_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_25to30_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_30to35_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_35to40_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_40to45_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_45to50_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_50to55_pr_symm;
+  std::vector<DataPoint> v_vn_yCM_55to60_pr_symm;
+
   std::vector<DataPoint> v_vn_pT_00to10_pr;
   std::vector<DataPoint> v_vn_pT_10to40_pr;
   std::vector<DataPoint> v_vn_pT_40to60_pr;
+
+  std::vector<std::vector<DataPoint>> v2_vn_yCM_cent_pr_symmetry;
 
   // Histograms that hold the values for the Barlow check related to this set of variations
   TH1D* barlow_vn_pp;
@@ -150,6 +165,19 @@ class CompositeData
   TH1D* barlow_vn_yCM_00to10_pr_symm;
   TH1D* barlow_vn_yCM_10to40_pr_symm;
   TH1D* barlow_vn_yCM_40to60_pr_symm;
+
+  TH1D* barlow_vn_yCM_00to05_pr_symm;
+  TH1D* barlow_vn_yCM_05to10_pr_symm;
+  TH1D* barlow_vn_yCM_10to15_pr_symm;
+  TH1D* barlow_vn_yCM_15to20_pr_symm;
+  TH1D* barlow_vn_yCM_20to25_pr_symm;
+  TH1D* barlow_vn_yCM_25to30_pr_symm;
+  TH1D* barlow_vn_yCM_30to35_pr_symm;
+  TH1D* barlow_vn_yCM_35to40_pr_symm;
+  TH1D* barlow_vn_yCM_40to45_pr_symm;
+  TH1D* barlow_vn_yCM_45to50_pr_symm;
+  TH1D* barlow_vn_yCM_50to55_pr_symm;
+  TH1D* barlow_vn_yCM_55to60_pr_symm;
 
   TH1D* barlow_vn_pT_00to10_pr;
   TH1D* barlow_vn_pT_10to40_pr;

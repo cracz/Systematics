@@ -6,6 +6,7 @@
 #include <vector>
 #include "TH1D.h"
 #include "TMath.h"
+#include "TGraphErrors.h"
 
 
 struct TProfileHelper

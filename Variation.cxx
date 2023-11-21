@@ -28,6 +28,7 @@ Variation::~Variation()
   delete h_vn_kp;
   delete h_vn_km;
   delete h_vn_pr;
+  delete h_vn_yCM_HADES;
   delete h_vn_yCM_00to10_pr;
   delete h_vn_yCM_10to40_pr;
   delete h_vn_yCM_40to60_pr;
@@ -84,6 +85,9 @@ void Variation::initialize(TString order_n_str)
   
   
   //=== vn vs rapidity stuff
+  p_vn_yCM_HADES = (TProfile*)file->Get("p_vn_yCM_HADES");
+  h_vn_yCM_HADES = p_vn_yCM_HADES->ProjectionX((TString)p_vn_yCM_HADES->GetName() +"_"+ ID);
+  
   TProfile2D *p2_vn_yCM_cent_pr = (TProfile2D*)file->Get("p2_vn_yCM_cent_pr");
   TProfile2D *p2_vn_yCM_cent_pr_symmetry = (TProfile2D*)file->Get("p2_vn_yCM_cent_pr_symmetry");
 

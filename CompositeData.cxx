@@ -59,6 +59,8 @@ CompositeData::~CompositeData()
   delete barlow_vn_kp;
   delete barlow_vn_km;
   delete barlow_vn_pr;
+
+  delete barlow_vn_yCM_HADES;
   
   delete barlow_vn_yCM_00to10_pr;
   delete barlow_vn_yCM_10to40_pr;
@@ -101,6 +103,8 @@ void CompositeData::initialize()
   barlow_vn_yCM_40to60_pr = new TH1D("barlow_vn_yCM_40to60_pr_"+ID, "40-60% pr vs yCM;y-y_{mid};#Delta/#sigma_{#Delta}", 20, -1, 1);
 
   // Proton y symmetric
+  barlow_vn_yCM_HADES = new TH1D("barlow_vn_yCM_HADES_"+ID, "20-30% pr vs yCM;y-y_{mid};#Delta/#sigma_{#Delta}", 20, -1, 1);
+
   barlow_vn_yCM_00to10_pr_symm = new TH1D("barlow_vn_yCM_00to10_pr_symm_"+ID, "0-10% pr vs yCM;y-y_{mid};#Delta/#sigma_{#Delta}", 20, -1, 1);
   barlow_vn_yCM_10to40_pr_symm = new TH1D("barlow_vn_yCM_10to40_pr_symm_"+ID, "10-40% pr vs yCM;y-y_{mid};#Delta/#sigma_{#Delta}", 20, -1, 1);
   barlow_vn_yCM_40to60_pr_symm = new TH1D("barlow_vn_yCM_40to60_pr_symm_"+ID, "40-60% pr vs yCM;y-y_{mid};#Delta/#sigma_{#Delta}", 20, -1, 1);
@@ -184,10 +188,12 @@ void CompositeData::saveDetails(Variation* normalData)
   addRawValuesToFile(detailsFile, normalData->h_vn_kp->GetName(), v_vn_kp);
   addRawValuesToFile(detailsFile, normalData->h_vn_km->GetName(), v_vn_km);
   addRawValuesToFile(detailsFile, normalData->h_vn_pr->GetName(), v_vn_pr);
-  
+
   addRawValuesToFile(detailsFile, normalData->h_vn_yCM_00to10_pr->GetName(), v_vn_yCM_00to10_pr);
   addRawValuesToFile(detailsFile, normalData->h_vn_yCM_10to40_pr->GetName(), v_vn_yCM_10to40_pr);
   addRawValuesToFile(detailsFile, normalData->h_vn_yCM_40to60_pr->GetName(), v_vn_yCM_40to60_pr);
+
+  addRawValuesToFile(detailsFile, normalData->h_vn_yCM_HADES->GetName(), v_vn_yCM_HADES);
 
   addRawValuesToFile(detailsFile, normalData->h_vn_yCM_00to10_pr_symm->GetName(), v_vn_yCM_00to10_pr_symm);
   addRawValuesToFile(detailsFile, normalData->h_vn_yCM_10to40_pr_symm->GetName(), v_vn_yCM_10to40_pr_symm);
@@ -221,6 +227,8 @@ void CompositeData::saveDetails(Variation* normalData)
   addBarlowValuesToFile(detailsFile, barlow_vn_yCM_00to10_pr, v_vn_yCM_00to10_pr);
   addBarlowValuesToFile(detailsFile, barlow_vn_yCM_10to40_pr, v_vn_yCM_10to40_pr);
   addBarlowValuesToFile(detailsFile, barlow_vn_yCM_40to60_pr, v_vn_yCM_40to60_pr);
+
+  addBarlowValuesToFile(detailsFile, barlow_vn_yCM_HADES, v_vn_yCM_HADES);
 
   addBarlowValuesToFile(detailsFile, barlow_vn_yCM_00to10_pr_symm, v_vn_yCM_00to10_pr_symm);
   addBarlowValuesToFile(detailsFile, barlow_vn_yCM_10to40_pr_symm, v_vn_yCM_10to40_pr_symm);
@@ -429,6 +437,8 @@ void CompositeData::combine(Variation* normalData, Variation* var1Data)
   mergePoints(normalData->h_vn_yCM_10to40_pr, var1Data->h_vn_yCM_10to40_pr, v_vn_yCM_10to40_pr);
   mergePoints(normalData->h_vn_yCM_40to60_pr, var1Data->h_vn_yCM_40to60_pr, v_vn_yCM_40to60_pr);
 
+  mergePoints(normalData->h_vn_yCM_HADES, var1Data->h_vn_yCM_HADES, v_vn_yCM_HADES);
+
   mergePoints(normalData->h_vn_yCM_00to10_pr_symm, var1Data->h_vn_yCM_00to10_pr_symm, v_vn_yCM_00to10_pr_symm);
   mergePoints(normalData->h_vn_yCM_10to40_pr_symm, var1Data->h_vn_yCM_10to40_pr_symm, v_vn_yCM_10to40_pr_symm);
   mergePoints(normalData->h_vn_yCM_40to60_pr_symm, var1Data->h_vn_yCM_40to60_pr_symm, v_vn_yCM_40to60_pr_symm);
@@ -466,6 +476,8 @@ void CompositeData::combine(Variation* normalData, Variation* var1Data, Variatio
   mergePoints(normalData->h_vn_yCM_10to40_pr, var1Data->h_vn_yCM_10to40_pr, var2Data->h_vn_yCM_10to40_pr, v_vn_yCM_10to40_pr);
   mergePoints(normalData->h_vn_yCM_40to60_pr, var1Data->h_vn_yCM_40to60_pr, var2Data->h_vn_yCM_40to60_pr, v_vn_yCM_40to60_pr);
 
+  mergePoints(normalData->h_vn_yCM_HADES, var1Data->h_vn_yCM_HADES, var2Data->h_vn_yCM_HADES, v_vn_yCM_HADES);
+
   mergePoints(normalData->h_vn_yCM_00to10_pr_symm, var1Data->h_vn_yCM_00to10_pr_symm, var2Data->h_vn_yCM_00to10_pr_symm, v_vn_yCM_00to10_pr_symm);
   mergePoints(normalData->h_vn_yCM_10to40_pr_symm, var1Data->h_vn_yCM_10to40_pr_symm, var2Data->h_vn_yCM_10to40_pr_symm, v_vn_yCM_10to40_pr_symm);
   mergePoints(normalData->h_vn_yCM_40to60_pr_symm, var1Data->h_vn_yCM_40to60_pr_symm, var2Data->h_vn_yCM_40to60_pr_symm, v_vn_yCM_40to60_pr_symm);
@@ -501,6 +513,8 @@ void CompositeData::combine(Variation* normalData, Variation* var1Data, Variatio
   mergePoints(normalData->h_vn_yCM_00to10_pr, var1Data->h_vn_yCM_00to10_pr, var2Data->h_vn_yCM_00to10_pr, var3Data->h_vn_yCM_00to10_pr, v_vn_yCM_00to10_pr);
   mergePoints(normalData->h_vn_yCM_10to40_pr, var1Data->h_vn_yCM_10to40_pr, var2Data->h_vn_yCM_10to40_pr, var3Data->h_vn_yCM_10to40_pr, v_vn_yCM_10to40_pr);
   mergePoints(normalData->h_vn_yCM_40to60_pr, var1Data->h_vn_yCM_40to60_pr, var2Data->h_vn_yCM_40to60_pr, var3Data->h_vn_yCM_40to60_pr, v_vn_yCM_40to60_pr);
+
+  mergePoints(normalData->h_vn_yCM_HADES, var1Data->h_vn_yCM_HADES, var2Data->h_vn_yCM_HADES, var3Data->h_vn_yCM_HADES, v_vn_yCM_HADES);
 
   mergePoints(normalData->h_vn_yCM_00to10_pr_symm, var1Data->h_vn_yCM_00to10_pr_symm, var2Data->h_vn_yCM_00to10_pr_symm, var3Data->h_vn_yCM_00to10_pr_symm, v_vn_yCM_00to10_pr_symm);
   mergePoints(normalData->h_vn_yCM_10to40_pr_symm, var1Data->h_vn_yCM_10to40_pr_symm, var2Data->h_vn_yCM_10to40_pr_symm, var3Data->h_vn_yCM_10to40_pr_symm, v_vn_yCM_10to40_pr_symm);
@@ -538,6 +552,8 @@ void CompositeData::combine(Variation* normalData, Variation* var1Data, Variatio
   mergePoints(normalData->h_vn_yCM_00to10_pr, var1Data->h_vn_yCM_00to10_pr, var2Data->h_vn_yCM_00to10_pr, var3Data->h_vn_yCM_00to10_pr, var4Data->h_vn_yCM_00to10_pr, v_vn_yCM_00to10_pr);
   mergePoints(normalData->h_vn_yCM_10to40_pr, var1Data->h_vn_yCM_10to40_pr, var2Data->h_vn_yCM_10to40_pr, var3Data->h_vn_yCM_10to40_pr, var4Data->h_vn_yCM_10to40_pr, v_vn_yCM_10to40_pr);
   mergePoints(normalData->h_vn_yCM_40to60_pr, var1Data->h_vn_yCM_40to60_pr, var2Data->h_vn_yCM_40to60_pr, var3Data->h_vn_yCM_40to60_pr, var4Data->h_vn_yCM_40to60_pr, v_vn_yCM_40to60_pr);
+
+  mergePoints(normalData->h_vn_yCM_HADES, var1Data->h_vn_yCM_HADES, var2Data->h_vn_yCM_HADES, var3Data->h_vn_yCM_HADES, var4Data->h_vn_yCM_HADES, v_vn_yCM_HADES);
 
   mergePoints(normalData->h_vn_yCM_00to10_pr_symm, var1Data->h_vn_yCM_00to10_pr_symm, var2Data->h_vn_yCM_00to10_pr_symm, var3Data->h_vn_yCM_00to10_pr_symm, var4Data->h_vn_yCM_00to10_pr_symm, v_vn_yCM_00to10_pr_symm);
   mergePoints(normalData->h_vn_yCM_10to40_pr_symm, var1Data->h_vn_yCM_10to40_pr_symm, var2Data->h_vn_yCM_10to40_pr_symm, var3Data->h_vn_yCM_10to40_pr_symm, var4Data->h_vn_yCM_10to40_pr_symm, v_vn_yCM_10to40_pr_symm);

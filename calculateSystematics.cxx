@@ -165,7 +165,9 @@ struct AverageContributionTracker
 void calculateSystematics(TString order_n_str = "3")
 {
   //TFile* newFile = new TFile("systematicErrors_3p0GeV_withSharang_NEW.root", "RECREATE");
-  TFile* newFile = new TFile("systematicErrors_3p0GeV.root", "RECREATE");
+
+  TString newFileName = "systematicErrors_3p0GeV.root";
+  TFile* newFile = new TFile(newFileName, "RECREATE");
 
   //TFile* sharangFile = TFile::Open("v3_proton_comparison.root");
   //TProfile* p_3p0GeV_1040 = (TProfile*)sharangFile->Get("3p0_p_1040");
@@ -187,10 +189,10 @@ void calculateSystematics(TString order_n_str = "3")
   Variation* nSigKa_low_20  = new Variation("nSigKa_low",directory20Percent+energyPrefix+"nSigKa_low", order_n_str);
   Variation* nSigPr_high_20 = new Variation("nSigPr_high",directory20Percent+energyPrefix+"nSigPr_high", order_n_str);
   Variation* nSigPr_low_20  = new Variation("nSigPr_low",directory20Percent+energyPrefix+"nSigPr_low", order_n_str);
-  //Variation* rvtx_high_20 = new Variation("rvtx_high",directory20Percent+energyPrefix+"rvtx_high", order_n_str);
-  //Variation* rvtx_low_20  = new Variation("rvtx_low",directory20Percent+energyPrefix+"rvtx_low", order_n_str);
-  //Variation* zvtx_high_20 = new Variation("zvtx_high",directory20Percent+energyPrefix+"zvtx_high", order_n_str);
-  //Variation* zvtx_low_20  = new Variation("zvtx_low",directory20Percent+energyPrefix+"zvtx_low", order_n_str);
+  Variation* rvtx_high_20 = new Variation("rvtx_high",directory20Percent+energyPrefix+"rvtx_high", order_n_str);
+  Variation* rvtx_low_20  = new Variation("rvtx_low",directory20Percent+energyPrefix+"rvtx_low", order_n_str);
+  Variation* zvtx_high_20 = new Variation("zvtx_high",directory20Percent+energyPrefix+"zvtx_high", order_n_str);
+  Variation* zvtx_low_20  = new Variation("zvtx_low",directory20Percent+energyPrefix+"zvtx_low", order_n_str);
   Variation* dca_high_20 = new Variation("dca_high",directory20Percent+energyPrefix+"dca_high", order_n_str);
   Variation* dca_low_20  = new Variation("dca_low",directory20Percent+energyPrefix+"dca_low", order_n_str);
   Variation* nhits_high_20 = new Variation("nhits_high",directory20Percent+energyPrefix+"nhits_high", order_n_str);
@@ -210,10 +212,10 @@ void calculateSystematics(TString order_n_str = "3")
   Variation* nSigKa_low_30  = new Variation("nSigKa_low",directory30Percent+energyPrefix+"nSigKa_low", order_n_str);
   Variation* nSigPr_high_30 = new Variation("nSigPr_high",directory30Percent+energyPrefix+"nSigPr_high", order_n_str);
   Variation* nSigPr_low_30  = new Variation("nSigPr_low",directory30Percent+energyPrefix+"nSigPr_low", order_n_str);
-  //Variation* rvtx_high_30 = new Variation("rvtx_high",directory30Percent+energyPrefix+"rvtx_high", order_n_str);
-  //Variation* rvtx_low_30  = new Variation("rvtx_low",directory30Percent+energyPrefix+"rvtx_low", order_n_str);
-  //Variation* zvtx_high_30 = new Variation("zvtx_high",directory30Percent+energyPrefix+"zvtx_high", order_n_str);
-  //Variation* zvtx_low_30  = new Variation("zvtx_low",directory30Percent+energyPrefix+"zvtx_low", order_n_str);
+  Variation* rvtx_high_30 = new Variation("rvtx_high",directory30Percent+energyPrefix+"rvtx_high", order_n_str);
+  Variation* rvtx_low_30  = new Variation("rvtx_low",directory30Percent+energyPrefix+"rvtx_low", order_n_str);
+  Variation* zvtx_high_30 = new Variation("zvtx_high",directory30Percent+energyPrefix+"zvtx_high", order_n_str);
+  Variation* zvtx_low_30  = new Variation("zvtx_low",directory30Percent+energyPrefix+"zvtx_low", order_n_str);
   Variation* dca_high_30 = new Variation("dca_high",directory30Percent+energyPrefix+"dca_high", order_n_str);
   Variation* dca_low_30  = new Variation("dca_low",directory30Percent+energyPrefix+"dca_low", order_n_str);
   Variation* nhits_high_30 = new Variation("nhits_high",directory30Percent+energyPrefix+"nhits_high", order_n_str);
@@ -233,8 +235,8 @@ void calculateSystematics(TString order_n_str = "3")
   CompositeData* nSigPi = new CompositeData("nSigPi", Normal, nSigPi_low_30, nSigPi_high_30, nSigPi_low_20, nSigPi_high_20);
   CompositeData* nSigKa = new CompositeData("nSigKa", Normal, nSigKa_low_30, nSigKa_high_30, nSigKa_low_20, nSigKa_high_20);
   CompositeData* nSigPr = new CompositeData("nSigPr", Normal, nSigPr_low_30, nSigPr_high_30, nSigPr_low_20, nSigPr_high_20);
-  //CompositeData* rvtx = new CompositeData("rvtx", Normal, rvtx_low_30, rvtx_high_30, rvtx_low_20, rvtx_high_20);
-  //CompositeData* zvtx = new CompositeData("zvtx", Normal, zvtx_low_30, zvtx_high_30, zvtx_low_20, zvtx_high_20);
+  CompositeData* rvtx = new CompositeData("rvtx", Normal, rvtx_low_30, rvtx_high_30, rvtx_low_20, rvtx_high_20);
+  CompositeData* zvtx = new CompositeData("zvtx", Normal, zvtx_low_30, zvtx_high_30, zvtx_low_20, zvtx_high_20);
   CompositeData* dca  = new CompositeData("dca", Normal, dca_low_30, dca_high_30, dca_low_20, dca_high_20);
   //CompositeData* nhitsdEdx = new CompositeData("nhitsdEdx", Normal, nhitsdEdx_high_30, nhitsdEdx_high_20, nhitsdEdx_low_20);
   CompositeData* nhitsdEdx = new CompositeData("nhitsdEdx", Normal, nhitsdEdx_high_30, nhitsdEdx_high_20);
@@ -249,8 +251,8 @@ void calculateSystematics(TString order_n_str = "3")
   composites.push_back(nSigPi);
   composites.push_back(nSigKa);
   composites.push_back(nSigPr);
-  //composites.push_back(rvtx);
-  //composites.push_back(zvtx);
+  composites.push_back(rvtx);
+  composites.push_back(zvtx);
   composites.push_back(dca);
   composites.push_back(nhitsdEdx);
   composites.push_back(nhitsratio);
@@ -565,6 +567,37 @@ void calculateSystematics(TString order_n_str = "3")
   ithBinSysErr = 0;
   quadSum = 0.0;
   //===
+
+
+  
+
+  //=== Proton vs rapidity HADES symmetric
+  std::vector<Double_t> v_sys_yCM_HADES;
+  bins = Normal->h_vn_yCM_HADES->GetNbinsX();
+  for (int ithBin = 0; ithBin < bins; ithBin++)
+  {
+    quadSum = 0.0;
+    quadSum += epd->v_vn_yCM_HADES.at(ithBin).variance;
+    
+    //if (ithBin > 4 && ithBin < 15)
+    //avgTracker_HADES.addContribution(epd->ID, epd->v_vn_yCM_HADES.at(ithBin).stdDevPercentage);
+
+    for (int jthCut = 0; jthCut < composites.size(); jthCut++)
+    {
+      if (composites.at(jthCut)->v_vn_yCM_HADES.at(ithBin).deltaByDeltaError > 1.0)
+      {
+        quadSum += composites.at(jthCut)->v_vn_yCM_HADES.at(ithBin).variance;
+        //avgTracker_HADES.addContribution(composites.at(jthCut)->ID, composites.at(jthCut)->v_vn_yCM_HADES.at(ithBin).stdDevPercentage);
+      }
+    }
+    
+    ithBinSysErr = TMath::Sqrt(quadSum);
+    v_sys_yCM_HADES.push_back(ithBinSysErr);
+  }
+  ithBinSysErr = 0;
+  quadSum = 0.0;
+  //===
+
 
 
   //=== Proton vs rapidity 0 - 10% symmetric
@@ -965,14 +998,14 @@ void calculateSystematics(TString order_n_str = "3")
 
 
 
-  //std::cout << "0-10% Centrality" << std::endl;
-  //avgTracker_00to10.printContributions();  
+  std::cout << "0-10% Centrality" << std::endl;
+  avgTracker_00to10.printContributions();  
   
   std::cout << "10-40% Centrality" << std::endl;
   avgTracker_10to40.printContributions();
 
-  //std::cout << "40-60% Centrality" << std::endl;
-  //avgTracker_40to60.printContributions();
+  std::cout << "40-60% Centrality" << std::endl;
+  avgTracker_40to60.printContributions();
 
   newFile->cd();
 
@@ -1414,6 +1447,16 @@ void calculateSystematics(TString order_n_str = "3")
       
 
   //=== Proton vs rapidity symmetric across midrapidity
+  copyWithNewErrors1 = new TGraphErrors((TH1D*)Normal->h_vn_yCM_HADES->Clone());
+  xAxisError = Normal->h_vn_yCM_HADES->GetXaxis()->GetBinWidth(1)/2.0;
+  for (int i = 0; i < v_sys_yCM_HADES.size(); i++)
+    { copyWithNewErrors1->SetPointError(i, xAxisError, v_sys_yCM_HADES.at(i)); }
+
+  copyWithNewErrors1->Write();
+  delete copyWithNewErrors1;
+
+  
+  
   THStack *prRapidityStack_symm = new THStack("prRapidityStack_symm", ";y-y_{mid};v_{"+order_n_str+"}");
   prRapidityStack_symm->Add(Normal->h_vn_yCM_00to10_pr_symm);
   prRapidityStack_symm->Add(Normal->h_vn_yCM_10to40_pr_symm);
@@ -1515,8 +1558,8 @@ void calculateSystematics(TString order_n_str = "3")
   delete nSigPi;
   delete nSigKa;
   delete nSigPr;
-  //delete rvtx;
-  //delete zvtx;
+  delete rvtx;
+  delete zvtx;
   delete dca;
   delete nhitsdEdx;
   delete nhitsratio;
@@ -1524,9 +1567,9 @@ void calculateSystematics(TString order_n_str = "3")
   delete m2Ka;
 
   delete Normal;
-  //delete epd_high;
+  delete epd_high;
   //delete epd_low;
-  //delete epd_scaled;
+  delete epd_scaled;
   
   delete nSigPi_high_30;
   delete nSigPi_low_30;
@@ -1534,10 +1577,10 @@ void calculateSystematics(TString order_n_str = "3")
   delete nSigKa_low_30;
   delete nSigPr_high_30;
   delete nSigPr_low_30;
-  //delete rvtx_high_30;
-  //delete rvtx_low_30;
-  //delete zvtx_high_30;
-  //delete zvtx_low_30;
+  delete rvtx_high_30;
+  delete rvtx_low_30;
+  delete zvtx_high_30;
+  delete zvtx_low_30;
   delete dca_high_30;
   delete dca_low_30;
   delete nhits_high_30;
@@ -1558,10 +1601,10 @@ void calculateSystematics(TString order_n_str = "3")
   delete nSigKa_low_20;
   delete nSigPr_high_20;
   delete nSigPr_low_20;
-  //delete rvtx_high_20;
-  //delete rvtx_low_20;
-  //delete zvtx_high_20;
-  //delete zvtx_low_20;
+  delete rvtx_high_20;
+  delete rvtx_low_20;
+  delete zvtx_high_20;
+  delete zvtx_low_20;
   delete dca_high_20;
   delete dca_low_20;
   delete nhits_high_20;
@@ -1577,6 +1620,8 @@ void calculateSystematics(TString order_n_str = "3")
 
   newFile->Close();
   delete newFile;
+
+  std::cout << std::endl << "Systematic uncertainties saved to " << newFileName << std::endl;
 }
 
 

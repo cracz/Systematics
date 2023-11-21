@@ -19,6 +19,8 @@ class Variation
   TH1D *h_vn_kp;
   TH1D *h_vn_km;
   TH1D *h_vn_pr;
+
+  TH1D *h_vn_yCM_HADES;
   
   TH1D *h_vn_yCM_00to10_pr;
   TH1D *h_vn_yCM_10to40_pr;
@@ -49,6 +51,8 @@ class Variation
   TProfile *p_vn_kp;
   TProfile *p_vn_km;
   TProfile *p_vn_pr;
+
+  TProfile *p_vn_yCM_HADES;
   
   TProfile *p_vn_yCM_00to10_pr;
   TProfile *p_vn_yCM_10to40_pr;

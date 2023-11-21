@@ -124,6 +124,8 @@ class CompositeData
   std::vector<DataPoint> v_vn_kp;
   std::vector<DataPoint> v_vn_km;
   std::vector<DataPoint> v_vn_pr;
+
+  std::vector<DataPoint> v_vn_yCM_HADES;
   
   std::vector<DataPoint> v_vn_yCM_00to10_pr;
   std::vector<DataPoint> v_vn_yCM_10to40_pr;
@@ -157,6 +159,8 @@ class CompositeData
   TH1D* barlow_vn_kp;
   TH1D* barlow_vn_km;
   TH1D* barlow_vn_pr;
+
+  TH1D* barlow_vn_yCM_HADES;
   
   TH1D* barlow_vn_yCM_00to10_pr;
   TH1D* barlow_vn_yCM_10to40_pr;

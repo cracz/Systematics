@@ -85,6 +85,14 @@ CompositeData::~CompositeData()
   delete barlow_vn_pT_00to10_pr;
   delete barlow_vn_pT_10to40_pr;
   delete barlow_vn_pT_40to60_pr;
+
+  delete barlow_vn_pT_bin6_pr_symm;
+  delete barlow_vn_pT_bin7_pr_symm;
+  delete barlow_vn_pT_bin8_pr_symm;
+  delete barlow_vn_pT_bin9_pr_symm;
+  delete barlow_vn_pT_bin10_pr_symm;
+  delete barlow_vn_pT_bin11_pr_symm;
+  delete barlow_vn_pT_bin12_pr_symm;
 }
 
 
@@ -126,6 +134,14 @@ void CompositeData::initialize()
   barlow_vn_pT_00to10_pr = new TH1D("barlow_vn_pT_00to10_pr_"+ID, "0-10% pr vs p_{T};p_{T} (GeV);#Delta/#sigma_{#Delta}", 10, 0, 2);
   barlow_vn_pT_10to40_pr = new TH1D("barlow_vn_pT_10to40_pr_"+ID, "10-40% pr vs p_{T};p_{T} (GeV);#Delta/#sigma_{#Delta}", 10, 0, 2);
   barlow_vn_pT_40to60_pr = new TH1D("barlow_vn_pT_40to60_pr_"+ID, "40-60% pr vs p_{T};p_{T} (GeV);#Delta/#sigma_{#Delta}", 10, 0, 2);
+
+  barlow_vn_pT_bin6_pr_symm  = new TH1D("barlow_vn_pT_bin6_pr_symm_"+ID, "bin 6;p_{T} (GeV);#Delta/#sigma_{#Delta}", 12, 0, 2.5);
+  barlow_vn_pT_bin7_pr_symm  = new TH1D("barlow_vn_pT_bin7_pr_symm_"+ID, "bin 7;p_{T} (GeV);#Delta/#sigma_{#Delta}", 12, 0, 2.5);
+  barlow_vn_pT_bin8_pr_symm  = new TH1D("barlow_vn_pT_bin8_pr_symm_"+ID, "bin 8;p_{T} (GeV);#Delta/#sigma_{#Delta}", 12, 0, 2.5);
+  barlow_vn_pT_bin9_pr_symm  = new TH1D("barlow_vn_pT_bin9_pr_symm_"+ID, "bin 9;p_{T} (GeV);#Delta/#sigma_{#Delta}", 12, 0, 2.5);
+  barlow_vn_pT_bin10_pr_symm = new TH1D("barlow_vn_pT_bin10_pr_symm_"+ID, "bin 10;p_{T} (GeV);#Delta/#sigma_{#Delta}", 12, 0, 2.5);
+  barlow_vn_pT_bin11_pr_symm = new TH1D("barlow_vn_pT_bin11_pr_symm_"+ID, "bin 11;p_{T} (GeV);#Delta/#sigma_{#Delta}", 12, 0, 2.5);
+  barlow_vn_pT_bin12_pr_symm = new TH1D("barlow_vn_pT_bin12_pr_symm_"+ID, "bin 12;p_{T} (GeV);#Delta/#sigma_{#Delta}", 12, 0, 2.5);
 }
 
 
@@ -215,6 +231,14 @@ void CompositeData::saveDetails(Variation* normalData)
   addRawValuesToFile(detailsFile, normalData->h_vn_pT_00to10_pr->GetName(), v_vn_pT_00to10_pr);
   addRawValuesToFile(detailsFile, normalData->h_vn_pT_10to40_pr->GetName(), v_vn_pT_10to40_pr);
   addRawValuesToFile(detailsFile, normalData->h_vn_pT_40to60_pr->GetName(), v_vn_pT_40to60_pr);
+
+  addRawValuesToFile(detailsFile, normalData->h_vn_pT_bin6_10to40_pr_symm->GetName(), v_vn_pT_bin6_pr_symm);
+  addRawValuesToFile(detailsFile, normalData->h_vn_pT_bin7_10to40_pr_symm->GetName(), v_vn_pT_bin7_pr_symm);
+  addRawValuesToFile(detailsFile, normalData->h_vn_pT_bin8_10to40_pr_symm->GetName(), v_vn_pT_bin8_pr_symm);
+  addRawValuesToFile(detailsFile, normalData->h_vn_pT_bin9_10to40_pr_symm->GetName(), v_vn_pT_bin9_pr_symm);
+  addRawValuesToFile(detailsFile, normalData->h_vn_pT_bin10_10to40_pr_symm->GetName(), v_vn_pT_bin10_pr_symm);
+  addRawValuesToFile(detailsFile, normalData->h_vn_pT_bin11_10to40_pr_symm->GetName(), v_vn_pT_bin11_pr_symm);
+  addRawValuesToFile(detailsFile, normalData->h_vn_pT_bin12_10to40_pr_symm->GetName(), v_vn_pT_bin12_pr_symm);
   ////
 
   // Save the significance values
@@ -250,6 +274,14 @@ void CompositeData::saveDetails(Variation* normalData)
   addBarlowValuesToFile(detailsFile, barlow_vn_pT_00to10_pr, v_vn_pT_00to10_pr);
   addBarlowValuesToFile(detailsFile, barlow_vn_pT_10to40_pr, v_vn_pT_10to40_pr);
   addBarlowValuesToFile(detailsFile, barlow_vn_pT_40to60_pr, v_vn_pT_40to60_pr);
+
+  addBarlowValuesToFile(detailsFile, barlow_vn_pT_bin6_pr_symm, v_vn_pT_bin6_pr_symm);
+  addBarlowValuesToFile(detailsFile, barlow_vn_pT_bin7_pr_symm, v_vn_pT_bin7_pr_symm);
+  addBarlowValuesToFile(detailsFile, barlow_vn_pT_bin8_pr_symm, v_vn_pT_bin8_pr_symm);
+  addBarlowValuesToFile(detailsFile, barlow_vn_pT_bin9_pr_symm, v_vn_pT_bin9_pr_symm);
+  addBarlowValuesToFile(detailsFile, barlow_vn_pT_bin10_pr_symm, v_vn_pT_bin10_pr_symm);
+  addBarlowValuesToFile(detailsFile, barlow_vn_pT_bin11_pr_symm, v_vn_pT_bin11_pr_symm);
+  addBarlowValuesToFile(detailsFile, barlow_vn_pT_bin12_pr_symm, v_vn_pT_bin12_pr_symm);
   ////
   
   detailsFile->Close();
@@ -270,21 +302,32 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, std::vector<
     
     point.var1Value = var1Histo->GetBinContent(i);
     point.var1Error = var1Histo->GetBinError(i);
-    
-    point.delta = TMath::Abs(point.var1Value - point.normalValue);
-    point.deltaError = TMath::Sqrt(TMath::Abs(TMath::Power(point.var1Error, 2) - TMath::Power(point.normalError, 2)));
-    point.deltaByDeltaError = (point.deltaError == 0.0)?0.0:point.delta/point.deltaError;
-    //point.stdDev = point.delta / TMath::Sqrt(12.0);
-    //point.variance = TMath::Power(point.delta/TMath::Sqrt(12.0), 2.0);
 
-    point.mean = (point.normalValue + point.var1Value) / N;
-    Double_t Nvariance = TMath::Power(point.normalValue - point.mean, 2.0) + 
-                          TMath::Power(point.var1Value - point.mean, 2.0);
+    if((point.normalValue == 0.0 && point.normalError == 0.0) ||
+       (point.var1Value   == 0.0 && point.var1Error   == 0.0))
+      {
+	point.delta = 0.0;
+	point.deltaError = 0.0;
+	point.deltaByDeltaError = 0.0;
+	point.mean = 0.0;
+	point.variance = 0.0;
+	point.stdDev = 0.0;
+	point.stdDevPercentage = 0.0;
+      }
+    else
+      {
+	point.delta = TMath::Abs(point.var1Value - point.normalValue);
+	point.deltaError = TMath::Sqrt(TMath::Abs(TMath::Power(point.var1Error, 2) - TMath::Power(point.normalError, 2)));
+	point.deltaByDeltaError = (point.deltaError == 0.0)?0.0:point.delta/point.deltaError;
+	point.mean = (point.normalValue + point.var1Value) / N;
+	
+	Double_t Nvariance = TMath::Power(point.normalValue - point.mean, 2.0) + 
+	  TMath::Power(point.var1Value - point.mean, 2.0);
 
-    point.variance = Nvariance / N;
-    point.stdDev = TMath::Sqrt(point.variance);
-    point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
-
+	point.variance = Nvariance / N;
+	point.stdDev = TMath::Sqrt(point.variance);
+	point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
+      }
     vectorOfPoints.push_back(point);
   }
 }
@@ -309,23 +352,34 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Hi
 
     point.getMax();
     point.getMin();
+
+    if((point.normalValue == 0.0 && point.normalError == 0.0) ||
+       (point.var1Value   == 0.0 && point.var1Error   == 0.0) ||
+       (point.var2Value   == 0.0 && point.var2Error   == 0.0))
+      {
+	point.delta = 0.0;
+	point.deltaError = 0.0;
+	point.deltaByDeltaError = 0.0;
+	point.mean = 0.0;
+	point.variance = 0.0;
+	point.stdDev = 0.0;
+	point.stdDevPercentage = 0.0;
+      }
+    else
+      {
+	point.delta = TMath::Abs(point.maxValue - point.minValue);
+	point.deltaError = TMath::Sqrt(TMath::Abs(TMath::Power(point.maxError, 2) - TMath::Power(point.minError, 2)));
+	point.deltaByDeltaError = (point.deltaError == 0.0)?0.0:point.delta/point.deltaError; 
+	point.mean = (point.normalValue + point.var1Value + point.var2Value) / N;
     
-    point.delta = TMath::Abs(point.maxValue - point.minValue);
-    point.deltaError = TMath::Sqrt(TMath::Abs(TMath::Power(point.maxError, 2) - TMath::Power(point.minError, 2)));
-    point.deltaByDeltaError = (point.deltaError == 0.0)?0.0:point.delta/point.deltaError;
-    //point.stdDev = point.delta / TMath::Sqrt(12.0);
-    //point.variance = TMath::Power(point.delta/TMath::Sqrt(12.0), 2.0);
+	Double_t Nvariance = TMath::Power(point.normalValue - point.mean, 2.0) + 
+	  TMath::Power(point.var1Value - point.mean, 2.0) + 
+	  TMath::Power(point.var2Value - point.mean, 2.0);
 
-    point.mean = (point.normalValue + point.var1Value + point.var2Value) / N;
-    
-    Double_t Nvariance = TMath::Power(point.normalValue - point.mean, 2.0) + 
-                          TMath::Power(point.var1Value - point.mean, 2.0) + 
-                          TMath::Power(point.var2Value - point.mean, 2.0);
-
-    point.variance = Nvariance / N;
-    point.stdDev = TMath::Sqrt(point.variance);
-    point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
-
+	point.variance = Nvariance / N;
+	point.stdDev = TMath::Sqrt(point.variance);
+	point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
+      }
     vectorOfPoints.push_back(point);
   }
 }
@@ -353,24 +407,36 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Hi
 
     point.getMax();
     point.getMin();
+
+    if((point.normalValue == 0.0 && point.normalError == 0.0) ||
+       (point.var1Value   == 0.0 && point.var1Error   == 0.0) ||
+       (point.var2Value   == 0.0 && point.var2Error   == 0.0) ||
+       (point.var3Value   == 0.0 && point.var3Error   == 0.0))
+      {
+	point.delta = 0.0;
+	point.deltaError = 0.0;
+	point.deltaByDeltaError = 0.0;
+	point.mean = 0.0;
+	point.variance = 0.0;
+	point.stdDev = 0.0;
+	point.stdDevPercentage = 0.0;
+      }
+    else
+      {
+	point.delta = TMath::Abs(point.maxValue - point.minValue);
+	point.deltaError = TMath::Sqrt(TMath::Abs(TMath::Power(point.maxError, 2) - TMath::Power(point.minError, 2)));
+	point.deltaByDeltaError = (point.deltaError == 0.0)?0.0:point.delta/point.deltaError;
+	point.mean = (point.normalValue + point.var1Value + point.var2Value + point.var3Value) / N;
     
-    point.delta = TMath::Abs(point.maxValue - point.minValue);
-    point.deltaError = TMath::Sqrt(TMath::Abs(TMath::Power(point.maxError, 2) - TMath::Power(point.minError, 2)));
-    point.deltaByDeltaError = (point.deltaError == 0.0)?0.0:point.delta/point.deltaError;
-    //point.stdDev = point.delta / TMath::Sqrt(12.0);
-    //point.variance = TMath::Power(point.delta/TMath::Sqrt(12.0), 2.0);
+	Double_t Nvariance = TMath::Power(point.normalValue - point.mean, 2.0) + 
+	  TMath::Power(point.var1Value - point.mean, 2.0) + 
+	  TMath::Power(point.var2Value - point.mean, 2.0) + 
+	  TMath::Power(point.var3Value - point.mean, 2.0);
 
-    point.mean = (point.normalValue + point.var1Value + point.var2Value + point.var3Value) / N;
-    
-    Double_t Nvariance = TMath::Power(point.normalValue - point.mean, 2.0) + 
-                          TMath::Power(point.var1Value - point.mean, 2.0) + 
-                          TMath::Power(point.var2Value - point.mean, 2.0) + 
-                          TMath::Power(point.var3Value - point.mean, 2.0);
-
-    point.variance = Nvariance / N;
-    point.stdDev = TMath::Sqrt(point.variance);
-    point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
-
+	point.variance = Nvariance / N;
+	point.stdDev = TMath::Sqrt(point.variance);
+	point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
+      }
     vectorOfPoints.push_back(point);
   }
 }
@@ -400,25 +466,38 @@ void CompositeData::mergePoints(TH1D* normalHisto, TH1D* var1Histo, TH1D* var2Hi
 
     point.getMax();
     point.getMin();
+
+    if((point.normalValue == 0.0 && point.normalError == 0.0) ||
+       (point.var1Value   == 0.0 && point.var1Error   == 0.0) ||
+       (point.var2Value   == 0.0 && point.var2Error   == 0.0) ||
+       (point.var3Value   == 0.0 && point.var3Error   == 0.0) ||
+       (point.var4Value   == 0.0 && point.var4Error   == 0.0))
+      {
+	point.delta = 0.0;
+	point.deltaError = 0.0;
+	point.deltaByDeltaError = 0.0;
+	point.mean = 0.0;
+	point.variance = 0.0;
+	point.stdDev = 0.0;
+	point.stdDevPercentage = 0.0;
+      }
+    else
+      {
+	point.delta = TMath::Abs(point.maxValue - point.minValue);
+	point.deltaError = TMath::Sqrt(TMath::Abs(TMath::Power(point.maxError, 2) - TMath::Power(point.minError, 2)));
+	point.deltaByDeltaError = (point.deltaError == 0.0)?0.0:point.delta/point.deltaError;
+	point.mean = (point.normalValue + point.var1Value + point.var2Value + point.var3Value + point.var4Value) / N;
     
-    point.delta = TMath::Abs(point.maxValue - point.minValue);
-    point.deltaError = TMath::Sqrt(TMath::Abs(TMath::Power(point.maxError, 2) - TMath::Power(point.minError, 2)));
-    point.deltaByDeltaError = (point.deltaError == 0.0)?0.0:point.delta/point.deltaError;
-    //point.stdDev = point.delta / TMath::Sqrt(12.0);
-    //point.variance = TMath::Power(point.delta/TMath::Sqrt(12.0), 2.0);
+	Double_t Nvariance = TMath::Power(point.normalValue - point.mean, 2.0) + 
+	  TMath::Power(point.var1Value - point.mean, 2.0) + 
+	  TMath::Power(point.var2Value - point.mean, 2.0) + 
+	  TMath::Power(point.var3Value - point.mean, 2.0) +
+	  TMath::Power(point.var4Value - point.mean, 2.0);
 
-    point.mean = (point.normalValue + point.var1Value + point.var2Value + point.var3Value + point.var4Value) / N;
-    
-    Double_t Nvariance = TMath::Power(point.normalValue - point.mean, 2.0) + 
-                          TMath::Power(point.var1Value - point.mean, 2.0) + 
-                          TMath::Power(point.var2Value - point.mean, 2.0) + 
-                          TMath::Power(point.var3Value - point.mean, 2.0) +
-                          TMath::Power(point.var4Value - point.mean, 2.0);
-
-    point.variance = Nvariance / N;
-    point.stdDev = TMath::Sqrt(point.variance);
-    point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
-
+	point.variance = Nvariance / N;
+	point.stdDev = TMath::Sqrt(point.variance);
+	point.stdDevPercentage = 100.0 * point.stdDev / TMath::Abs(point.normalValue);
+      }
     vectorOfPoints.push_back(point);
   }
 }
@@ -459,6 +538,14 @@ void CompositeData::combine(Variation* normalData, Variation* var1Data)
   mergePoints(normalData->h_vn_pT_00to10_pr, var1Data->h_vn_pT_00to10_pr, v_vn_pT_00to10_pr);
   mergePoints(normalData->h_vn_pT_10to40_pr, var1Data->h_vn_pT_10to40_pr, v_vn_pT_10to40_pr);
   mergePoints(normalData->h_vn_pT_40to60_pr, var1Data->h_vn_pT_40to60_pr, v_vn_pT_40to60_pr);
+
+  mergePoints(normalData->h_vn_pT_bin6_10to40_pr_symm,  var1Data->h_vn_pT_bin6_10to40_pr_symm,  v_vn_pT_bin6_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin7_10to40_pr_symm,  var1Data->h_vn_pT_bin7_10to40_pr_symm,  v_vn_pT_bin7_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin8_10to40_pr_symm,  var1Data->h_vn_pT_bin8_10to40_pr_symm,  v_vn_pT_bin8_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin9_10to40_pr_symm,  var1Data->h_vn_pT_bin9_10to40_pr_symm,  v_vn_pT_bin9_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin10_10to40_pr_symm, var1Data->h_vn_pT_bin10_10to40_pr_symm, v_vn_pT_bin10_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin11_10to40_pr_symm, var1Data->h_vn_pT_bin11_10to40_pr_symm, v_vn_pT_bin11_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin12_10to40_pr_symm, var1Data->h_vn_pT_bin12_10to40_pr_symm, v_vn_pT_bin12_pr_symm);
 }
 
 
@@ -498,6 +585,14 @@ void CompositeData::combine(Variation* normalData, Variation* var1Data, Variatio
   mergePoints(normalData->h_vn_pT_00to10_pr, var1Data->h_vn_pT_00to10_pr, var2Data->h_vn_pT_00to10_pr, v_vn_pT_00to10_pr);
   mergePoints(normalData->h_vn_pT_10to40_pr, var1Data->h_vn_pT_10to40_pr, var2Data->h_vn_pT_10to40_pr, v_vn_pT_10to40_pr);
   mergePoints(normalData->h_vn_pT_40to60_pr, var1Data->h_vn_pT_40to60_pr, var2Data->h_vn_pT_40to60_pr, v_vn_pT_40to60_pr);
+
+  mergePoints(normalData->h_vn_pT_bin6_10to40_pr_symm,  var1Data->h_vn_pT_bin6_10to40_pr_symm,  var2Data->h_vn_pT_bin6_10to40_pr_symm,  v_vn_pT_bin6_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin7_10to40_pr_symm,  var1Data->h_vn_pT_bin7_10to40_pr_symm,  var2Data->h_vn_pT_bin7_10to40_pr_symm,  v_vn_pT_bin7_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin8_10to40_pr_symm,  var1Data->h_vn_pT_bin8_10to40_pr_symm,  var2Data->h_vn_pT_bin8_10to40_pr_symm,  v_vn_pT_bin8_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin9_10to40_pr_symm,  var1Data->h_vn_pT_bin9_10to40_pr_symm,  var2Data->h_vn_pT_bin9_10to40_pr_symm,  v_vn_pT_bin9_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin10_10to40_pr_symm, var1Data->h_vn_pT_bin10_10to40_pr_symm, var2Data->h_vn_pT_bin10_10to40_pr_symm, v_vn_pT_bin10_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin11_10to40_pr_symm, var1Data->h_vn_pT_bin11_10to40_pr_symm, var2Data->h_vn_pT_bin11_10to40_pr_symm, v_vn_pT_bin11_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin12_10to40_pr_symm, var1Data->h_vn_pT_bin12_10to40_pr_symm, var2Data->h_vn_pT_bin12_10to40_pr_symm, v_vn_pT_bin12_pr_symm);
 }
 
 
@@ -536,6 +631,14 @@ void CompositeData::combine(Variation* normalData, Variation* var1Data, Variatio
   mergePoints(normalData->h_vn_pT_00to10_pr, var1Data->h_vn_pT_00to10_pr, var2Data->h_vn_pT_00to10_pr, var3Data->h_vn_pT_00to10_pr, v_vn_pT_00to10_pr);
   mergePoints(normalData->h_vn_pT_10to40_pr, var1Data->h_vn_pT_10to40_pr, var2Data->h_vn_pT_10to40_pr, var3Data->h_vn_pT_10to40_pr, v_vn_pT_10to40_pr);
   mergePoints(normalData->h_vn_pT_40to60_pr, var1Data->h_vn_pT_40to60_pr, var2Data->h_vn_pT_40to60_pr, var3Data->h_vn_pT_40to60_pr, v_vn_pT_40to60_pr);
+
+  mergePoints(normalData->h_vn_pT_bin6_10to40_pr_symm,  var1Data->h_vn_pT_bin6_10to40_pr_symm,  var2Data->h_vn_pT_bin6_10to40_pr_symm,   var3Data->h_vn_pT_bin6_10to40_pr_symm,  v_vn_pT_bin6_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin7_10to40_pr_symm,  var1Data->h_vn_pT_bin7_10to40_pr_symm,  var2Data->h_vn_pT_bin7_10to40_pr_symm,   var3Data->h_vn_pT_bin7_10to40_pr_symm,  v_vn_pT_bin7_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin8_10to40_pr_symm,  var1Data->h_vn_pT_bin8_10to40_pr_symm,  var2Data->h_vn_pT_bin8_10to40_pr_symm,   var3Data->h_vn_pT_bin8_10to40_pr_symm,  v_vn_pT_bin8_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin9_10to40_pr_symm,  var1Data->h_vn_pT_bin9_10to40_pr_symm,  var2Data->h_vn_pT_bin9_10to40_pr_symm,   var3Data->h_vn_pT_bin9_10to40_pr_symm,  v_vn_pT_bin9_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin10_10to40_pr_symm, var1Data->h_vn_pT_bin10_10to40_pr_symm, var2Data->h_vn_pT_bin10_10to40_pr_symm,  var3Data->h_vn_pT_bin10_10to40_pr_symm, v_vn_pT_bin10_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin11_10to40_pr_symm, var1Data->h_vn_pT_bin11_10to40_pr_symm, var2Data->h_vn_pT_bin11_10to40_pr_symm,  var3Data->h_vn_pT_bin11_10to40_pr_symm, v_vn_pT_bin11_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin12_10to40_pr_symm, var1Data->h_vn_pT_bin12_10to40_pr_symm, var2Data->h_vn_pT_bin12_10to40_pr_symm,  var3Data->h_vn_pT_bin12_10to40_pr_symm, v_vn_pT_bin12_pr_symm);
 }
 
 
@@ -575,4 +678,12 @@ void CompositeData::combine(Variation* normalData, Variation* var1Data, Variatio
   mergePoints(normalData->h_vn_pT_00to10_pr, var1Data->h_vn_pT_00to10_pr, var2Data->h_vn_pT_00to10_pr, var3Data->h_vn_pT_00to10_pr, var4Data->h_vn_pT_00to10_pr, v_vn_pT_00to10_pr);
   mergePoints(normalData->h_vn_pT_10to40_pr, var1Data->h_vn_pT_10to40_pr, var2Data->h_vn_pT_10to40_pr, var3Data->h_vn_pT_10to40_pr, var4Data->h_vn_pT_10to40_pr, v_vn_pT_10to40_pr);
   mergePoints(normalData->h_vn_pT_40to60_pr, var1Data->h_vn_pT_40to60_pr, var2Data->h_vn_pT_40to60_pr, var3Data->h_vn_pT_40to60_pr, var4Data->h_vn_pT_40to60_pr, v_vn_pT_40to60_pr);
+
+  mergePoints(normalData->h_vn_pT_bin6_10to40_pr_symm,  var1Data->h_vn_pT_bin6_10to40_pr_symm,  var2Data->h_vn_pT_bin6_10to40_pr_symm,   var3Data->h_vn_pT_bin6_10to40_pr_symm, var4Data->h_vn_pT_bin6_10to40_pr_symm,  v_vn_pT_bin6_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin7_10to40_pr_symm,  var1Data->h_vn_pT_bin7_10to40_pr_symm,  var2Data->h_vn_pT_bin7_10to40_pr_symm,   var3Data->h_vn_pT_bin7_10to40_pr_symm, var4Data->h_vn_pT_bin7_10to40_pr_symm,  v_vn_pT_bin7_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin8_10to40_pr_symm,  var1Data->h_vn_pT_bin8_10to40_pr_symm,  var2Data->h_vn_pT_bin8_10to40_pr_symm,   var3Data->h_vn_pT_bin8_10to40_pr_symm, var4Data->h_vn_pT_bin8_10to40_pr_symm,  v_vn_pT_bin8_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin9_10to40_pr_symm,  var1Data->h_vn_pT_bin9_10to40_pr_symm,  var2Data->h_vn_pT_bin9_10to40_pr_symm,   var3Data->h_vn_pT_bin9_10to40_pr_symm, var4Data->h_vn_pT_bin9_10to40_pr_symm,  v_vn_pT_bin9_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin10_10to40_pr_symm, var1Data->h_vn_pT_bin10_10to40_pr_symm, var2Data->h_vn_pT_bin10_10to40_pr_symm,  var3Data->h_vn_pT_bin10_10to40_pr_symm, var4Data->h_vn_pT_bin10_10to40_pr_symm, v_vn_pT_bin10_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin11_10to40_pr_symm, var1Data->h_vn_pT_bin11_10to40_pr_symm, var2Data->h_vn_pT_bin11_10to40_pr_symm,  var3Data->h_vn_pT_bin11_10to40_pr_symm, var4Data->h_vn_pT_bin11_10to40_pr_symm, v_vn_pT_bin11_pr_symm);
+  mergePoints(normalData->h_vn_pT_bin12_10to40_pr_symm, var1Data->h_vn_pT_bin12_10to40_pr_symm, var2Data->h_vn_pT_bin12_10to40_pr_symm,  var3Data->h_vn_pT_bin12_10to40_pr_symm, var4Data->h_vn_pT_bin12_10to40_pr_symm, v_vn_pT_bin12_pr_symm);
 }

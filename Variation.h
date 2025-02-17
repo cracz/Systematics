@@ -46,6 +46,14 @@ class Variation
   TH1D *h_vn_pT_10to40_pr;
   TH1D *h_vn_pT_40to60_pr;
 
+  TH1D *h_vn_pT_bin6_10to40_pr_symm;
+  TH1D *h_vn_pT_bin7_10to40_pr_symm;
+  TH1D *h_vn_pT_bin8_10to40_pr_symm;
+  TH1D *h_vn_pT_bin9_10to40_pr_symm;
+  TH1D *h_vn_pT_bin10_10to40_pr_symm;
+  TH1D *h_vn_pT_bin11_10to40_pr_symm;
+  TH1D *h_vn_pT_bin12_10to40_pr_symm;
+
   TProfile *p_vn_pp;
   TProfile *p_vn_pm;
   TProfile *p_vn_kp;
@@ -77,6 +85,14 @@ class Variation
   TProfile *p_vn_pT_00to10_pr;
   TProfile *p_vn_pT_10to40_pr;
   TProfile *p_vn_pT_40to60_pr;
+
+  TProfile *p_vn_pT_bin6_10to40_pr_symm;
+  TProfile *p_vn_pT_bin7_10to40_pr_symm;
+  TProfile *p_vn_pT_bin8_10to40_pr_symm;
+  TProfile *p_vn_pT_bin9_10to40_pr_symm;
+  TProfile *p_vn_pT_bin10_10to40_pr_symm;
+  TProfile *p_vn_pT_bin11_10to40_pr_symm;
+  TProfile *p_vn_pT_bin12_10to40_pr_symm;
 
  private:
   TString fileName;

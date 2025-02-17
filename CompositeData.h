@@ -151,6 +151,14 @@ class CompositeData
   std::vector<DataPoint> v_vn_pT_10to40_pr;
   std::vector<DataPoint> v_vn_pT_40to60_pr;
 
+  std::vector<DataPoint> v_vn_pT_bin6_pr_symm;
+  std::vector<DataPoint> v_vn_pT_bin7_pr_symm;
+  std::vector<DataPoint> v_vn_pT_bin8_pr_symm;
+  std::vector<DataPoint> v_vn_pT_bin9_pr_symm;
+  std::vector<DataPoint> v_vn_pT_bin10_pr_symm;
+  std::vector<DataPoint> v_vn_pT_bin11_pr_symm;
+  std::vector<DataPoint> v_vn_pT_bin12_pr_symm;
+
   std::vector<std::vector<DataPoint>> v2_vn_yCM_cent_pr_symmetry;
 
   // Histograms that hold the values for the Barlow check related to this set of variations
@@ -186,6 +194,14 @@ class CompositeData
   TH1D* barlow_vn_pT_00to10_pr;
   TH1D* barlow_vn_pT_10to40_pr;
   TH1D* barlow_vn_pT_40to60_pr;
+
+  TH1D* barlow_vn_pT_bin6_pr_symm;
+  TH1D* barlow_vn_pT_bin7_pr_symm;
+  TH1D* barlow_vn_pT_bin8_pr_symm;
+  TH1D* barlow_vn_pT_bin9_pr_symm;
+  TH1D* barlow_vn_pT_bin10_pr_symm;
+  TH1D* barlow_vn_pT_bin11_pr_symm;
+  TH1D* barlow_vn_pT_bin12_pr_symm;
 
   TString ID;
   bool onlyOneVariation;

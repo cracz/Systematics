@@ -50,6 +50,13 @@ Variation::~Variation()
   delete h_vn_pT_00to10_pr;
   delete h_vn_pT_10to40_pr;
   delete h_vn_pT_40to60_pr;
+  delete h_vn_pT_bin6_10to40_pr_symm;
+  delete h_vn_pT_bin7_10to40_pr_symm;
+  delete h_vn_pT_bin8_10to40_pr_symm;
+  delete h_vn_pT_bin9_10to40_pr_symm;
+  delete h_vn_pT_bin10_10to40_pr_symm;
+  delete h_vn_pT_bin11_10to40_pr_symm;
+  delete h_vn_pT_bin12_10to40_pr_symm;
   
   file->Close();
 }
@@ -158,6 +165,8 @@ void Variation::initialize(TString order_n_str)
 
   //=== vn vs pT stuff
   TProfile2D *p2_vn_pT_cent_pr = (TProfile2D*)file->Get("p2_vn_pT_cent_pr");
+  TProfile2D *p2_pT_normalBins = (TProfile2D*)file->Get("p2_vn_yCM_vs_pT_pr_symm_10to40");
+  TProfile2D *p2_vn_yCM_vs_pT_pr_symm_10to40 = p2_pT_normalBins->RebinX();
 
   p_vn_pT_00to10_pr = p2_vn_pT_cent_pr->ProfileY("p_vn_pT_00to10_pr", 15, 16);
   p_vn_pT_10to40_pr = p2_vn_pT_cent_pr->ProfileY("p_vn_pT_10to40_pr", 9, 14);
@@ -171,6 +180,21 @@ void Variation::initialize(TString order_n_str)
   h_vn_pT_10to40_pr = p_vn_pT_10to40_pr->ProjectionX();
   h_vn_pT_40to60_pr = p_vn_pT_40to60_pr->ProjectionX();
 
+  p_vn_pT_bin6_10to40_pr_symm  = p2_vn_yCM_vs_pT_pr_symm_10to40->ProfileY("p_vn_pT_bin6_10to40_pr_symm", 6, 6);
+  p_vn_pT_bin7_10to40_pr_symm  = p2_vn_yCM_vs_pT_pr_symm_10to40->ProfileY("p_vn_pT_bin7_10to40_pr_symm", 7, 7);
+  p_vn_pT_bin8_10to40_pr_symm  = p2_vn_yCM_vs_pT_pr_symm_10to40->ProfileY("p_vn_pT_bin8_10to40_pr_symm", 8, 8);
+  p_vn_pT_bin9_10to40_pr_symm  = p2_vn_yCM_vs_pT_pr_symm_10to40->ProfileY("p_vn_pT_bin9_10to40_pr_symm", 9, 9);
+  p_vn_pT_bin10_10to40_pr_symm = p2_vn_yCM_vs_pT_pr_symm_10to40->ProfileY("p_vn_pT_bin10_10to40_pr_symm", 10, 10);
+  p_vn_pT_bin11_10to40_pr_symm = p2_vn_yCM_vs_pT_pr_symm_10to40->ProfileY("p_vn_pT_bin11_10to40_pr_symm", 11, 11);
+  p_vn_pT_bin12_10to40_pr_symm = p2_vn_yCM_vs_pT_pr_symm_10to40->ProfileY("p_vn_pT_bin12_10to40_pr_symm", 12, 12);
+
+  h_vn_pT_bin6_10to40_pr_symm  = p_vn_pT_bin6_10to40_pr_symm->ProjectionX();
+  h_vn_pT_bin7_10to40_pr_symm  = p_vn_pT_bin7_10to40_pr_symm->ProjectionX();
+  h_vn_pT_bin8_10to40_pr_symm  = p_vn_pT_bin8_10to40_pr_symm->ProjectionX();
+  h_vn_pT_bin9_10to40_pr_symm  = p_vn_pT_bin9_10to40_pr_symm->ProjectionX();
+  h_vn_pT_bin10_10to40_pr_symm = p_vn_pT_bin10_10to40_pr_symm->ProjectionX();
+  h_vn_pT_bin11_10to40_pr_symm = p_vn_pT_bin11_10to40_pr_symm->ProjectionX();
+  h_vn_pT_bin12_10to40_pr_symm = p_vn_pT_bin12_10to40_pr_symm->ProjectionX();
 }// End initialize()
 
 
@@ -187,6 +211,7 @@ void Variation::fixAttributes(TString order_n_str)
       h_vn_pp->SetMarkerSize(2.5);
       h_vn_pp->SetMarkerColor(2);
       h_vn_pp->SetLineColor(2);
+      h_vn_pp->SetFillColorAlpha(2,0.3);
       h_vn_pp->SetLineWidth(3);
       h_vn_pp->GetYaxis()->SetTitleOffset(1.7);
       h_vn_pp->GetXaxis()->SetNdivisions(210);
@@ -197,6 +222,7 @@ void Variation::fixAttributes(TString order_n_str)
       h_vn_pm->SetMarkerSize(2.5);
       h_vn_pm->SetMarkerColor(4);
       h_vn_pm->SetLineColor(4);
+      h_vn_pm->SetFillColorAlpha(4,0.3);
       h_vn_pm->SetLineWidth(3);
       h_vn_pm->GetYaxis()->SetTitleOffset(1.7);
       h_vn_pm->GetXaxis()->SetNdivisions(210);
@@ -207,6 +233,7 @@ void Variation::fixAttributes(TString order_n_str)
       h_vn_kp->SetMarkerSize(2.5);
       h_vn_kp->SetMarkerColor(2);
       h_vn_kp->SetLineColor(2);
+      h_vn_kp->SetFillColorAlpha(2,0.3);
       h_vn_kp->SetLineWidth(3);
       h_vn_kp->GetYaxis()->SetTitleOffset(1.7);
       h_vn_kp->GetXaxis()->SetNdivisions(210);
@@ -217,6 +244,7 @@ void Variation::fixAttributes(TString order_n_str)
       h_vn_km->SetMarkerSize(2.5);
       h_vn_km->SetMarkerColor(4);
       h_vn_km->SetLineColor(4);
+      h_vn_km->SetFillColorAlpha(4,0.3);
       h_vn_km->SetLineWidth(3);
       h_vn_km->GetYaxis()->SetTitleOffset(1.7);
       h_vn_km->GetXaxis()->SetNdivisions(210);
@@ -229,6 +257,7 @@ void Variation::fixAttributes(TString order_n_str)
       h_vn_pr->SetMarkerSize(2.5);
       h_vn_pr->SetMarkerColor(2);
       h_vn_pr->SetLineColor(2);
+      h_vn_pr->SetFillColorAlpha(2,0.3);
       h_vn_pr->SetLineWidth(3);
       h_vn_pr->GetYaxis()->SetTitleOffset(1.7);
       h_vn_pr->GetXaxis()->SetNdivisions(210);
@@ -249,6 +278,9 @@ void Variation::fixAttributes(TString order_n_str)
       h_vn_yCM_00to10_pr->SetLineColor(2);
       h_vn_yCM_10to40_pr->SetLineColor(4);
       h_vn_yCM_40to60_pr->SetLineColor(8);
+      h_vn_yCM_00to10_pr->SetFillColorAlpha(2,0.3);
+      h_vn_yCM_10to40_pr->SetFillColorAlpha(4,0.3);
+      h_vn_yCM_40to60_pr->SetFillColorAlpha(8,0.3);
       h_vn_yCM_00to10_pr->SetLineWidth(3);
       h_vn_yCM_10to40_pr->SetLineWidth(3);
       h_vn_yCM_40to60_pr->SetLineWidth(3);
@@ -265,6 +297,9 @@ void Variation::fixAttributes(TString order_n_str)
       h_vn_yCM_00to10_pr_symm->SetLineColor(2);
       h_vn_yCM_10to40_pr_symm->SetLineColor(4);
       h_vn_yCM_40to60_pr_symm->SetLineColor(8);
+      h_vn_yCM_00to10_pr_symm->SetFillColorAlpha(2,0.3);
+      h_vn_yCM_10to40_pr_symm->SetFillColorAlpha(4,0.3);
+      h_vn_yCM_40to60_pr_symm->SetFillColorAlpha(8,0.3);
       h_vn_yCM_00to10_pr_symm->SetLineWidth(3);
       h_vn_yCM_10to40_pr_symm->SetLineWidth(3);
       h_vn_yCM_40to60_pr_symm->SetLineWidth(3);
@@ -283,6 +318,9 @@ void Variation::fixAttributes(TString order_n_str)
       h_vn_pT_00to10_pr->SetLineColor(2);
       h_vn_pT_10to40_pr->SetLineColor(4);
       h_vn_pT_40to60_pr->SetLineColor(8);
+      h_vn_pT_00to10_pr->SetFillColorAlpha(2,0.3);
+      h_vn_pT_10to40_pr->SetFillColorAlpha(4,0.3);
+      h_vn_pT_40to60_pr->SetFillColorAlpha(8,0.3);
       h_vn_pT_00to10_pr->SetLineWidth(3);
       h_vn_pT_10to40_pr->SetLineWidth(3);
       h_vn_pT_40to60_pr->SetLineWidth(3);

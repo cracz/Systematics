@@ -26,7 +26,7 @@ struct AverageContributionTracker
   Double_t rvtxPercentQuadSum = 0.0;
   Double_t zvtxPercentQuadSum = 0.0;
   Double_t dcaPercentQuadSum = 0.0;
-  Double_t nhitsdEdxPercentQuadSum = 0.0;
+  Double_t nhitsdedxPercentQuadSum = 0.0;
   Double_t nhitsratioPercentQuadSum = 0.0;
   Double_t m2PiPercentQuadSum = 0.0;
   Double_t m2KaPercentQuadSum = 0.0;
@@ -46,7 +46,7 @@ struct AverageContributionTracker
   Int_t rvtxNbins = 0;
   Int_t zvtxNbins = 0;
   Int_t dcaNbins = 0;
-  Int_t nhitsdEdxNbins = 0;
+  Int_t nhitsdedxNbins = 0;
   Int_t nhitsratioNbins = 0;
   Int_t m2PiNbins = 0;
   Int_t m2KaNbins = 0;
@@ -60,7 +60,7 @@ struct AverageContributionTracker
   {
     if (ID == "nhits" ||
 	ID == "dca" ||
-	ID == "nhitsdEdx" ||
+	ID == "nhitsdedx" ||
 	ID == "nhitsratio")
       {
 	trackQAPercentQuadSum += stdDevContributed;
@@ -102,38 +102,6 @@ struct AverageContributionTracker
 	zTrPercentQuadSum += stdDevContributed;
 	zTrNbins++;
       }
-    /*
-    else if (ID == "rvtx")
-      {
-	rvtxPercentQuadSum += stdDevContributed;
-	rvtxNbins++;
-      }
-    else if (ID == "zvtx")
-      {
-	zvtxPercentQuadSum += stdDevContributed;
-	zvtxNbins++;
-      }
-    else if (ID == "dca")
-      {
-	dcaPercentQuadSum += stdDevContributed;
-	dcaNbins++;
-      }
-    else if (ID == "nhits")
-      {
-	nhitsPercentQuadSum += stdDevContributed;
-	nhitsNbins++;
-      }
-    else if (ID == "nhitsdEdx")
-      {
-	nhitsdEdxPercentQuadSum += stdDevContributed;
-	nhitsdEdxNbins++;
-      }
-    else if (ID == "nhitsratio")
-      {
-	nhitsratioPercentQuadSum += stdDevContributed;
-	nhitsratioNbins++;
-      }
-    */
     else if (ID == "m2Pi")
       {
 	m2PiPercentQuadSum += stdDevContributed;
@@ -167,14 +135,6 @@ struct AverageContributionTracker
 	      << std::endl
 	      << "Track QA, " << trackQAPercentQuadSum / (Double_t)trackQANbins << std::endl
       	      << "Event QA, " << eventQAPercentQuadSum / (Double_t)eventQANbins << std::endl
-            /*
-	      << "nHits, " << nhitsPercentQuadSum / (Double_t)nhitsNbins << std::endl
-	      << "nHits dEdx, " << nhitsdEdxPercentQuadSum / (Double_t)nhitsdEdxNbins << std::endl
-	      << "nHits Ratio, " << nhitsratioPercentQuadSum / (Double_t)nhitsratioNbins << std::endl
-	      << "DCA, " << dcaPercentQuadSum / (Double_t)dcaNbins << std::endl
-	      << "r Vertex, " << rvtxPercentQuadSum / (Double_t)rvtxNbins << std::endl
-	      << "z Vertex, " << zvtxPercentQuadSum / (Double_t)zvtxNbins << std::endl
-	    */
 	      << "nSigma Pi, " << nSigPiPercentQuadSum / (Double_t)nSigPiNbins << std::endl
 	      << "nSigma Ka, " << nSigKaPercentQuadSum / (Double_t)nSigKaNbins << std::endl
 	      << "nSigma Pr, " << nSigPrPercentQuadSum / (Double_t)nSigPrNbins << std::endl
@@ -194,82 +154,90 @@ struct AverageContributionTracker
 
 
 
-void calculateSystematics(TString order_n_str = "3")
+void calculateSystematics()
 {
+  // Set these to point to your results, 20% variations, 30% variations, event plane resolution variations
+  TString directory = "/star/data01/pwg/cracz/flowResults_3p2GeV/Results_Feb2025_NewMethods/";
+  TString directory20Percent = "/star/data01/pwg/cracz/flowResults_3p2GeV/Results_Feb2025_NewMethods/20percentVariations/";
+  TString directory30Percent = "/star/data01/pwg/cracz/flowResults_3p2GeV/Results_Feb2025_NewMethods/30percentVariations/";
+  TString directoryEPR = "/star/data01/pwg/cracz/flowResults_3p2GeV/Results_Feb2025_NewMethods/";
+
+  // Set energy prefix and anisotropic flow order strings
+  TString energyPrefix = "3p2GeV_";
+  TString order_n_str = "3";
+
+  // Set output file name
   TString newFileName = "systematicErrors_3p2GeV.root";
   TFile* newFile = new TFile(newFileName, "RECREATE");
+
   
-  TString directory = "../../../Results_February2025/flowResults_3p2GeV/";
-  TString directory20Percent = "../../../Results_February2025/flowResults_3p2GeV/20percentVariations/";
-  TString directory30Percent = "../../../Results_February2025/flowResults_3p2GeV/30percentVariations/";
-  TString directoryEPR = "../../../Results_February2025/flowResults_3p2GeV/";
-  TString energyPrefix = "3p2GeV_";
-  
+  // Create all variation objects
   Variation* Normal = new Variation("Normal",directory+energyPrefix+"1to8_13to16", order_n_str);
   Variation* epd_high = new Variation("epd_high",directoryEPR+energyPrefix+"1to8_14to16", order_n_str);
-  Variation* epd_low = new Variation("epd_low",directoryEPR+energyPrefix+"1to8_12to16", order_n_str);
+  Variation* epd_low = new Variation("epd_low",directoryEPR+energyPrefix+"1to8_12to16", order_n_str);  
   
-  
-  Variation* nSigPi_high_20 = new Variation("nSigPi_high",directory20Percent+energyPrefix+"nSigPi_high", order_n_str);
-  Variation* nSigPi_low_20  = new Variation("nSigPi_low",directory20Percent+energyPrefix+"nSigPi_low", order_n_str);
-  Variation* nSigKa_high_20 = new Variation("nSigKa_high",directory20Percent+energyPrefix+"nSigKa_high", order_n_str);
-  Variation* nSigKa_low_20  = new Variation("nSigKa_low",directory20Percent+energyPrefix+"nSigKa_low", order_n_str);
-  Variation* nSigPr_high_20 = new Variation("nSigPr_high",directory20Percent+energyPrefix+"nSigPr_high", order_n_str);
-  Variation* nSigPr_low_20  = new Variation("nSigPr_low",directory20Percent+energyPrefix+"nSigPr_low", order_n_str);
-  Variation* zDe_high_20 = new Variation("zDe_high",directory20Percent+energyPrefix+"zDe_high", order_n_str);
-  Variation* zDe_low_20  = new Variation("zDe_low",directory20Percent+energyPrefix+"zDe_low", order_n_str);
-  Variation* zTr_high_20 = new Variation("zTr_high",directory20Percent+energyPrefix+"zTr_high", order_n_str);
-  Variation* zTr_low_20  = new Variation("zTr_low",directory20Percent+energyPrefix+"zTr_low", order_n_str);
-  //Variation* rvtx_high_20 = new Variation("rvtx_high",directory20Percent+energyPrefix+"rvtx_high", order_n_str);
-  //Variation* rvtx_low_20  = new Variation("rvtx_low",directory20Percent+energyPrefix+"rvtx_low", order_n_str);
-  //Variation* zvtx_high_20 = new Variation("zvtx_high",directory20Percent+energyPrefix+"zvtx_high", order_n_str);
-  //Variation* zvtx_low_20  = new Variation("zvtx_low",directory20Percent+energyPrefix+"zvtx_low", order_n_str);
-  Variation* dca_high_20 = new Variation("dca_high",directory20Percent+energyPrefix+"dca_high", order_n_str);
-  Variation* dca_low_20  = new Variation("dca_low",directory20Percent+energyPrefix+"dca_low", order_n_str);
-  Variation* nhits_high_20 = new Variation("nhits_high",directory20Percent+energyPrefix+"nhits_high", order_n_str);
-  Variation* nhits_low_20 = new Variation("nhits_low",directory20Percent+energyPrefix+"nhits_low", order_n_str);
-  Variation* nhitsdEdx_high_20 = new Variation("nhitsdEdx_high",directory20Percent+energyPrefix+"nhitsdEdx_high", order_n_str);
-  Variation* nhitsratio_high_20 = new Variation("nhitsratio_high",directory20Percent+energyPrefix+"nhitsratio_high", order_n_str);
-  Variation* nhitsratio_low_20  = new Variation("nhitsratio_low",directory20Percent+energyPrefix+"nhitsratio_low", order_n_str);
-  Variation* m2Pi_high_20 = new Variation("m2Pi_high",directory20Percent+energyPrefix+"m2Pi_high", order_n_str);
-  Variation* m2Pi_low_20  = new Variation("m2Pi_low",directory20Percent+energyPrefix+"m2Pi_low", order_n_str);
-  Variation* m2Ka_high_20 = new Variation("m2Ka_high",directory20Percent+energyPrefix+"m2Ka_high", order_n_str);
-  Variation* m2Ka_low_20  = new Variation("m2Ka_low",directory20Percent+energyPrefix+"m2Ka_low", order_n_str);
-  Variation* m2De_high_20 = new Variation("m2De_high",directory20Percent+energyPrefix+"m2De_high", order_n_str);
-  Variation* m2De_low_20  = new Variation("m2De_low",directory20Percent+energyPrefix+"m2De_low", order_n_str);
-  Variation* m2Tr_high_20 = new Variation("m2Tr_high",directory20Percent+energyPrefix+"m2Tr_high", order_n_str);
-  Variation* m2Tr_low_20  = new Variation("m2Tr_low",directory20Percent+energyPrefix+"m2Tr_low", order_n_str);
+  Variation* nSigPi_high_20 = new Variation("nSigPi_high_20",directory20Percent+energyPrefix+"nSigPi_high", order_n_str);
+  Variation* nSigPi_low_20  = new Variation("nSigPi_low_20",directory20Percent+energyPrefix+"nSigPi_low", order_n_str);
+  Variation* nSigKa_high_20 = new Variation("nSigKa_high_20",directory20Percent+energyPrefix+"nSigKa_high", order_n_str);
+  Variation* nSigKa_low_20  = new Variation("nSigKa_low_20",directory20Percent+energyPrefix+"nSigKa_low", order_n_str);
+  Variation* nSigPr_high_20 = new Variation("nSigPr_high_20",directory20Percent+energyPrefix+"nSigPr_high", order_n_str);
+  Variation* nSigPr_low_20  = new Variation("nSigPr_low_20",directory20Percent+energyPrefix+"nSigPr_low", order_n_str);
+  Variation* zDe_high_20 = new Variation("zDe_high_20",directory20Percent+energyPrefix+"zDe_high", order_n_str);
+  Variation* zDe_low_20  = new Variation("zDe_low_20",directory20Percent+energyPrefix+"zDe_low", order_n_str);
+  Variation* zTr_high_20 = new Variation("zTr_high_20",directory20Percent+energyPrefix+"zTr_high", order_n_str);
+  Variation* zTr_low_20  = new Variation("zTr_low_20",directory20Percent+energyPrefix+"zTr_low", order_n_str);
+  //Variation* rvtx_high_20 = new Variation("rvtx_high_20",directory20Percent+energyPrefix+"rvtx_high", order_n_str);
+  //Variation* rvtx_low_20  = new Variation("rvtx_low_20",directory20Percent+energyPrefix+"rvtx_low", order_n_str);
+  //Variation* zvtx_high_20 = new Variation("zvtx_high_20",directory20Percent+energyPrefix+"zvtx_high", order_n_str);
+  //Variation* zvtx_low_20  = new Variation("zvtx_low_20",directory20Percent+energyPrefix+"zvtx_low", order_n_str);
+  Variation* dca_high_20 = new Variation("dca_high_20",directory20Percent+energyPrefix+"dca_high", order_n_str);
+  Variation* dca_low_20  = new Variation("dca_low_20",directory20Percent+energyPrefix+"dca_low", order_n_str);
+  Variation* nhits_high_20 = new Variation("nhits_high_20",directory20Percent+energyPrefix+"nhits_high", order_n_str);
+  Variation* nhits_low_20 = new Variation("nhits_low_20",directory20Percent+energyPrefix+"nhits_low", order_n_str);
+  Variation* nhitsdedx_high_20 = new Variation("nhitsdedx_high_20",directory20Percent+energyPrefix+"nhitsdedx_high", order_n_str);
+  Variation* nhitsratio_high_20 = new Variation("nhitsratio_high_20",directory20Percent+energyPrefix+"nhitsratio_high", order_n_str);
+  Variation* nhitsratio_low_20  = new Variation("nhitsratio_low_20",directory20Percent+energyPrefix+"nhitsratio_low", order_n_str);
+  Variation* m2Pi_high_20 = new Variation("m2Pi_high_20",directory20Percent+energyPrefix+"m2Pi_high", order_n_str);
+  Variation* m2Pi_low_20  = new Variation("m2Pi_low_20",directory20Percent+energyPrefix+"m2Pi_low", order_n_str);
+  Variation* m2Ka_high_20 = new Variation("m2Ka_high_20",directory20Percent+energyPrefix+"m2Ka_high", order_n_str);
+  Variation* m2Ka_low_20  = new Variation("m2Ka_low_20",directory20Percent+energyPrefix+"m2Ka_low", order_n_str);
+  Variation* m2De_high_20 = new Variation("m2De_high_20",directory20Percent+energyPrefix+"m2De_high", order_n_str);
+  Variation* m2De_low_20  = new Variation("m2De_low_20",directory20Percent+energyPrefix+"m2De_low", order_n_str);
+  Variation* m2Tr_high_20 = new Variation("m2Tr_high_20",directory20Percent+energyPrefix+"m2Tr_high", order_n_str);
+  Variation* m2Tr_low_20  = new Variation("m2Tr_low_20",directory20Percent+energyPrefix+"m2Tr_low", order_n_str);
 
-  Variation* nSigPi_high_30 = new Variation("nSigPi_high",directory30Percent+energyPrefix+"nSigPi_high", order_n_str);
-  Variation* nSigPi_low_30  = new Variation("nSigPi_low",directory30Percent+energyPrefix+"nSigPi_low", order_n_str);
-  Variation* nSigKa_high_30 = new Variation("nSigKa_high",directory30Percent+energyPrefix+"nSigKa_high", order_n_str);
-  Variation* nSigKa_low_30  = new Variation("nSigKa_low",directory30Percent+energyPrefix+"nSigKa_low", order_n_str);
-  Variation* nSigPr_high_30 = new Variation("nSigPr_high",directory30Percent+energyPrefix+"nSigPr_high", order_n_str);
-  Variation* nSigPr_low_30  = new Variation("nSigPr_low",directory30Percent+energyPrefix+"nSigPr_low", order_n_str);
-  Variation* zDe_high_30 = new Variation("zDe_high",directory30Percent+energyPrefix+"zDe_high", order_n_str);
-  Variation* zDe_low_30  = new Variation("zDe_low",directory30Percent+energyPrefix+"zDe_low", order_n_str);
-  Variation* zTr_high_30 = new Variation("zTr_high",directory30Percent+energyPrefix+"zTr_high", order_n_str);
-  Variation* zTr_low_30  = new Variation("zTr_low",directory30Percent+energyPrefix+"zTr_low", order_n_str);
-  //Variation* rvtx_high_30 = new Variation("rvtx_high",directory30Percent+energyPrefix+"rvtx_high", order_n_str);
-  //Variation* rvtx_low_30  = new Variation("rvtx_low",directory30Percent+energyPrefix+"rvtx_low", order_n_str);
-  //Variation* zvtx_high_30 = new Variation("zvtx_high",directory30Percent+energyPrefix+"zvtx_high", order_n_str);
-  //Variation* zvtx_low_30  = new Variation("zvtx_low",directory30Percent+energyPrefix+"zvtx_low", order_n_str);
-  Variation* dca_high_30 = new Variation("dca_high",directory30Percent+energyPrefix+"dca_high", order_n_str);
-  Variation* dca_low_30  = new Variation("dca_low",directory30Percent+energyPrefix+"dca_low", order_n_str);
-  Variation* nhits_high_30 = new Variation("nhits_high",directory30Percent+energyPrefix+"nhits_high", order_n_str);
-  Variation* nhits_low_30 = new Variation("nhits_low",directory30Percent+energyPrefix+"nhits_low", order_n_str);
-  Variation* nhitsdEdx_high_30 = new Variation("nhitsdEdx_high",directory30Percent+energyPrefix+"nhitsdEdx_high", order_n_str);
-  Variation* nhitsratio_high_30 = new Variation("nhitsratio_high",directory30Percent+energyPrefix+"nhitsratio_high", order_n_str);
-  Variation* nhitsratio_low_30  = new Variation("nhitsratio_low",directory30Percent+energyPrefix+"nhitsratio_low", order_n_str);
-  Variation* m2Pi_high_30 = new Variation("m2Pi_high",directory30Percent+energyPrefix+"m2Pi_high", order_n_str);
-  Variation* m2Pi_low_30  = new Variation("m2Pi_low",directory30Percent+energyPrefix+"m2Pi_low", order_n_str);
-  Variation* m2Ka_high_30 = new Variation("m2Ka_high",directory30Percent+energyPrefix+"m2Ka_high", order_n_str);
-  Variation* m2Ka_low_30  = new Variation("m2Ka_low",directory30Percent+energyPrefix+"m2Ka_low", order_n_str);
-  Variation* m2De_high_30 = new Variation("m2De_high",directory30Percent+energyPrefix+"m2De_high", order_n_str);
-  Variation* m2De_low_30  = new Variation("m2De_low",directory30Percent+energyPrefix+"m2De_low", order_n_str); 
-  Variation* m2Tr_high_30 = new Variation("m2Tr_high",directory30Percent+energyPrefix+"m2Tr_high", order_n_str);
-  Variation* m2Tr_low_30  = new Variation("m2Tr_low",directory30Percent+energyPrefix+"m2Tr_low", order_n_str);
+  Variation* nSigPi_high_30 = new Variation("nSigPi_high_30",directory30Percent+energyPrefix+"nSigPi_high", order_n_str);
+  Variation* nSigPi_low_30  = new Variation("nSigPi_low_30",directory30Percent+energyPrefix+"nSigPi_low", order_n_str);
+  Variation* nSigKa_high_30 = new Variation("nSigKa_high_30",directory30Percent+energyPrefix+"nSigKa_high", order_n_str);
+  Variation* nSigKa_low_30  = new Variation("nSigKa_low_30",directory30Percent+energyPrefix+"nSigKa_low", order_n_str);
+  Variation* nSigPr_high_30 = new Variation("nSigPr_high_30",directory30Percent+energyPrefix+"nSigPr_high", order_n_str);
+  Variation* nSigPr_low_30  = new Variation("nSigPr_low_30",directory30Percent+energyPrefix+"nSigPr_low", order_n_str);
+  Variation* zDe_high_30 = new Variation("zDe_high_30",directory30Percent+energyPrefix+"zDe_high", order_n_str);
+  Variation* zDe_low_30  = new Variation("zDe_low_30",directory30Percent+energyPrefix+"zDe_low", order_n_str);
+  Variation* zTr_high_30 = new Variation("zTr_high_30",directory30Percent+energyPrefix+"zTr_high", order_n_str);
+  Variation* zTr_low_30  = new Variation("zTr_low_30",directory30Percent+energyPrefix+"zTr_low", order_n_str);
+  //Variation* rvtx_high_30 = new Variation("rvtx_high_30",directory30Percent+energyPrefix+"rvtx_high", order_n_str);
+  //Variation* rvtx_low_30  = new Variation("rvtx_low_30",directory30Percent+energyPrefix+"rvtx_low", order_n_str);
+  //Variation* zvtx_high_30 = new Variation("zvtx_high_30",directory30Percent+energyPrefix+"zvtx_high", order_n_str);
+  //Variation* zvtx_low_30  = new Variation("zvtx_low_30",directory30Percent+energyPrefix+"zvtx_low", order_n_str);
+  Variation* dca_high_30 = new Variation("dca_high_30",directory30Percent+energyPrefix+"dca_high", order_n_str);
+  Variation* dca_low_30  = new Variation("dca_low_30",directory30Percent+energyPrefix+"dca_low", order_n_str);
+  Variation* nhits_high_30 = new Variation("nhits_high_30",directory30Percent+energyPrefix+"nhits_high", order_n_str);
+  Variation* nhits_low_30 = new Variation("nhits_low_30",directory30Percent+energyPrefix+"nhits_low", order_n_str);
+  Variation* nhitsdedx_high_30 = new Variation("nhitsdedx_high_30",directory30Percent+energyPrefix+"nhitsdedx_high", order_n_str);
+  Variation* nhitsratio_high_30 = new Variation("nhitsratio_high_30",directory30Percent+energyPrefix+"nhitsratio_high", order_n_str);
+  Variation* nhitsratio_low_30  = new Variation("nhitsratio_low_30",directory30Percent+energyPrefix+"nhitsratio_low", order_n_str);
+  Variation* m2Pi_high_30 = new Variation("m2Pi_high_30",directory30Percent+energyPrefix+"m2Pi_high", order_n_str);
+  Variation* m2Pi_low_30  = new Variation("m2Pi_low_30",directory30Percent+energyPrefix+"m2Pi_low", order_n_str);
+  Variation* m2Ka_high_30 = new Variation("m2Ka_high_30",directory30Percent+energyPrefix+"m2Ka_high", order_n_str);
+  Variation* m2Ka_low_30  = new Variation("m2Ka_low_30",directory30Percent+energyPrefix+"m2Ka_low", order_n_str);
+  Variation* m2De_high_30 = new Variation("m2De_high_30",directory30Percent+energyPrefix+"m2De_high", order_n_str);
+  Variation* m2De_low_30  = new Variation("m2De_low_30",directory30Percent+energyPrefix+"m2De_low", order_n_str); 
+  Variation* m2Tr_high_30 = new Variation("m2Tr_high_30",directory30Percent+energyPrefix+"m2Tr_high", order_n_str);
+  Variation* m2Tr_low_30  = new Variation("m2Tr_low_30",directory30Percent+energyPrefix+"m2Tr_low", order_n_str);
 
+
+  // Combine Variation objects of the same type to calculate standard deviations at every point.
   CompositeData* epd = new CompositeData("epd", Normal, epd_low, epd_high);
   CompositeData* nhits = new CompositeData("nhits", Normal, nhits_low_30, nhits_high_30, nhits_low_20, nhits_high_20);  
   CompositeData* nSigPi = new CompositeData("nSigPi", Normal, nSigPi_low_30, nSigPi_high_30, nSigPi_low_20, nSigPi_high_20);
@@ -280,7 +248,7 @@ void calculateSystematics(TString order_n_str = "3")
   //CompositeData* rvtx = new CompositeData("rvtx", Normal, rvtx_low_30, rvtx_high_30, rvtx_low_20, rvtx_high_20);
   //CompositeData* zvtx = new CompositeData("zvtx", Normal, zvtx_low_30, zvtx_high_30, zvtx_low_20, zvtx_high_20);
   CompositeData* dca  = new CompositeData("dca", Normal, dca_low_30, dca_high_30, dca_low_20, dca_high_20);
-  CompositeData* nhitsdEdx = new CompositeData("nhitsdEdx", Normal, nhitsdEdx_high_30, nhitsdEdx_high_20);
+  CompositeData* nhitsdedx = new CompositeData("nhitsdedx", Normal, nhitsdedx_high_30, nhitsdedx_high_20);
   CompositeData* nhitsratio = new CompositeData("nhitsratio", Normal, nhitsratio_low_30, nhitsratio_high_30, nhitsratio_low_20, nhitsratio_high_20);
   CompositeData* m2Pi = new CompositeData("m2Pi", Normal, m2Pi_low_30, m2Pi_high_30, m2Pi_low_20, m2Pi_high_20);
   CompositeData* m2Ka = new CompositeData("m2Ka", Normal, m2Ka_low_30, m2Ka_high_30, m2Ka_low_20, m2Ka_high_20);
@@ -288,7 +256,7 @@ void calculateSystematics(TString order_n_str = "3")
   CompositeData* m2Tr = new CompositeData("m2Tr", Normal, m2Tr_low_30, m2Tr_high_30, m2Tr_low_20, m2Tr_high_20);
 
   
-  // Any variations applied universally (like epd variation) should not be in this vector.
+  // Any variations applied universally (like epd variation) should NOT be in this vector.
   std::vector<CompositeData*> composites;
   composites.push_back(nhits);
   composites.push_back(nSigPi);
@@ -299,7 +267,7 @@ void calculateSystematics(TString order_n_str = "3")
   //composites.push_back(rvtx);
   //composites.push_back(zvtx);
   composites.push_back(dca);
-  composites.push_back(nhitsdEdx);
+  composites.push_back(nhitsdedx);
   composites.push_back(nhitsratio);
   composites.push_back(m2Pi);
   composites.push_back(m2Ka);
@@ -1212,7 +1180,7 @@ void calculateSystematics(TString order_n_str = "3")
 
   
 
-  // SAVE V3 VALUES, SYSTEMATIC UNCERTAINTIES, AND # OF ENTRIES IN VECTOR FORM FOR ODD/EVEN PROPAGATION
+  // SAVE V3 VALUES, SYSTEMATIC UNCERTAINTIES, AND # OF ENTRIES IN VECTOR FORM FOR ODD/EVEN FLOW PROPAGATION
   std::vector<Double_t> vn_yCM_10to40_pr_values;
   std::vector<Double_t> vn_yCM_10to40_pr_uncertainties;
   std::vector<Double_t> vn_yCM_10to40_pr_entries;
@@ -1852,7 +1820,7 @@ void calculateSystematics(TString order_n_str = "3")
   //delete rvtx;
   //delete zvtx;
   delete dca;
-  delete nhitsdEdx;
+  delete nhitsdedx;
   delete nhitsratio;
   delete m2Pi;
   delete m2Ka;
@@ -1875,7 +1843,7 @@ void calculateSystematics(TString order_n_str = "3")
   delete dca_low_30;
   delete nhits_high_30;
   delete nhits_low_30;
-  delete nhitsdEdx_high_30;
+  delete nhitsdedx_high_30;
   delete nhitsratio_high_30;
   delete nhitsratio_low_30;
   delete m2Pi_high_30;
@@ -1898,7 +1866,7 @@ void calculateSystematics(TString order_n_str = "3")
   delete dca_low_20;
   delete nhits_high_20;
   delete nhits_low_20;
-  delete nhitsdEdx_high_20;
+  delete nhitsdedx_high_20;
   delete nhitsratio_high_20;
   delete nhitsratio_low_20;
   delete m2Pi_high_20;

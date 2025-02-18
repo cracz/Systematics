@@ -1,25 +1,31 @@
 # Systematics
 
-When first setting up, or any time anything in Variation.* or CompositeDatat.* is changed, run these commands with a ROOT 6 installation (likely will not work on RACF though for reasons apart from ROOT):
+This package will only work as is on ROOT 6. For this reason, run `setRoot6.sh` before moving on to the next step when on RACF.
+
+When first setting up, or any time anything in Variation.* or CompositeData.* is changed, run these commands with a ROOT 6 installation (likely will not work on RACF though for reasons apart from ROOT):
 
 ```bash
 ./makeSharedLib.sh Variation
 ./makeSharedLib.sh CompositeData
 ```
 
-Go into `calculateSystematics.cxx` and make sure the first argument for each `Variation` object is the path and prefix of your results variations. The normal results are also considered a 'variation' as well. To run the script and calculate systematic uncertainties, use 
+In `calculateSystematics.cxx`, the first argument for each `Variation` object is a short string identifier for the type of variation that file is. The second argument is the path and first portion of the name of your results variations. The naming convention assumed for all results files of a partiular energy is `[energyPrefix]_[variationType].picoDst.result.combined.root`; the `.picoDst.result.combined.root` portion is assumed and added automatically. The third argument is just a string version of the order of anisotropic flow; "3" for triangular flow. Arguments 1 and 3 are just used for plot titles and axis titles to keep things organized and clear.
+
+The normal results are also considered a 'variation' as well. 
+
+To run the program and calculate systematic uncertainties, be sure to set the directory variables to point to the location of your results files and set the proper energyPrefix. Then use 
 
 ```bash
 root -l -b -q calculateSystematics.cxx
 ```
 
-The `Variation` objects are then compined into one `CompositeData` object for each type of cut. Each `CompositeData` object can accept up to 5 `Variation` objects to combine. `CompositeData` does the background work to calculate the standard deviations and the significance of each cuts's systematic uncertainty contribution. All you need to do is use the `CompositeData` objects to pull out the significance value and the systematic uncertainty contribution.
+The `Variation` objects of the same type (but varying sizes) are then combined into one `CompositeData` object. Each `CompositeData` object can accept up to 5 `Variation` objects to combine. `CompositeData` does the background work to calculate the standard deviations and the significance of each cuts's systematic uncertainty contribution. All you need to do is use the `CompositeData` objects to pull out the significance value and the systematic uncertainty contribution.
 
-Each `CompositeData` holds vectors corresponding to each important TProfile, for example, proton flow measurements vs centrality is called `p_vn_pp` (`p_` for 'profile', `v_` for 'vector'). To get the corresponding data that was compiled from all variations, use `compositeDataObject->v_vn_pp`. These vectors hold another custom data type called `DataPoint` defined within `CompositeData.h` which holds all necessary systematic info for each point.
+Each `CompositeData` holds vectors corresponding to each important TProfile, for example, a vector of proton flow measurements vs centrality are accessed through a CompositeData object via `compositeDataObject->v_vn_pr`. The `v_` signifies this is a vector, and it is associated with `p_vn_pr`, a TProfile, hence the `p_` in that name. Each entry of these vectors are custom `DataPoint` objects defined within `CompositeData.h` which holds all necessary systematic info for each point.
 
 ## Barlow Check
 
-The variable for every `DataPoint` that tells you the significance of the systematic contribution is called `deltaByDeltaError`. To determine if a particular cut and its variations (one `compositeDataObject`) produced a systematic uncertainty contribution that was significant at one bin of the proton flow vs centrality measurements, the command would be:
+The variable for every `DataPoint` that tells you the significance of the systematic contribution is called `deltaByDeltaError`. To determine if a particular variation type (one `compositeDataObject`) produced a systematic uncertainty contribution that was significant at one point of the proton flow vs centrality measurements, the command would be:
 
 ```c++
 compositeDataObject->v_vn_pr.at(binNumber).deltaByDeltaError > 1.0

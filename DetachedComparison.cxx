@@ -24,9 +24,15 @@ void DetachedComparison::mergePoints(TH1D* var1Histo, TH1D* var2Histo, std::vect
     point.var2Error = var2Histo->GetBinError(i);
 
     if((point.var1Value == 0.0 && point.var1Error == 0.0) || (point.var2Value == 0.0 && point.var2Error == 0.0))
+      {
 	point.deltaAbsVal = 0.0;
+	point.deltaAbsValSquared = 0.0;
+      }
     else
+      {
 	point.deltaAbsVal = TMath::Abs(point.var2Value - point.var1Value);
+	point.deltaAbsValSquared = TMath::Power(TMath::Abs(point.var2Value - point.var1Value), 2.0);
+      }
 
     vectorOfPoints.push_back(point);
   }

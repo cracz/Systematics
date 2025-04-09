@@ -17,6 +17,7 @@ class DetachedComparison
     Double_t var2Value = -999.0;
     Double_t var2Error = -999.0;
     Double_t deltaAbsVal;
+    Double_t deltaAbsValSquared;
   };
   
   std::vector<ComparisonPoint> v_vn_pp;

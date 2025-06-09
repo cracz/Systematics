@@ -68,6 +68,8 @@ class DetachedComparison
   void initialize();
   void mergePoints(TH1D* histo1, TH1D* histo2, std::vector<ComparisonPoint>& vectorOfPoints);
   void combine(Variation* data1, Variation* data2);
+  void addRawValuesToFile(TFile* file, TString histogramName, std::vector<ComparisonPoint> vectorOfPoints);
+  void saveDetails();
 };
 
 #endif

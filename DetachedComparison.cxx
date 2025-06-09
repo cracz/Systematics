@@ -10,6 +10,7 @@ DetachedComparison::DetachedComparison(TString prefix, Variation* data1, Variati
   ID = prefix;
   //initialize();
   combine(data1, data2);
+  saveDetails();
 }
 
 // Calculate necessary info for one histogram type with normal data and one variation
@@ -82,4 +83,79 @@ void DetachedComparison::combine(Variation* var1Data, Variation* var2Data)
   mergePoints(var1Data->h_vn_pT_bin10_10to40_pr_symm, var2Data->h_vn_pT_bin10_10to40_pr_symm, v_vn_pT_bin10_pr_symm);
   mergePoints(var1Data->h_vn_pT_bin11_10to40_pr_symm, var2Data->h_vn_pT_bin11_10to40_pr_symm, v_vn_pT_bin11_pr_symm);
   mergePoints(var1Data->h_vn_pT_bin12_10to40_pr_symm, var2Data->h_vn_pT_bin12_10to40_pr_symm, v_vn_pT_bin12_pr_symm);
+}
+
+
+
+// Save normal and varied flow values for each point to the file supplied.
+void DetachedComparison::addRawValuesToFile(TFile* file, TString histogramName, std::vector<ComparisonPoint> vectorOfPoints)
+{
+  TH1D* temp;
+  TString nameWithBinNo;
+  file->cd();
+
+  for (int i = 0; i < vectorOfPoints.size(); i++)
+  {
+    nameWithBinNo.Form(histogramName+"_bin%d", i+1);
+    temp = new TH1D(nameWithBinNo, nameWithBinNo, 500, 1, 1);
+
+    temp->Fill(vectorOfPoints.at(i).var1Value);
+    temp->Fill(vectorOfPoints.at(i).var2Value);  
+    
+    temp->Write();
+    delete temp;
+  }
+}
+
+
+// Save each flow value in the same bin from both variations to see the effect on every point.
+void DetachedComparison::saveDetails()
+{
+  TFile *detailsFile = new TFile("Details_"+ID+".root", "RECREATE");
+
+  // Save the flow values 
+  addRawValuesToFile(detailsFile, "h_vn_pp", v_vn_pp);
+  addRawValuesToFile(detailsFile, "h_vn_pm", v_vn_pm);
+  addRawValuesToFile(detailsFile, "h_vn_kp", v_vn_kp);
+  addRawValuesToFile(detailsFile, "h_vn_km", v_vn_km);
+  addRawValuesToFile(detailsFile, "h_vn_pr", v_vn_pr);
+
+  addRawValuesToFile(detailsFile, "h_vn_yCM_00to10_pr", v_vn_yCM_00to10_pr);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_10to40_pr", v_vn_yCM_10to40_pr);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_40to60_pr", v_vn_yCM_40to60_pr);
+
+  addRawValuesToFile(detailsFile, "h_vn_yCM_HADES", v_vn_yCM_HADES);
+
+  addRawValuesToFile(detailsFile, "h_vn_yCM_00to10_pr_symm", v_vn_yCM_00to10_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_10to40_pr_symm", v_vn_yCM_10to40_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_40to60_pr_symm", v_vn_yCM_40to60_pr_symm);
+
+  addRawValuesToFile(detailsFile, "h_vn_yCM_00to05_pr_symm", v_vn_yCM_00to05_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_05to10_pr_symm", v_vn_yCM_05to10_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_10to15_pr_symm", v_vn_yCM_10to15_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_15to20_pr_symm", v_vn_yCM_15to20_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_20to25_pr_symm", v_vn_yCM_20to25_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_25to30_pr_symm", v_vn_yCM_25to30_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_30to35_pr_symm", v_vn_yCM_30to35_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_35to40_pr_symm", v_vn_yCM_35to40_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_40to45_pr_symm", v_vn_yCM_40to45_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_45to50_pr_symm", v_vn_yCM_45to50_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_50to55_pr_symm", v_vn_yCM_50to55_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_yCM_55to60_pr_symm", v_vn_yCM_55to60_pr_symm);
+
+  addRawValuesToFile(detailsFile, "h_vn_pT_00to10_pr", v_vn_pT_00to10_pr);
+  addRawValuesToFile(detailsFile, "h_vn_pT_10to40_pr", v_vn_pT_10to40_pr);
+  addRawValuesToFile(detailsFile, "h_vn_pT_40to60_pr", v_vn_pT_40to60_pr);
+
+  addRawValuesToFile(detailsFile, "h_vn_pT_bin6_10to40_pr_symm", v_vn_pT_bin6_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_pT_bin7_10to40_pr_symm", v_vn_pT_bin7_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_pT_bin8_10to40_pr_symm", v_vn_pT_bin8_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_pT_bin9_10to40_pr_symm", v_vn_pT_bin9_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_pT_bin10_10to40_pr_symm", v_vn_pT_bin10_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_pT_bin11_10to40_pr_symm", v_vn_pT_bin11_pr_symm);
+  addRawValuesToFile(detailsFile, "h_vn_pT_bin12_10to40_pr_symm", v_vn_pT_bin12_pr_symm);
+  ////
+  
+  detailsFile->Close();
+  delete detailsFile;
 }

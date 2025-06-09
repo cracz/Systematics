@@ -18,6 +18,7 @@ void printPointErrors(TGraphErrors *graph);
 struct AverageContributionTracker
 {
   Double_t epdPercentQuadSum = 0.0;
+  Double_t resPercentQuadSum = 0.0;
   Double_t nhitsPercentQuadSum = 0.0;
   Double_t nSigPiPercentQuadSum = 0.0;
   Double_t nSigKaPercentQuadSum = 0.0;
@@ -38,6 +39,7 @@ struct AverageContributionTracker
   Double_t eventQAPercentQuadSum = 0.0;
 
   Int_t epdNbins = 0;
+  Int_t resNbins = 0;
   Int_t nhitsNbins = 0;
   Int_t nSigPiNbins = 0;
   Int_t nSigKaNbins = 0;
@@ -77,6 +79,11 @@ struct AverageContributionTracker
       {
 	epdPercentQuadSum += stdDevContributed;
 	epdNbins++;
+      }
+    else if (ID == "res")
+      {
+	resPercentQuadSum += stdDevContributed;
+	resNbins++;
       }
     else if (ID == "nSigPi")
       {
@@ -185,7 +192,8 @@ struct AverageContributionTracker
 	      << "m^2 Ka, " << m2KaPercentQuadSum / (Double_t)m2KaNbins << std::endl
       	      << "m^2 De, " << m2DePercentQuadSum / (Double_t)m2DeNbins << std::endl
       	      << "m^2 Tr, " << m2TrPercentQuadSum / (Double_t)m2TrNbins << std::endl
-	      << "EP Resolution, " << epdPercentQuadSum / (Double_t)epdNbins << std::endl
+	      << "EPD B Variation, " << epdPercentQuadSum / (Double_t)epdNbins << std::endl
+	      << "Resolution Method, " << resPercentQuadSum / (Double_t)resNbins << std::endl
 	      << std::endl;
   }
 };
@@ -200,18 +208,18 @@ void calculateSystematics(TString order_n_str = "3")
   TString newFileName = "systematicErrors_3p2GeV.root";
   TFile* newFile = new TFile(newFileName, "RECREATE");
   
-  TString directory = "../../../Results_February2025/flowResults_3p2GeV/";
-  TString directory20Percent = "../../../Results_February2025/flowResults_3p2GeV/20percentVariations/";
-  TString directory30Percent = "../../../Results_February2025/flowResults_3p2GeV/30percentVariations/";
-  TString directoryEPR = "../../../Results_February2025/flowResults_3p2GeV/";
+  TString directory = "../Results_February2025/flowResults_3p2GeV/";
+  TString directory20Percent = "../Results_February2025/flowResults_3p2GeV/20percentVariations/";
+  TString directory30Percent = "../Results_February2025/flowResults_3p2GeV/30percentVariations/";
+  TString directoryEPR = "../Results_February2025/flowResults_3p2GeV/";
   TString energyPrefix = "3p2GeV_";
   
   Variation* Normal = new Variation("Normal",directory+energyPrefix+"1to8_13to16", order_n_str);
   Variation* epd_high = new Variation("epd_high",directoryEPR+energyPrefix+"1to8_14to16", order_n_str);
   Variation* epd_low = new Variation("epd_low",directoryEPR+energyPrefix+"1to8_12to16", order_n_str);
 
-  Variation* res_new = new Variation("res_new",directoryEPR+energyPrefix+"1to6_8to13_1p1to0", order_n_str);
-  Variation* res_old = new Variation("res_old",directoryEPR+energyPrefix+"1to6_8to13_1p1to0_OldResolutions", order_n_str);
+  Variation* res_new = new Variation("res_new",directoryEPR+energyPrefix+"1to6_8to14_1p1to0", order_n_str);
+  Variation* res_old = new Variation("res_old",directoryEPR+energyPrefix+"1to6_8to14_1p1to0_OldResolutions", order_n_str);
   
   Variation* nSigPi_high_20 = new Variation("nSigPi_high",directory20Percent+energyPrefix+"nSigPi_high", order_n_str);
   Variation* nSigPi_low_20  = new Variation("nSigPi_low",directory20Percent+energyPrefix+"nSigPi_low", order_n_str);
@@ -505,11 +513,20 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += res->v_vn_pr.at(ithBin).deltaAbsValSquared;
 
     if (ithBin < 2)
-      avgTracker_00to10.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
+      {
+	avgTracker_00to10.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
+	avgTracker_00to10.addContribution(res->ID, 100 * res->v_vn_pr.at(ithBin).deltaAbsValSquared / TMath::Abs(Normal->h_vn_pr->GetBinContent(ithBin+1)) );
+      }
     if (ithBin >= 2 && ithBin <= 7)
-      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
+      {
+	avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
+	avgTracker_10to40.addContribution(res->ID, 100 * res->v_vn_pr.at(ithBin).deltaAbsValSquared / TMath::Abs(Normal->h_vn_pr->GetBinContent(ithBin+1)) );
+      }
     if (ithBin > 7)
-      avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
+      {
+	avgTracker_40to60.addContribution(epd->ID, epd->v_vn_pr.at(ithBin).stdDevPercentage);
+	avgTracker_40to60.addContribution(res->ID, 100 * res->v_vn_pr.at(ithBin).deltaAbsValSquared / TMath::Abs(Normal->h_vn_pr->GetBinContent(ithBin+1)) );
+      }
 
     for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
@@ -578,7 +595,10 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += res->v_vn_yCM_10to40_pr.at(ithBin).deltaAbsValSquared;
 
     if (ithBin > 9)
-      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
+      {
+	avgTracker_10to40.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr.at(ithBin).stdDevPercentage);
+	avgTracker_10to40.addContribution(res->ID, 100 * res->v_vn_yCM_10to40_pr.at(ithBin).deltaAbsValSquared / TMath::Abs(Normal->h_vn_yCM_10to40_pr->GetBinContent(ithBin+1)) );
+      }
 
     for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
@@ -701,7 +721,10 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += res->v_vn_yCM_10to40_pr_symm.at(ithBin).deltaAbsValSquared;
 
     if (ithBin > 4 && ithBin < 15)
-      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
+      {
+	avgTracker_10to40.addContribution(epd->ID, epd->v_vn_yCM_10to40_pr_symm.at(ithBin).stdDevPercentage);
+	avgTracker_10to40.addContribution(res->ID, 100 * res->v_vn_yCM_10to40_pr_symm.at(ithBin).deltaAbsValSquared / TMath::Abs(Normal->h_vn_yCM_10to40_pr_symm->GetBinContent(ithBin+1)) );
+      }
 
     for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
@@ -1033,7 +1056,10 @@ void calculateSystematics(TString order_n_str = "3")
     quadSum += res->v_vn_pT_10to40_pr.at(ithBin).deltaAbsValSquared;
 
     if (ithBin > 1)
-      avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
+      {
+	avgTracker_10to40.addContribution(epd->ID, epd->v_vn_pT_10to40_pr.at(ithBin).stdDevPercentage);
+	avgTracker_10to40.addContribution(res->ID, 100 * res->v_vn_pT_10to40_pr.at(ithBin).deltaAbsValSquared / TMath::Abs(Normal->h_vn_pT_10to40_pr->GetBinContent(ithBin+1)) );
+      }
 
     for (int jthCut = 0; jthCut < composites.size(); jthCut++)
     {
